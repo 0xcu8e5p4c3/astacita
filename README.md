@@ -11,12 +11,10 @@ Website ini merupakan platform berita modern yang dikembangkan menggunakan **Lar
 - **Kategori & Tagging**: Pengelompokan berita berdasarkan kategori dan tag.
 - **Sistem Komentar**: Pengguna dapat berinteraksi dengan memberikan komentar pada artikel.
 - **Mode Gelap/Terang**: Pilihan tampilan sesuai preferensi pengguna.
-- **Kecepatan Tinggi**: Optimasi performa untuk pengalaman pengguna yang lebih baik.
 
 ## 🛠️ Teknologi yang Digunakan
 - **Framework**: Laravel
-- **Database**: PostgreSQL
-- **Deployment**: Laravel Forge / VPS
+- **Database**: PostgreSQL/MySQL
 
 ## 📦 Instalasi dan Menjalankan Proyek
 ### 1. Clone Repository
@@ -28,11 +26,13 @@ cd astacita
 ### 2. Instal Dependensi
 ```bash
 composer install
+php artisan key:generate
+cp .env.example .env
 npm install
 ```
 
 ### 3. Konfigurasi Database
-- Pastikan PostgreSQL sudah terinstal.
+- Pastikan PostgreSQL/MySQL sudah terinstal.
 - Buat database baru dan sesuaikan konfigurasi di `.env`.
 - Jalankan migrasi database:
 ```bash
@@ -41,9 +41,17 @@ php artisan migrate
 
 ### 4. Menjalankan Proyek
 ```bash
-php artisan serve
+composer run dev
 ```
 Akses website melalui `http://localhost:8000`
+
+### 4. Update Proyek
+```bash
+git add .
+git commit -m "deskripsi"
+git pull origin main
+git push origin main
+```
 
 ## 🔒 Akses Terbatas
 Proyek ini hanya untuk tim internal dan **tidak untuk publik**. Jika Anda adalah bagian dari tim, pastikan Anda memiliki izin sebelum mengakses atau mengubah kode.
