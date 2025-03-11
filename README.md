@@ -26,8 +26,8 @@ cd astacita
 ### 2. Instal Dependensi
 ```bash
 composer install
-php artisan key:generate
 cp .env.example .env
+php artisan key:generate
 npm install
 ```
 
