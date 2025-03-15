@@ -11,12 +11,8 @@ class Category extends Model
     use HasFactory;
 
     protected $table = 'categories';
-
-    // Primary key (opsional, Laravel sudah otomatis mengenali `id` sebagai primary key)
     protected $primaryKey = 'id';
-
     public $timestamps = false;
-
     protected $fillable = ['name', 'slug'];
 
     /**
@@ -33,6 +29,6 @@ class Category extends Model
      */
     public function articles()
     {
-        return $this->hasMany(Article::class, 'category_id');
+        return $this->hasMany(\App\Models\Article::class, 'category_id');
     }
 }

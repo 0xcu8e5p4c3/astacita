@@ -48,6 +48,7 @@ class User extends Authenticatable
     /**
      * Cek apakah user adalah seorang Author
      */
+    
     public function isAuthor(): bool
     {
         return $this->role === 'author';

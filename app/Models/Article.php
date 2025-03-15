@@ -15,8 +15,25 @@ class Article extends Model
 
     // Kolom yang bisa diisi secara massal
     protected $fillable = [
-        'title', 'slug', 'content', 'author_id', 'editor_id', 'category_id', 'published', 'published_at'
+        'title', 'slug', 'content', 'author_id', 'editor_id', 'category_id', 'published', 'published_at','scheduled_at', 'status'
     ];
+
+    protected $dates = [
+        'published_at',
+        'scheduled_at',
+    ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($article) {
+            if ($article->scheduled_at && now()->greaterThanOrEqualTo($article->scheduled_at)) {
+                $article->published = true;
+                $article->published_at = now();
+            }
+        });
+    }
 
     /**
      * Mutator: Set slug otomatis berdasarkan title.
@@ -56,7 +73,7 @@ class Article extends Model
      */
     public function tags()
     {
-        return $this->belongsToMany(Tag::class, 'article_tag', 'article_id', 'tag_id');
+        return $this->belongsToMany(Tags::class, 'article_tag', 'article_id', 'tag_id');
     }
 
     /**

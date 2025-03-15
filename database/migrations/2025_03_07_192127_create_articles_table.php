@@ -13,9 +13,11 @@ return new class extends Migration
             $table->string('title', 255);
             $table->string('slug', 255)->unique();
             $table->text('content');
-            $table->foreignId('author_id')->nullable()->constrained('roles')->cascadeOnDelete();
-            $table->foreignId('editor_id')->nullable()->constrained('roles')->cascadeOnDelete();
+            $table->foreignId('author_id')->nullable()->constrained('users')->cascadeOnDelete();
+            $table->foreignId('editor_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->foreignId('category_id')->nullable()->constrained('categories')->cascadeOnDelete();
+            $table->enum('status', ['draft', 'scheduled', 'published'])->default('draft');
+            $table->timestamp('scheduled_at')->nullable();
             $table->boolean('published')->default(false);
             $table->timestamp('published_at')->nullable();
             $table->timestamps(); // created_at & updated_at
