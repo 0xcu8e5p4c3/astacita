@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('article_id')->constrained()->onDelete('cascade');
             $table->string('ip_address'); // Untuk melacak unique views
+            $table->timestamp('visited_at')->useCurrent();
             $table->timestamps();
         });
     }

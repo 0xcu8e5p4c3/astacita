@@ -2,16 +2,15 @@
 
 namespace App\Filament\Pages;
 
-use Filament\Pages\Page;
+use Filament\Pages\Dashboard as BaseDashboard;
+use App\Filament\Widgets\WebStatsOverview;
 
-class Dashboard extends Page
+class Dashboard extends BaseDashboard
 {
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
-
-    public static function getNavigationSort(): int
+    public function getWidgets(): array
     {
-        return 1;
+        return [
+            WebStatsOverview::class,
+        ];
     }
-
-    protected static string $view = 'filament.pages.dashboard';
 }

@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\FilamentUser; // Perbaiki namespace
+use Filament\Panel;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Contracts\Auth\MustVerifyEmail; // Perbaiki namespace
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -45,10 +49,17 @@ class User extends Authenticatable
         ];
     }
 
+        /**
+     * Cek apakah user adalah seorang Author
+     */
+    public function isUser(): bool
+    {
+        return $this->role === 'user';
+    }
+
     /**
      * Cek apakah user adalah seorang Author
      */
-    
     public function isAuthor(): bool
     {
         return $this->role === 'author';
@@ -67,7 +78,7 @@ class User extends Authenticatable
      */
     public function articles()
     {
-        return $this->hasMany(Article::class, 'author_id');
+        return $this->hasMany(\App\Models\Article::class, 'author_id');
     }
 
     /**
@@ -75,7 +86,7 @@ class User extends Authenticatable
      */
     public function editedArticles()
     {
-        return $this->hasMany(Article::class, 'editor_id');
+        return $this->hasMany(\App\Models\Article::class, 'editor_id');
     }
 
     /**
@@ -83,7 +94,7 @@ class User extends Authenticatable
      */
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'user_id');
+        return $this->hasMany(\App\Models\Comment::class, 'user_id');
     }
 
     /**
@@ -91,6 +102,30 @@ class User extends Authenticatable
      */
     public function likes()
     {
-        return $this->hasMany(Like::class, 'user_id');
+        return $this->hasMany(\App\Models\Like::class, 'user_id');
     }
+
+    /**
+     * Hak akses ke Filament Admin Panel
+     */
+    public function canAccessPanel(Panel $panel): bool
+    
+    {
+        if ($panel->getId() === 'editor') {
+            return true;
+        }
+        
+        if ($panel->getId() === 'author') {
+            return true;
+        }
+        
+        if ($panel->getId() === 'user') {
+            return true;
+        }
+        
+        // Default return untuk semua kasus lainnya
+        return true;
+        
+    }
+    
 }
