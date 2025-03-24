@@ -1,4 +1,4 @@
-<h2 class="text-lg font-semibold mb-4">Trending Topic</h2>
+<h2 class="text-2xl font-bold mb-4">Trending Topic</h2>
     <div class="bg-green-100 p-4 rounded-lg w-full">
         <div class="relative flex items-center px-4"
         data-auto-slide="true" 

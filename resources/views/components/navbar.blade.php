@@ -1,40 +1,27 @@
-<nav class="fixed top-0 left-0 w-full z-50">
-    <!-- Navbar Atas (Breaking News, Tanggal, Login) -->
-    <div class="bg-black text-white text-sm py-2 px-4 flex justify-between items-center">
-        <div class="flex items-center">
-            <span class="text-red-500 font-bold mr-2">• BREAKING:</span>
-            <span>Through Their Vision, Determination, And Standards, The Winning</span>
-        </div>
-        <div class="flex items-center space-x-4">
-            <span>March 4, 2025</span>
-            <button class="text-white"><i class="fas fa-moon"></i></button>
-            <button class="border px-3 py-1 rounded-full border-white hover:bg-white hover:text-black">
-                Login/Signup
-            </button>
-        </div>
+<div class="fixed top-0 left-0 w-full z-50 flex items-center justify-between h-16 bg-[#E4FF9A] px-4">
+<div class="flex items-center gap-2">
+        <img src="{{ asset('images/astacitalogo.png') }}" alt="Company Logo" class="h-10 w-auto" />
+  </div>
+  
+  <div class="flex-1 flex justify-center min-w-[120px]">
+    <div class="flex items-center justify-center text-black text-xs font-semibold bg-white rounded-full backdrop-blur-sm px-4 py-1 border">
+      <button onclick="window.location.href='{{ route('home') }}'" class="hover:text-red-500 transition duration-700 px-3 py-1 rounded-full">Home</button>
+      <button onclick="window.location.href='{{ route('ai') }}'" class="hover:text-red-500 transition px-3 py-1 duration-700 rounded-full">AI</button>
+      <button onclick="window.location.href='{{ route('crypto') }}'" class="hover:text-red-500 transition px-3 py-1 duration-700 rounded-full">Crypto</button>
+      <button onclick="window.location.href='{{ route('startup') }}'" class="hover:text-red-500 transition px-3 py-1 duration-700 rounded-full">Start Up</button>
+      <button onclick="window.location.href='{{ route('okegas') }}'" class="hover:text-red-500 transition px-3 py-1 duration-700 rounded-full">Oke Gas</button>
+      <button onclick="window.location.href='{{ route('kabinet') }}'" class="hover:text-red-500 transition px-3 py-1 duration-700 rounded-full">Kabinet</button>
+      <button onclick="window.location.href='{{ route('bumn') }}'" class="hover:text-red-500 transition px-3 py-1 duration-700 rounded-full">BUMN</button>
     </div>
-
-    <div class="bg-[#F7FDC3] py-3 px-6 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-
-            <a href="{{ url('/') }}" class="flex items-center">
-                <img src="images/astacitalogo.png" alt="Logo" class="h-16">
-            </a>
-
-            <ul class="flex px-10 space-x-6 text-black font-medium">
-                <li><a href="#" class="text-red-500">HOME</a></li>
-                <li><a href="#" class="hover:text-red-500">AI</a></li>
-                <li><a href="#" class="hover:text-red-500">CRYPTO</a></li>
-                <li><a href="#" class="hover:text-red-500">START UP</a></li>
-                <li><a href="#" class="hover:text-red-500">OKE GAS</a></li>
-                <li><a href="#" class="hover:text-red-500">KABINET</a></li>
-                <li><a href="#" class="hover:text-red-500">BUMN</a></li>
-            </ul>
-
-            <div class="relative">
-                <input type="text" placeholder="Search" class="border rounded-full px-4 py-2 w-64">
-                <i class="fas fa-search absolute right-4 top-3 text-gray-500"></i>
-            </div>
-        </div>
-    </div>
-</nav>
+  </div>
+  
+  <div class="flex items-center gap-2">
+    <button class="text-black text-sm font-medium hover:text-red-500 transition">Log In</button>
+    <button class="text-zinc-100 rounded-full px-4 py-1 bg-zinc-950 text-sm font-medium flex items-center transition border border-zinc-700 relative overflow-hidden group">
+      Sign Up
+      <svg class="inline-block ml-2 group-hover:translate-x-1 transition duration-700" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M13.3 17.275q-.3-.3-.288-.725t.313-.725L16.15 13H5q-.425 0-.713-.288T4 12q0-.425.288-.713T5 11h11.15L13.325 8.175q-.3-.3-.313-.725t.288-.725q.3-.3.725-.288t.725.313l4.15 4.15q.15.15.213.325t.063.375q0 .2-.063.375t-.213.325l-4.15 4.15q-.3.3-.725.313t-.725-.288Z"/>
+      </svg>
+    </button>
+  </div>
+</div>

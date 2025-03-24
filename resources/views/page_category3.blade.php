@@ -1,11 +1,15 @@
-<link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="{{ asset('css/carouselitem.css') }}">
-
-<div class="bg-white">
-    <div class="container mx-auto px-4 py-8">
-        <h1 class="text-2xl font-bold mb-4">Top Stories</h1>
-<div class="carousel carousel-end rounded-box">
-  <a href="news1.html" class="carousel-item relative">
+<x-layout>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="{{ asset('css/carouselitem.css') }}">
+  
+  <div class="container mx-auto p-6">
+    <!-- Wrapper utama -->
+    <div class="flex flex-col md:flex-row gap-6">
+      
+      <!-- Konten utama -->
+      <div class="flex-1">
+        <div class="carousel carousel-end rounded-box">
+        <a href="news1.html" class="carousel-item relative">
     <img src="https://img.daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.webp" alt="News 1" />
     <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-4 text-center">
       <span class="block text-xs font-bold uppercase">Category 1</span>
@@ -85,5 +89,37 @@
       <p class="text-sm">A short summary of the fifth news article to give users an idea of the content.</p>
     </div>
   </a>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto pt-6">
+          <div class="flex flex-col gap-4">
+            <div class="bg-white rounded-xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg group">
+              <div class="md:flex">
+                <div class="md:shrink-0">
+                  <img class="h-48 w-full object-cover md:h-full md:w-48 transition-all duration-300 group-hover:scale-105" 
+                       src="https://loremflickr.com/320/240/nature">
+                </div>
+                <div class="p-6">
+                  <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Nature Getaway</div>
+                  <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black relative group">
+                    A perfect retreat for relaxation
+                    <span class="absolute left-0 bottom-0 w-0 h-[2px] bg-indigo-500 transition-all duration-300 group-hover:w-full"></span>
+                  </a>
+                  <p class="mt-2 text-slate-500">
+                    Escape the city hustle and relax in a peaceful nature retreat.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+      
+      <!-- Sidebar -->
+      <div class="w-full md:w-80">
+        <x-sidebarcard />
+      </div>
+
+    </div>
+  </div>
+</x-layout>
