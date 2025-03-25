@@ -52,6 +52,7 @@ Route::get('/article/{slug}', function ($slug, Request $request) {
     return view('article', compact('article'));
 });
 
+
 Route::post('/logout', function () {
     Auth::logout();
     request()->session()->invalidate();

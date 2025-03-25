@@ -27,8 +27,8 @@ class AdminPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->id('admin')
-            ->path('admin')
+            ->id('astacita')
+            ->path('astacita')
             ->login()
             ->registration()
             ->passwordReset()
@@ -60,12 +60,11 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                // RedirectIfAuthenticated::class,
+                
             ])
             ->authMiddleware([
                 Authenticate::class,
-                // EnsureEmailVerif::class,
-                // FilamentAdminMiddleware::class,
+                RedirectIfAuthenticated::class,
             ]);
     }
 }
