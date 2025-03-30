@@ -32,13 +32,14 @@ class NewsResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Forms\Components\FileUpload::make('cover_image')
-                ->label('Cover Artikel')
-                ->directory('covers-img')
-                ->image()
-                ->maxSize(2048)
-                ->columnSpanFull(),
-
+            Forms\Components\FileUpload::make('cover')
+            ->label('Cover Artikel')
+            ->directory('covers') // Simpan di storage/app/public/covers
+            ->image() // Hanya menerima gambar
+            ->maxSize(2048) // Maksimal 2MB
+            ->visibility('public') // Agar bisa diakses via URL
+            ->columnSpanFull(), // Biar lebar penuh
+        
                 Forms\Components\TextInput::make('title')
                 ->required()
                 ->maxLength(255)

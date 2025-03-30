@@ -9,20 +9,16 @@ class Media extends Model
 {
     use HasFactory;
 
-    // Nama tabel (opsional, Laravel otomatis mengenali)
-    protected $table = 'media';
-
-    // Tidak menggunakan timestamps default Laravel (created_at & updated_at)
-    public $timestamps = false;
-
-    // Kolom yang bisa diisi secara massal
+    protected $table = 'media'; // Nama tabel di database
     protected $fillable = ['article_id', 'file_path', 'file_type', 'uploaded_at'];
 
+    public $timestamps = false; // Karena kolom `uploaded_at` sudah ada dan diatur otomatis
+
     /**
-     * Relasi: Media terkait dengan satu artikel (Many to One)
+     * Relasi ke model Article (Many-to-One)
      */
     public function article()
     {
-        return $this->belongsTo(Article::class, 'article_id');
+        return $this->belongsTo(Article::class);
     }
 }

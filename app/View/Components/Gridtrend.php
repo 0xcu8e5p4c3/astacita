@@ -7,17 +7,21 @@ use App\Models\Article;
 
 class Gridtrend extends Component
 {
-    public $news;
+    public $hometrend;
 
     public function __construct()
     {
-        // Ambil 5 artikel dengan jumlah views terbanyak
-        $this->news = Article::withCount('views')->orderBy('views_count', 'desc')->take(5)->get();
+        // Ambil artikel trending berdasarkan jumlah views
+        $this->hometrend = Article::where('status', 'published')
+            ->whereNotNull('published_at')
+            ->withCount('views') // Menghitung jumlah views dari tabel views
+            ->orderByDesc('views_count') // Urutkan berdasarkan jumlah views
+            ->limit(15)
+            ->get();
     }
 
     public function render()
     {
-        return view('components.gridtrend')->with('news', $this->news);
+        return view('components.gridtrend', ['hometrend' => $this->hometrend]);
     }
-    
 }

@@ -99,4 +99,13 @@ class Article extends Model
     {
         return $this->hasMany(View::class, 'article_id');
     }
+        /**
+     * Relasi: Artikel memiliki 1 cover
+     */
+    public function media()
+    {
+        return $this->hasOne(Media::class, 'article_id');
+    }
+
+    
 }

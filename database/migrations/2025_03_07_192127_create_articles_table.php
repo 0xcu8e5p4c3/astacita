@@ -15,7 +15,7 @@ return new class extends Migration
             $table->text('content');
             $table->foreignId('author_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->foreignId('editor_id')->nullable()->constrained('users')->cascadeOnDelete();
-            $table->foreignId('category_id')->nullable()->constrained('categories')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->enum('status', ['draft', 'scheduled', 'published'])->default('draft');
             $table->timestamp('scheduled_at')->nullable();
             $table->boolean('published')->default(false);

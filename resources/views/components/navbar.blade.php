@@ -21,7 +21,8 @@
 
         <div class="absolute right-0 mt-2 w-40 bg-white text-black rounded-md shadow-lg hidden group-hover:block">
           <a href="" class="block px-4 py-2 hover:bg-gray-200">Dashboard</a>
-          <a href="" class="block px-4 py-2 hover:bg-gray-200">Profile</a>
+          <a href="{{ route('profile') }}" class="block px-4 py-2 hover:bg-gray-200">Profile</a>
+          <a href="" class="block px-4 py-2 hover:bg-gray-200">Subscription</a>
           <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="w-full text-left px-4 py-2 hover:bg-gray-200">Logout</button>
@@ -51,19 +52,46 @@
 
   <div class="flex-1 flex justify-center min-w-[120px]">
     <div class="flex items-center justify-center text-black text-xs font-semibold bg-white rounded-full backdrop-blur-sm px-4 py-1 border">
-      @foreach(['home', 'ai', 'crypto', 'startup', 'okegas', 'kabinet', 'bumn'] as $route)
-        <button onclick="window.location.href='{{ route($route) }}'" class="hover:text-red-500 transition duration-700 px-3 py-1 rounded-full">
-          {{ ucfirst($route) }}
+      @foreach([
+          ['route' => 'home', 'slug' => null, 'label' => 'Home'],
+          ['route' => 'category.show', 'slug' => 'ai', 'label' => 'AI'],
+          ['route' => 'category.show', 'slug' => 'crypto', 'label' => 'Crypto'],
+          ['route' => 'category.show', 'slug' => 'start-up', 'label' => 'Startup'],
+          ['route' => 'category.show', 'slug' => 'oke-gas', 'label' => 'OkeGas'],
+          ['route' => 'category.show', 'slug' => 'kabinet', 'label' => 'Kabinet'],
+          ['route' => 'category.show', 'slug' => 'bumn', 'label' => 'BUMN']
+      ] as $data)
+
+        <button onclick="window.location.href='{{ $data['slug'] ? route($data['route'], ['slug' => $data['slug']]) : route($data['route']) }}'" 
+                class="hover:text-red-500 transition duration-700 px-3 py-1 rounded-full">
+          {{ $data['label'] }}
         </button>
+
       @endforeach
     </div>
   </div>
 
-  <!-- Search Box -->
-  <div class="relative bg-white rounded-3xl w-auto h-auto border border-gray-300">
-    <input type="text" placeholder="Search" class="rounded-full text-black px-4 py-2 pr-10 focus:outline-none"/>
-    <i class="fas fa-search absolute right-3 top-3 text-gray-500"></i>
-  </div>
+  <div class="relative w-full max-w-sm mx-auto bg-white rounded-full">
+  <form action="{{ route('search') }}" method="GET" class="relative">
+    <input placeholder="e.g. Blog" class="rounded-full w-full h-10 bg-transparent py-1 pl-6 pr-24 outline-none border border-gray-300 shadow-sm hover:outline-none focus:ring-teal-200 focus:border-teal-200 text-sm" type="text" name="query" id="query">
+    <button type="submit" class="absolute inline-flex items-center h-8 px-3 py-1 text-xs text-white transition duration-150 ease-in-out rounded-full outline-none right-2 top-9 transform -translate-y-1/2 bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+      <svg class="mr-1 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+      </svg>
+      Search
+    </button>
+    </form>
+</div>
+
+  <!-- <div class="relative bg-white rounded-3xl w-auto h-auto border border-gray-300">
+    <form action="{{ route('search') }}" method="GET" class="relative">
+        <input type="text" name="q" placeholder="Search..." value="{{ request('q') }}" class="rounded-full text-black px-4 py-2 pr-10 w-full focus:outline-none"/>
+        <button type="submit" class="absolute right-3 top-2 text-gray-500">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+</div> -->
+
 </div>
 
 <script>

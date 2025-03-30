@@ -2,25 +2,30 @@
 
 namespace App\View\Components;
 
-use Closure;
-use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use App\Models\Article;
 
 class ArticleTempl extends Component
 {
+    public $article;
+
     /**
-     * Create a new component instance.
+     * Buat instance komponen.
      */
-    public function __construct()
+    public function __construct($slug)
     {
-        //
+        $this->article = Article::where('slug', $slug)
+            ->with(['category', 'author', 'tags', 'media'])
+            ->firstOrFail();
     }
 
     /**
-     * Get the view / contents that represent the component.
+     * Render tampilan komponen.
      */
-    public function render(): View|Closure|string
+    public function render()
     {
-        return view('components.article-templ');
+        return view('components.article-templ', [
+            'article' => $this->article
+        ]);
     }
 }

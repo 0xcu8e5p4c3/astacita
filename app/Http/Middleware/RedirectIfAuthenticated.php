@@ -28,6 +28,10 @@ class RedirectIfAuthenticated
                     ->with('error', 'Silakan verifikasi email Anda sebelum mengakses halaman ini.');
             }
 
+             // **Redirect hanya jika user baru login (gunakan session)**
+            if (!session()->has('redirected_after_login')) {
+                 session(['redirected_after_login' => true]);
+
             // **Redirect berdasarkan role user**
             $redirectRoutes = [
                 'editor' => '/astacita',
@@ -46,4 +50,5 @@ class RedirectIfAuthenticated
 
         return $next($request);
     }
+}
 }

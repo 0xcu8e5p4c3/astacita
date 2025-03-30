@@ -1,57 +1,35 @@
 <?php
 
+
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\TrendingController;
 use Illuminate\Support\Facades\Route;
 use App\Models\View;
 use Illuminate\Http\Request;
 use App\Models\Article;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ViewArticle;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('home');
+Route::get('/home', function () {
+    return view('home'); // Pastikan 'home.blade.php' memanggil komponen Gridtrend
 })->name('home');
 
-Route::get('/ai', function () {
-    return view('page_category1');
-})->name('ai');
+Route::get('/pages/{slug}/{request?}', [ArticleController::class, 'category'])->name('category.show');
 
-Route::get('/crypto', function () {
-    return view('page_category2');
-})->name('crypto');
+Route::get('/Pages/{slug}', [ViewArticle::class, 'show'])->name('article.show');
 
-Route::get('/startup', function () {
-    return view('page_category3');
-})->name('startup');
+Route::get('/pages/{slug}/loadmore', [ArticleController::class, 'loadMore'])->name('category.loadmore');
 
-Route::get('/kabinet', function () {
-    return view('page_category4');
-})->name('kabinet');
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 
-Route::get('/okegas', function () {
-    return view('page_category5');
-})->name('okegas');
+Route::get('/test', function () {
+    return view('test');
+})->name('test');
 
-Route::get('/bumn', function () {
-    return view('page_category6');
-})->name('bumn');
-
-Route::get('/article/{slug}', function ($slug, Request $request) {
-    $article = Article::where('slug', $slug)->firstOrFail();
-
-    // Cek apakah IP sudah melihat artikel ini
-    $existingView = View::where('article_id', $article->id)
-                        ->where('ip_address', $request->ip())
-                        ->first();
-
-    if (!$existingView) {
-        View::create([
-            'article_id' => $article->id,
-            'ip_address' => $request->ip(),
-        ]);
-    }
-
-    return view('article', compact('article'));
-});
-
+Route::get('/profile', function () {
+    return view('profile');
+})->name('profile');
 
 Route::post('/logout', function () {
     Auth::logout();
