@@ -8,16 +8,20 @@ use App\Models\View;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\ViewArticle;
+use App\Http\Controllers\ArticleViewController;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/home', function () {
-    return view('home'); // Pastikan 'home.blade.php' memanggil komponen Gridtrend
+Route::get('/', function () {
+    return view('home');
 })->name('home');
 
-Route::get('/pages/{slug}/{request?}', [ArticleController::class, 'category'])->name('category.show');
+// category menu navbar
+Route::get('/pages/{slug}/{request?}', [ArticleController::class, 'showCategory'])->name('category.show');
+// Detail artikel
+Route::get('/news/{categorySlug}/{articleSlug}', [ArticleViewController::class, 'show'])
+    // ->middleware('store.article')
+    ->name('article.show');
 
-Route::get('/Pages/{slug}', [ViewArticle::class, 'show'])->name('article.show');
 
 Route::get('/pages/{slug}/loadmore', [ArticleController::class, 'loadMore'])->name('category.loadmore');
 

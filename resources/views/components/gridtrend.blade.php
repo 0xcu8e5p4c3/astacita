@@ -2,11 +2,11 @@
 <link rel="stylesheet" href="{{ asset('css/carouselitem.css') }}">
 
 <div class="bg-white">
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto px-4">
         <h1 class="text-2xl font-bold mb-4">Trending</h1>
         <div class="carousel carousel-end rounded-box">
         @foreach ($hometrend as $article)
-            <a href="{{ route('category.show', $article->slug) }}" class="carousel-item relative">
+            <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="carousel-item relative">
                 <img src="{{ $article->media->file_path ?? asset('storage/default.jpg') }}" 
                     alt="{{ $article->title }}" 
                     class="w-full h-40 object-cover" />

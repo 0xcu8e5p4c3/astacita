@@ -5,7 +5,6 @@
             <div class="col-span-2">
                 <a href="{{ url('/') }}" class="flex items-center mb-4">
                     <img src="images/astacitalogo.png" alt="Logo" class="h-12"> <!-- Ganti dengan logo yang sesuai -->
-                    <span class="ml-2 text-lg font-bold">ASTACITA</span>
                 </a>
                 <p class="text-gray-400 text-sm">
                     Expert insights, industry trends, and inspiring stories that help you live and work on your own terms.
@@ -44,17 +43,15 @@
             </div>
 
             <!-- Kolom 3: Pages -->
-            <div>
+            <div class="col-span-1">
                 <h3 class="font-semibold mb-4">Pages</h3>
                 <ul class="text-gray-400 text-sm space-y-2">
-                    <li><a href="#" class="hover:text-white">Lifestyle Blog</a></li>
-                    <li><a href="#" class="hover:text-white">Entertainment News</a></li>
-                    <li><a href="#" class="hover:text-white">Technology Blog</a></li>
-                    <li><a href="#" class="hover:text-white">Showbiz News</a></li>
-                    <li><a href="#" class="hover:text-white">Archive</a></li>
-                    <li><a href="#" class="hover:text-white">Author</a></li>
+                    @foreach($categories as $category)
+                        <li><a href="{{ url('pages/'.$category->slug) }}" class="hover:text-white">{{ $category->name }}</a></li>
+                    @endforeach
                 </ul>
             </div>
+
 
             <!-- Kolom 4: Useful Links -->
             <div>
@@ -68,20 +65,6 @@
                     <li><a href="#" class="hover:text-white">Archive News</a></li>
                 </ul>
             </div>
-
-            <!-- Kolom 5: Support -->
-            <div>
-                <h3 class="font-semibold mb-4">Support</h3>
-                <ul class="text-gray-400 text-sm space-y-2">
-                    <li><a href="#" class="hover:text-white">Top Lifestyle Blog</a></li>
-                    <li><a href="#" class="hover:text-white">Top 5 Travel Places</a></li>
-                    <li><a href="#" class="hover:text-white">Top 10 Exercise</a></li>
-                    <li><a href="#" class="hover:text-white">Top Mobile Accessories</a></li>
-                    <li><a href="#" class="hover:text-white">Top Mobile Gadgets</a></li>
-                    <li><a href="#" class="hover:text-white">Top Healthy Breakfast</a></li>
-                </ul>
-            </div>
-        </div>
 
         <!-- Copyright -->
         <div class="border-t border-gray-700 mt-8 pt-4 text-center text-gray-400 text-sm">

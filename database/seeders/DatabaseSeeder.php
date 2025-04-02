@@ -12,6 +12,7 @@ use App\Models\Comments;
 use App\Models\View;
 use App\Models\Like;
 use App\Models\Media;
+use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
@@ -45,6 +46,7 @@ class DatabaseSeeder extends Seeder
         }
 
         // Seed Articles + Cover Image
+        $articles = [];
         for ($i = 1; $i <= 100; $i++) {
             $article = Article::create([
                 'title' => $faker->sentence,
@@ -60,6 +62,9 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ]);
 
+            // Simpan article untuk digunakan nanti
+            $articles[] = $article;
+
             // Tambahkan cover ke tabel media (Menggunakan Picsum)
             Media::create([
                 'article_id' => $article->id,
@@ -71,10 +76,22 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        // Seed Tags
-        $tags = ['AI', 'Blockchain', 'Startups', 'Web3', 'Fintech'];
-        foreach ($tags as $tag) {
-            Tags::create(['name' => $tag]);
+        // Seed Tags (10 tags random)
+        $tagNames = ['AI', 'Blockchain', 'Web3', 'DeFi', 'NFT', 'Metaverse', 'Cybersecurity', 'Fintech', 'IoT', 'Big Data'];
+        $tags = [];
+        foreach ($tagNames as $tag) {
+            $tags[] = Tags::create(['name' => $tag]);
+        }
+
+        // Assign 5 random tags to each article
+        foreach ($articles as $article) {
+            $randomTags = collect($tags)->random(5);
+            foreach ($randomTags as $tag) {
+                DB::table('article_tag')->insert([
+                    'article_id' => $article->id,
+                    'tag_id' => $tag->id
+                ]);
+            }
         }
 
         // Seed Comments

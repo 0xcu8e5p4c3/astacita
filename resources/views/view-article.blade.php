@@ -1,47 +1,48 @@
+<link rel="stylesheet" href="{{ asset('css/tiptap.css') }}">
+
 <x-layout>
 
 <!-- cover -->
 <div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 relative">
     <div class="bg-cover bg-center text-center overflow-hidden"
-        style="min-height: 500px; background-image: url('https://api.time.com/wp-content/uploads/2020/07/never-trumpers-2020-election-01.jpg?quality=85&amp;w=1201&amp;h=676&amp;crop=1')"
-        title="Woman holding a mug">
+        style="min-height: 500px; background-image: url('{{ $viewarticle->thumbnail ? asset('storage/'.$viewarticle->thumbnail) : 'https://picsum.photos/seed/'.$viewarticle->id.'/800/450' }}')"
+        title="{{ $viewarticle->title }}">
     </div>
 
     <!-- title -->
     <div class="max-w-3xl mx-auto">
         <div class="mt-3 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
             <div class="bg-white relative top-0 -mt-32 p-5 sm:p-10">
-                <h1 href="#" class="text-gray-900 font-bold text-3xl mb-2">Revenge of the Never Trumpers</h1>
+                <h1 href="#" class="text-gray-900 font-bold text-3xl mb-2">{{ $viewarticle->title }}</h1>
 
                 <!-- Penulis -->
                 <p class="text-gray-700 text-xs mt-2">Written By:
                     <a href="#"
                         class="text-indigo-600 font-medium hover:text-gray-900 transition duration-500 ease-in-out">
-                        Ahmad Sultani
+                        {{ $viewarticle->author->name }}
+                
+                <!-- category -->
                     </a> In
-
-                    <!-- category -->
                     <a href="#"
                         class="text-xs text-indigo-600 font-medium hover:text-gray-900 transition duration-500 ease-in-out">
-                        Election
-                    </a>,
+                        {{ $viewarticle->category->name }}
+                    </a>
                 </p>
 
                 <!-- content -->
-                <p class="text-base leading-8 my-5">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-                    and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
-                    leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s
-                    with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
-                    publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                </p>
+                <div class="tiptap-content my-5">
+                {!! $viewarticle->content !!}
+                </div>
+
 
                 <!-- Tags -->
-                <a href="#"
-                    class="text-xs text-indigo-600 font-medium hover:text-gray-900 transition duration-500 ease-in-out">
-                    #Election
-                </a>
+                @foreach ($viewarticle->tags as $tag)
+                    <a href="{{ route('category.show', ['slug' => $viewarticle->slug]) }}"
+                        class="text-xs text-indigo-600 font-medium hover:text-gray-900 transition duration-500 ease-in-out">
+                        #{{ $tag->name }}
+                    </a>
+                @endforeach
+
 
                 <div class="pt-5 dark:bg-slate-800flex items-center">
                     <div class="bg-gray-100 dark:bg-gray-700 relative shadow-xl overflow-hidden hover:shadow-2xl group rounded-xl p-5 transition-all duration-500 transform">

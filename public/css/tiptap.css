@@ -1,0 +1,106 @@
+/* Container untuk konten Tiptap */
+.tiptap-content {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    font-size: 1rem;
+    margin: 1rem auto;
+    max-width: 800px;
+    padding: 0 1rem;
+  }
+  
+  /* Paragraf */
+  .tiptap-content p {
+    margin-bottom: 1rem;
+  }
+  
+  /* Heading */
+  .tiptap-content h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 1.5rem 0 1rem;
+  }
+  
+  .tiptap-content h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 1.25rem 0 1rem;
+  }
+  
+  .tiptap-content h3 {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin: 1rem 0 0.75rem;
+  }
+  
+  .tiptap-content h4 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1rem 0 0.75rem;
+  }
+  
+  /* Blockquote */
+  .tiptap-content blockquote {
+    font-style: italic;
+    border-left: 4px solid #ddd;
+    padding-left: 1rem;
+    margin: 1rem 0;
+    color: #555;
+    background-color: #f9f9f9;
+  }
+  
+  /* Unordered List */
+  .tiptap-content ul {
+    list-style: disc inside;
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+  
+  /* Ordered List */
+  .tiptap-content ol {
+    list-style: decimal inside;
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+  }
+  
+  /* List Items */
+  .tiptap-content li {
+    margin: 0.5rem 0;
+  }
+  
+  /* Link */
+  .tiptap-content a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .tiptap-content a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Preformatted / Code Block */
+  .tiptap-content pre {
+    background: #f5f5f5;
+    padding: 1rem;
+    overflow-x: auto;
+    border-radius: 4px;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    margin-bottom: 1rem;
+  }
+  
+  /* Inline Code */
+  .tiptap-content code {
+    background: #f5f5f5;
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+  
+  /* Images */
+  .tiptap-content img {
+    max-width: 100%;
+    height: auto;
+    margin: 1rem 0;
+    border-radius: 4px;
+  }
+  

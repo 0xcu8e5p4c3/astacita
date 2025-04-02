@@ -8,10 +8,10 @@ use App\Models\Category;
 
 class ArticleController extends Controller
 {
-    public function category(Request $request, $slug)
+    public function showCategory(Request $request, $categorySlug)
     {
         // Ambil kategori berdasarkan slug
-        $category = Category::where('slug', $slug)->firstOrFail();
+        $category = Category::where('slug', $categorySlug)->firstOrFail();
 
         // Ambil berita trending berdasarkan jumlah views terbanyak
         $trending = Article::where('category_id', $category->id)
@@ -29,26 +29,17 @@ class ArticleController extends Controller
             ->orderByDesc('published_at') // Order berdasarkan tanggal publish
             ->limit(5)
             ->get();
-            
+        
         return view('page_category1', compact('category', 'trending', 'articles'));
     }
+    
 
-    public function show($slug)
+    public function loadMore(Request $request, $categorySlug)
     {
-        $article = Article::where('slug', $slug)
-            ->with(['category', 'author', 'tags', 'media'])
-            ->firstOrFail();
-
-        return view('view-article', compact('article'));
-    }
-
-
-    public function loadMore(Request $request, $slug)
-    {
-        $category = Category::where('slug', $slug)->firstOrFail();
+        $category = Category::where('slug', $categorySlug)->firstOrFail();
         
-        $offset = (int) $request->offset; // Pastikan offset adalah integer
-        \Log::info("Offset yang diterima: " . $offset); // Cek nilai offset di log
+        $offset = (int) $request->offset; 
+        \Log::info("Offset yang diterima: " . $offset); 
 
         // Ambil artikel dengan limit dan offset
         $moreArticles = Article::where('category_id', $category->id)

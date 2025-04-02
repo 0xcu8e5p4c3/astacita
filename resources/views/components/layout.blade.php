@@ -14,7 +14,7 @@
     <x-navbar></x-navbar>
     
     <!-- Main Content -->
-    <main class="container mx-auto px-20 pb-[30px] ">
+    <main class="container mx-auto px-20 py-[20px] ">
         {{ $slot }}
     </main>
 

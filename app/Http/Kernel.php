@@ -18,6 +18,7 @@ use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Http\Middleware\HandleCors;
 use Illuminate\Http\Middleware\TrustProxies;
+use Illuminate\Http\Middleware\StoreArticleInSession;
 use Illuminate\Http\Middleware\VerifyCsrfToken;
 use App\Http\Middleware\FilamentAdminMiddleware;
 
@@ -84,9 +85,10 @@ class Kernel extends HttpKernel
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
-        'userauth' => FilamentAdminMiddleware::class, // Tambahkan middleware Filament admin
+        'userauth' => FilamentAdminMiddleware::class,
         'verified' => EnsureEmailIsVerif::class,
         'redirect' => RedirectIfAuthenticated::class,
+        'store.article' => StoreArticleInSession::class,
     ];
     
     

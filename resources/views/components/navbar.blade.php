@@ -45,7 +45,7 @@
 </div>
 
 <!-- Header Utama -->
-<div class="sticky top-10 left-0 w-full z-40 flex items-center justify-between h-20 bg-[#E4FF9A] px-4">
+<div class="sticky top-9 left-0 w-full z-40 flex items-center justify-between h-20 bg-[#E4FF9A] px-4">
   <div class="flex items-center gap-2">
     <img src="{{ asset('images/astacitalogo.png') }}" alt="Company Logo" class="h-10 w-auto" />
   </div>
