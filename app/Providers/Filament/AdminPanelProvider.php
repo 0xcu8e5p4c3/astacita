@@ -4,7 +4,6 @@ namespace App\Providers\Filament;
 
 use Filament\Http\Middleware\Authenticate;
 use App\Http\Middleware\FilamentAdminMiddleware;
-use App\Http\Middleware\EnsureEmailVerif;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -50,6 +49,7 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
             ])
+            
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

@@ -18,12 +18,12 @@ class Newsgrid3 extends Component
      */
     public function __construct()
     {
-        // Ambil kategori berdasarkan slug
+        
         $okegasCategory = Category::where('slug', 'oke-gas')->first();
         $bumnCategory = Category::where('slug', 'bumn')->first();
         $kabinetCategory = Category::where('slug', 'kabinet')->first();
 
-        // Ambil artikel berdasarkan kategori dan pastikan author dimuat
+
         $this->okegas = $okegasCategory ? $okegasCategory->articles()->with('author')->latest()->take(4)->get() : collect();
         $this->bumn = $bumnCategory ? $bumnCategory->articles()->with('author')->latest()->take(4)->get() : collect();
         $this->kabinet = $kabinetCategory ? $kabinetCategory->articles()->with('author')->latest()->take(4)->get() : collect();

@@ -10,45 +10,49 @@ class RedirectIfAuthenticated
 {
     public function handle(Request $request, Closure $next, ...$guards)
     {
-        // **Pastikan logout tidak dicegah oleh middleware**
+        // ✅ Handle logout secara manual
         if ($request->routeIs('filament.astacita.auth.logout') || $request->is('logout')) {
             Auth::logout();
-            session()->invalidate();
-            session()->regenerateToken();
-            
-            return redirect('/'); // **Redirect langsung ke halaman utama setelah logout**
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect('/'); // Atau route lain setelah logout
         }
 
+        // ✅ Kalau sudah login
         if (Auth::check()) {
             $user = Auth::user();
 
-            // **Jika user belum verifikasi email, redirect ke halaman verifikasi**
-            if (!$user->hasVerifiedEmail() && !$request->is('astacita/email-verification/prompt')) {
+            // 🚫 Cegah user non-verifikasi email akses halaman lain
+            if (
+                !$user->hasVerifiedEmail() &&
+                !$request->routeIs('filament.astacita.auth.email-verification.prompt') &&
+                !$request->routeIs('filament.astacita.auth.email-verification.verify') &&
+                !$request->routeIs('filament.astacita.auth.logout')
+            ) {
                 return redirect()->route('filament.astacita.auth.email-verification.prompt')
-                    ->with('error', 'Silakan verifikasi email Anda sebelum mengakses halaman ini.');
+                    ->with('error', 'Silakan verifikasi email Anda terlebih dahulu.');
             }
 
-             // **Redirect hanya jika user baru login (gunakan session)**
-            if (!session()->has('redirected_after_login')) {
-                 session(['redirected_after_login' => true]);
+            // ✅ Cegah akses ke halaman login/register kalau udah login
+            if (
+                $request->routeIs('filament.astacita.auth.login') ||
+                $request->routeIs('filament.astacita.auth.register')
+            ) {
+                $redirectRoutes = [
+                    'admin' => '/dashboard',
+                    'editor' => '/astacita',
+                    'author' => '/astacita',
+                    'user' => '/',
+                ];
 
-            // **Redirect berdasarkan role user**
-            $redirectRoutes = [
-                'editor' => '/astacita',
-                'author' => '/astacita',
-                'user' => '/',
-                'admin' => '/dashboard',
-            ];
+                $targetRoute = $redirectRoutes[$user->role] ?? '/';
 
-            $targetRoute = $redirectRoutes[$user->role] ?? '/login';
-
-            // **Cegah redirect berulang**
-            if (!$request->is(trim($targetRoute, '/'))) {
                 return redirect($targetRoute);
             }
         }
 
+        // ✅ Biarkan proses lanjut kalau belum login
         return $next($request);
     }
-}
 }

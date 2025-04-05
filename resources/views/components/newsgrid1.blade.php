@@ -1,70 +1,52 @@
 <div class="max-w-7xl mx-auto py-6">
-    <!-- Top Section -->
     <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6">
-        <!-- Left Image Section with Overlay -->
+        <!-- Left Image Section -->
         <div class="relative overflow-hidden rounded-lg carousel-item">
-            <img src="https://img.daisyui.com/images/stock/photo-1550258987-190a2d41a8ba.webp" 
-                alt="Top News Image" 
+            <img src="{{ $leftArticle->thumbnail ? asset('storage/'.$leftArticle->thumbnail) : 'https://picsum.photos/seed/'.$leftArticle->id.'/400/250' }}" 
+                alt="{{ $leftArticle->title }}" 
                 class="w-full aspect-[16/9] object-cover" />
             <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-4 text-center">
-                <span class="block text-xs font-bold uppercase">Lifestyle</span>
-                <h3 class="text-lg font-semibold">Top News Title</h3>
-                <p class="text-sm">This is a short description of the top news article.</p>
+                <span class="block text-xs font-bold uppercase">{{ $leftArticle->category->name }}</span>
+                <h3 class="text-lg font-semibold">
+                    <a href="{{ route('article.show', ['categorySlug' => $leftArticle->category->slug, 'articleSlug' => $leftArticle->slug]) }}" class="no-underline">{{ $featured->title }}</a>
+                </h3>
+                <p class="text-sm">{{ Str::limit($leftArticle->content, 100) }}</p>
             </div>
         </div>
-        
+
         <!-- Right Text Section -->
         <div class="bg-white p-6 rounded-lg shadow-md">
-            <img src="https://img.daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.webp" 
-                alt="Man with sunglasses" 
+            <img src="{{ $rightArticle->thumbnail ? asset('storage/'.$rightArticle->thumbnail) : 'https://picsum.photos/seed/'.$rightArticle->id.'/400/250' }}" 
+                alt="{{ $rightArticle->title }}" 
                 class="w-full aspect-[16/9] object-cover rounded-lg mb-4" />
-            <span class="bg-gray-200 text-xs px-3 py-1 rounded">FASHION</span>
-            <h2 class="text-xl font-bold my-2">Your Team Needs Products Has Come A Long Way For...</h2>
-            <p class="text-gray-600 mb-4">
-                In 2028 schools will indeed sport fabulous gadgets, devices, and interfaces of learning. We provide our everyday lifestyle easily.
-            </p>
+            <span class="bg-white shadow-md text-xs font-bold px-3 py-1 rounded">{{ $rightArticle->category->name }}</span>
+            <h2 class="text-xl font-bold my-2">
+                <a href="{{ route('article.show', ['categorySlug' => $rightArticle->category->slug, 'articleSlug' => $rightArticle->slug]) }}" class="hover:text-blue-500 no-underline">{{ $featured->title }}</a>
+            </h2>
+            <p class="text-gray-600 text-base mb-4">{{ Str::limit(strip_tags($featured->content), 100) }}</p>
             <div class="flex items-center text-gray-500 text-sm">
-                <img src="https://img.daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.webp" 
-                    alt="Author's avatar" 
-                    class="w-8 h-8 rounded-full mr-2" />
-                <span>Hasan AH</span>
+                <img src="{{ $rightArticle->author->avatar }}" alt="{{ $rightArticle->author->name }}" class="w-8 h-8 rounded-full mr-2" />
+                <span>{{ $rightArticle->author->name }}</span>
                 <span class="mx-2">|</span>
-                <span>4 min read</span>
-                <span class="mx-2">|</span>
-                <span>302 Views</span>
+                <span>{{ $rightArticle->created_at->format('d M Y') }}</span>
             </div>
         </div>
     </div>
 
     <!-- Bottom Section -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mt-6">
-        <!-- Card 1 -->
-        <div class="relative overflow-hidden rounded-lg carousel-item">
-            <img src="https://img.daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.webp" class="w-full aspect-square object-cover" />
-            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-2 text-center">
-                <h3 class="text-sm font-semibold">News Title 1</h3>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mt-6">
+        @foreach($news as $article)
+            <div class="relative overflow-hidden rounded-lg carousel-item">
+                <img src="{{ $article->thumbnail ? asset('storage/'.$article->thumbnail) : 'https://picsum.photos/seed/'.$article->id.'/400/250' }}" 
+                    alt="{{ $article->title }}" 
+                    class="w-full aspect-square object-cover" />
+                <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-3 text-center">
+                    <span class="block text-xs font-bold uppercase">{{ $article->category->name }}</span>
+                    <h3 class="text-sm font-semibold">
+                        <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="no-underline">{{ $article->title }}</a>
+                    </h3>
+                </div>
             </div>
-        </div>
-        <!-- Card 2 -->
-        <div class="relative overflow-hidden rounded-lg carousel-item">
-            <img src="https://img.daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.webp" class="w-full aspect-square object-cover" />
-            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-2 text-center">
-                <h3 class="text-sm font-semibold">News Title 2</h3>
-            </div>
-        </div>
-        <!-- Card 3 -->
-        <div class="relative overflow-hidden rounded-lg carousel-item">
-            <img src="https://img.daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.webp" class="w-full aspect-square object-cover" />
-            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-2 text-center">
-                <h3 class="text-sm font-semibold">News Title 3</h3>
-            </div>
-        </div>
-        <!-- Card 4 -->
-        <div class="relative overflow-hidden rounded-lg carousel-item">
-            <img src="https://img.daisyui.com/images/stock/photo-1559703248-dcaaec9fab78.webp" class="w-full aspect-square object-cover" />
-            <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-2 text-center">
-                <h3 class="text-sm font-semibold">News Title 4</h3>
-            </div>
-        </div>
+        @endforeach
     </div>
 </div>
