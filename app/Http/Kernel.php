@@ -18,8 +18,8 @@ use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Http\Middleware\HandleCors;
 use Illuminate\Http\Middleware\TrustProxies;
-use Illuminate\Http\Middleware\RedirectIfAuthenticated;
-use Illuminate\Http\Middleware\StoreArticleInSession;
+use App\Http\Middleware\StoreArticleInSession;
+use App\Http\Middleware\IsEditor;
 use Illuminate\Http\Middleware\VerifyCsrfToken;
 use App\Http\Middleware\FilamentAdminMiddleware;
 
@@ -86,8 +86,8 @@ class Kernel extends HttpKernel
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
-        'redirect' => RedirectIfAuthenticated::class,
         'store.article' => StoreArticleInSession::class,
+        'is.editor' => IsEditor::class,
     ];
     
     

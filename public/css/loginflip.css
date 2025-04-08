@@ -1,0 +1,59 @@
+.form-panel {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+
+  .form-panel.active {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 10;
+  }
+
+  .card-container {
+    perspective: 1500px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .flip-wrapper {
+    transition: transform 0.8s ease-in-out;
+    transform-style: preserve-3d;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .form-panel {
+    backface-visibility: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    top: 0;
+    left: 0;
+  }
+
+  .user-panel {
+    z-index: 5;
+    transform: rotateY(0deg);
+  }
+
+  .signup-panel {
+    transform: rotateY(180deg);
+  }
+
+  .forgot-panel {
+    transform: rotateY(-180deg);
+  }
+
+  .rotate-y-right {
+    transform: rotateY(180deg);
+  }
+
+  .rotate-y-left {
+    transform: rotateY(-180deg);
+  }
