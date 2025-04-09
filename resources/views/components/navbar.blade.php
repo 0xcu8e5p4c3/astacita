@@ -31,10 +31,10 @@
       </div>
     @else
       <!-- Jika belum login -->
-      <button onclick="window.location.href='{{ route('filament.astacita.auth.login') }}'" class="text-white text-sm font-medium hover:text-red-500 transition">
+      <button onclick="window.location.href='{{ route('login') }}'" class="text-white text-sm font-medium hover:text-red-500 transition">
         Log In
       </button>
-      <button onclick="window.location.href='{{ route('filament.astacita.auth.register') }}'" class="text-zinc-100 rounded-full px-4 py-1 bg-zinc-950 text-sm font-medium flex items-center transition border border-zinc-700 relative overflow-hidden group">
+      <button onclick="window.location.href='{{ route('login') }}'" class="text-zinc-100 rounded-full px-4 py-1 bg-zinc-950 text-sm font-medium flex items-center transition border border-zinc-700 relative overflow-hidden group">
         Sign Up
         <svg class="inline-block ml-2 group-hover:translate-x-1 transition duration-700" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24">
           <path fill="currentColor" d="M13.3 17.275q-.3-.3-.288-.725t.313-.725L16.15 13H5q-.425 0-.713-.288T4 12q0-.425.288-.713T5 11h11.15L13.325 8.175q-.3-.3-.313-.725t.288-.725q.3-.3.725-.288t.725.313l4.15 4.15q.15.15.213.325t.063.375q0 .2-.063.375t-.213.325l-4.15 4.15q-.3.3-.725.313t-.725-.288Z"/>

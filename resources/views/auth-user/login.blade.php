@@ -3,56 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ asset('css/loginflip.css') }}">
+  <script src="{{ asset('js/loginflip.js') }}" defer></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <title>Login Page</title>
-  <style>
-    .form-panel {
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-      backface-visibility: hidden;
-      transform-style: preserve-3d;
-    }
-
-    .form-panel.active {
-      opacity: 1;
-      pointer-events: auto;
-      z-index: 10;
-    }
-
-    .card-container {
-      perspective: 1500px;
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-
-    .flip-wrapper {
-      transition: transform 0.8s ease-in-out;
-      transform-style: preserve-3d;
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-
-    .form-panel {
-      backface-visibility: hidden;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 1rem;
-      top: 0;
-      left: 0;
-    }
-
-    .user-panel { z-index: 5; transform: rotateY(0deg); }
-    .signup-panel { transform: rotateY(180deg); }
-    .forgot-panel { transform: rotateY(-180deg); }
-    .rotate-y-right { transform: rotateY(180deg); }
-    .rotate-y-left { transform: rotateY(-180deg); }
-  </style>
 </head>
+
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
 
   <div class="card-container w-full max-w-md h-[550px] relative">
@@ -67,7 +24,7 @@
           <p class="mt-2 pb-6 text-sm sm:text-base text-center text-gray-600">
             Please sign in to your account
           </p>
-          <form method="POST" action="{{ route('login') }}" class="space-y-4">
+          <form id="loginForm" method="POST" action="{{ route('login') }}" class="space-y-4">
             @csrf
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
@@ -91,9 +48,11 @@
               </label>
               <button type="button" onclick="flipTo('forgot')" class="text-red-600 hover:underline">Forgot password?</button>
             </div>
-            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 transition text-white py-2 rounded-lg font-semibold mt-2">
-              Sign In
+            <button id="loginSubmitBtn" type="submit" class="w-full bg-red-600 hover:bg-red-700 transition text-white py-2 rounded-lg font-semibold mt-2 flex items-center justify-center">
+              <span class="spinner hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+              <span class="btn-text">Sign In</span>
             </button>
+
           </form>
         </div>
 
@@ -109,7 +68,7 @@
           <img src="{{ asset('images/astacitalogo.png') }}" alt="Logo" class="w-auto h-12" />
         </div>
         <h2 class="text-lg font-semibold text-center text-red-600 mb-4 pt-5">Create Account</h2>
-        <form method="POST" action="{{ route('register') }}" class="space-y-4">
+        <form id="registerForm" method="POST" action="{{ route('register') }}" class="space-y-4">
           @csrf
           <input type="text" name="name" placeholder="Full Name" required
             class="px-3 py-2 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-red-300 outline-none" />
@@ -124,9 +83,11 @@
           </div>
           <input type="password" name="password_confirmation" placeholder="Confirm Password" required
             class="px-3 py-2 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-red-300 outline-none" />
-          <button type="submit" class="w-full bg-red-600 hover:bg-red-700 transition text-white py-2 rounded-lg font-semibold">
-            Create Account
-          </button>
+            <button id="registerSubmitBtn" type="submit" class="w-full bg-red-600 hover:bg-red-700 transition text-white py-2 rounded-lg font-semibold flex items-center justify-center">
+              <span class="spinner hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+              <span class="btn-text">Create Account</span>
+            </button>
+
         </form>
         <div class="text-center text-sm pt-6">
           <button onclick="flipTo('user')" class="text-red-600 hover:underline">Back to Login</button>
@@ -139,13 +100,15 @@
           <img src="{{ asset('images/astacitalogo.png') }}" alt="Logo" class="w-auto h-12" />
         </div>
         <h2 class="text-lg font-semibold text-center text-red-600 mb-4 pt-5">Forgot Password</h2>
-        <form method="POST" action="{{ route('password.email') }}">
+        <form id="forgotForm" method="POST" action="{{ route('password.email') }}">
           @csrf
           <input type="email" name="email" placeholder="Enter your email" required
             class="px-3 py-2 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-red-300 outline-none" />
-          <button type="submit" class="w-full bg-red-600 hover:bg-red-700 transition text-white py-2 rounded-lg font-semibold mt-4">
-            Send Reset Link
-          </button>
+            <button id="forgotSubmitBtn" type="submit" class="w-full bg-red-600 hover:bg-red-700 transition text-white py-2 rounded-lg font-semibold mt-4 flex items-center justify-center">
+              <span class="spinner hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
+              <span class="btn-text">Send Reset Link</span>
+            </button>
+
         </form>
         <div class="text-center text-sm pt-6">
           <button onclick="flipTo('user')" class="text-red-600 hover:underline">Back to Login</button>
@@ -155,33 +118,6 @@
     </div>
   </div>
 
-  <script>
-    const wrapper = document.getElementById('flipWrapper');
-    const panels = document.querySelectorAll('.form-panel');
-
-    function flipTo(target) {
-      wrapper.classList.remove('rotate-y-left', 'rotate-y-right');
-      panels.forEach(p => p.classList.remove('active'));
-
-      if (target === 'signup') {
-        wrapper.classList.add('rotate-y-right');
-      } else if (target === 'forgot') {
-        wrapper.classList.add('rotate-y-left');
-      }
-
-      setTimeout(() => {
-        document.querySelector(`.panel-${target === 'user' ? 'user' : target}`).classList.add('active');
-      }, 400);
-    }
-
-    function togglePassword(inputId, iconId) {
-      const input = document.getElementById(inputId);
-      const icon = document.getElementById(iconId);
-      input.type = input.type === "password" ? "text" : "password";
-      icon.classList.toggle("fa-eye");
-      icon.classList.toggle("fa-eye-slash");
-    }
-  </script>
 
 </body>
 </html>

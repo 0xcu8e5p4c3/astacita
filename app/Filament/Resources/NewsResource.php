@@ -40,7 +40,7 @@ class NewsResource extends Resource
             ->visibility('public') // Agar bisa diakses via URL
             ->columnSpanFull(), // Biar lebar penuh
         
-                Forms\Components\TextInput::make('title')
+            Forms\Components\TextInput::make('title')
                 ->required()
                 ->maxLength(255)
                 ->reactive() // Membuat title bisa langsung memengaruhi slug

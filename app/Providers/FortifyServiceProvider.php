@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Actions\Fortify\CreateNewUser;
+use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
 use Illuminate\Http\Request;
@@ -14,9 +16,15 @@ class FortifyServiceProvider extends ServiceProvider
     {
         // View untuk login/register/forgot/reset dalam 1 file
         Fortify::loginView(fn () => view('auth-user.login'));
+
         Fortify::registerView(fn () => view('auth-user.login'));
+        $this->app->singleton(CreatesNewUsers::class, CreateNewUser::class);
+
         Fortify::requestPasswordResetLinkView(fn () => view('auth-user.login'));
+
         Fortify::resetPasswordView(fn ($request) => view('auth-user.login', ['request' => $request]));
+
+        Fortify::verifyEmailView(fn () => view('auth.verify-email'));
 
         // Rate limiter untuk login
         RateLimiter::for('login', function (Request $request) {

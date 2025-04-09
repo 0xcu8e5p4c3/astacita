@@ -16,7 +16,12 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+Route::get('/verify-email', function () {
+    return view('auth-user.verif-email');
+})->name('verify-email');
+
 Route::post('/login', [AuthUserController::class, 'store']);
+
 Route::post('/logout', [AuthUserController::class, 'destroy'])->name('logout');
 
 // category menu navbar

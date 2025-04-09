@@ -29,9 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('astacita')
             ->path('astacita')
             ->login()
-            ->registration()
             ->passwordReset()
-            ->emailVerification()
             ->profile()
             ->colors([
                 'primary' => Color::Indigo

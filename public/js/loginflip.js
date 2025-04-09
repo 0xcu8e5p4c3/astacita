@@ -1,4 +1,3 @@
-
 const wrapper = document.getElementById('flipWrapper');
 const panels = document.querySelectorAll('.form-panel');
 
@@ -13,10 +12,31 @@ function flipTo(target) {
   }
 
   setTimeout(() => {
-    if (target === 'signup') document.querySelector('.panel-signup').classList.add('active');
-    else if (target === 'forgot') document.querySelector('.panel-forgot').classList.add('active');
-    else document.querySelector('.panel-user').classList.add('active');
+    document.querySelector(`.panel-${target === 'user' ? 'user' : target}`).classList.add('active');
   }, 400);
 }
 
-document.querySelector('.panel-user').classList.add('active');
+function togglePassword(inputId, iconId) {
+  const input = document.getElementById(inputId);
+  const icon = document.getElementById(iconId);
+  input.type = input.type === "password" ? "text" : "password";
+  icon.classList.toggle("fa-eye");
+  icon.classList.toggle("fa-eye-slash");
+}
+function showSpinner(formId, buttonId) {
+const form = document.getElementById(formId);
+const button = document.getElementById(buttonId);
+
+form.addEventListener("submit", function () {
+  const spinner = button.querySelector(".spinner");
+  const text = button.querySelector(".btn-text");
+
+  spinner.classList.remove("hidden");
+  text.textContent = "Processing...";
+  button.disabled = true;
+});
+}
+
+showSpinner("loginForm", "loginSubmitBtn");
+showSpinner("registerForm", "registerSubmitBtn");
+showSpinner("forgotForm", "forgotSubmitBtn");

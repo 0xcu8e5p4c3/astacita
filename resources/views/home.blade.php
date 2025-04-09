@@ -12,8 +12,6 @@
 
 <x-newsgrid6 />
 
-
-
 <x-newsgrid2 />
 
 <x-newsgrid7 /> 
