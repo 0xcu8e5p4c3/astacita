@@ -3,7 +3,9 @@
 
 <div class="bg-white">
     <div class="container mx-auto px-4">
-        <h1 class="text-2xl font-bold mb-4">Trending</h1>
+        <h1 class="text-xl font-bold mb-4">
+            Trending
+        </h1>
         <div class="carousel carousel-end rounded-box">
         @foreach ($hometrend as $article)
             <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="carousel-item relative">

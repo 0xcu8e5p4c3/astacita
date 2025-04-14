@@ -59,7 +59,9 @@ class DatabaseSeeder extends Seeder
                 'published' => true,
                 'published_at' => now(),
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => now(),
+                'is_featured' => (bool) rand(0, 1),
+
             ]);
 
             // Simpan article untuk digunakan nanti

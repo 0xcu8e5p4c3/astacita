@@ -1,97 +1,43 @@
-<div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 relative">
-    <div class="grid grid-cols-1 sm:grid-cols-12 gap-5">
-
-        <div class="sm:col-span-5">
-            <a href="#">
-                <div class="bg-cover text-center overflow-hidden"
-                    style="min-height: 300px; background-image: url('https://api.time.com/wp-content/uploads/2020/07/never-trumpers-2020-election-01.jpg?quality=85&amp;w=1201&amp;h=676&amp;crop=1')"
-                    title="Woman holding a mug">
+<h1 class="text-xl font-bold mb-4">
+            Discover
+        </h1>
+        <div class="flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-12">
+    <div class="flex-1 space-y-6">
+        @foreach ($articles as $article)
+            <div class="bg-white p-4 rounded-lg shadow-md">
+                <div class="flex space-x-4">
+                <img src="{{ $article->thumbnail ? asset('storage/'.$article->thumbnail) : 'https://picsum.photos/seed/'.$article->id.'/800/450' }}"
+                  class="w-24 h-24 rounded-lg object-cover mt-0 self-center"
+                  alt="{{ $article->title }}">
+                    <div>
+                    <p class="text-sm font-medium text-indigo-600">
+                <span class="bg-white shadow-md text-xs font-bold px-3 py-1 rounded">{{ strtoupper($article->category->name) }}</span>
+              </p>
+                        <h2 class="text-lg font-semibold mt-2">
+                            <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}"
+                               class="text-gray-900 hover:text-blue-600 transition duration-200">
+                                {{ Str::limit($article->title, 60) }}
+                            </a>
+                        </h2>
+                        <p class="text-gray-600 mt-1">
+                            {{ Str::limit(strip_tags($article->content), 100) }}
+                        </p>
+                        <div class="flex items-center text-gray-500 text-sm mt-2">
+                            <img src="{{ $article->author->avatar ?? 'https://placehold.co/20x20' }}"
+                                 class="w-5 h-5 rounded-full" alt="{{ $article->author->name ?? 'Author' }}">
+                            <span class="ml-2">{{ $article->author->name ?? 'Unknown' }}</span>
+                            <span class="mx-1">|</span>
+                            <span>{{ $article->created_at->diffForHumans() }}</span>
+                            <span class="mx-1">|</span>
+                            <span><i class="fas fa-eye"></i> {{ $article->views_count }} Views</span>
+                        </div>
+                    </div>
                 </div>
-            </a>
-            <div class="mt-3 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
-                <div class="">
-                    <a href="#"
-                        class="text-xs text-indigo-600 uppercase font-medium hover:text-gray-900 transition duration-500 ease-in-out">
-                        Election
-                    </a>
-                    <a href="#"
-                        class="block text-gray-900 font-bold text-2xl mb-2 hover:text-indigo-600 transition duration-500 ease-in-out">Revenge
-                        of the Never Trumpers</a>
-                    <p class="text-gray-700 text-base mt-2">Meet the Republican dissidents fighting to push Donald Trump
-                        out of office—and reclaim their party</p>
-                </div>
-        
             </div>
-        </div>
+        @endforeach
+    </div>
 
-        <div class="sm:col-span-7 grid grid-cols-2 lg:grid-cols-3 gap-5">
-            <div class="">
-                <a href="#">
-                    <div class="h-40 bg-cover text-center overflow-hidden"
-                        style="background-image: url('https://api.time.com/wp-content/uploads/2020/07/president-trump-coronavirus-election.jpg?quality=85&amp;w=364&amp;h=204&amp;crop=1')"
-                        title="Woman holding a mug">
-                    </div>
-                </a>
-                <a href="#"
-                    class="text-gray-900 inline-block font-semibold text-md my-2 hover:text-indigo-600 transition duration-500 ease-in-out">Trump
-                    Steps Back Into Coronavirus Spotlight</a>
-            </div>
-            <div class="">
-                <a href="#">
-                    <div class="h-40 bg-cover text-center overflow-hidden"
-                        style="background-image: url('https://api.time.com/wp-content/uploads/2020/06/GettyImages-1222922545.jpg?quality=85&amp;w=364&amp;h=204&amp;crop=1')"
-                        title="Woman holding a mug">
-                    </div>
-                </a>
-                <a href="#"
-                    class="text-gray-900 inline-block font-semibold text-md my-2 hover:text-indigo-600 transition duration-500 ease-in-out">How
-                    Trump's Mistakes Became Biden's Big Breaks</a>
-            </div>
-            <div class="">
-                <a href="#">
-                    <div class="h-40 bg-cover text-center overflow-hidden"
-                        style="background-image: url('https://api.time.com/wp-content/uploads/2020/07/American-Flag.jpg?quality=85&amp;w=364&amp;h=204&amp;crop=1')"
-                        title="Woman holding a mug">
-                    </div>
-                </a>
-                <a href="#"
-                    class="text-gray-900 inline-block font-semibold text-md my-2 hover:text-indigo-600 transition duration-500 ease-in-out">Survey:
-                    Many Americans 'Dissatisfied' With U.S.</a>
-            </div>
-            <div class="">
-                <a href="#">
-                    <div class="h-40 bg-cover text-center overflow-hidden"
-                        style="background-image: url('https://api.time.com/wp-content/uploads/2020/06/GettyImages-1222922545.jpg?quality=85&amp;w=364&amp;h=204&amp;crop=1')"
-                        title="Woman holding a mug">
-                    </div>
-                </a>
-                <a href="#"
-                    class="text-gray-900 inline-block font-semibold text-md my-2 hover:text-indigo-600 transition duration-500 ease-in-out">How
-                    Trump's Mistakes Became Biden's Big Breaks</a>
-            </div>
-            <div class="">
-                <a href="#">
-                    <div class="h-40 bg-cover text-center overflow-hidden"
-                        style="background-image: url('https://api.time.com/wp-content/uploads/2020/07/American-Flag.jpg?quality=85&amp;w=364&amp;h=204&amp;crop=1')"
-                        title="Woman holding a mug">
-                    </div>
-                </a>
-                <a href="#"
-                    class="text-gray-900 inline-block font-semibold text-md my-2 hover:text-indigo-600 transition duration-500 ease-in-out">Survey:
-                    Many Americans 'Dissatisfied' With U.S.</a>
-            </div>
-            <div class="">
-                <a href="#">
-                    <div class="h-40 bg-cover text-center overflow-hidden"
-                        style="background-image: url('https://api.time.com/wp-content/uploads/2020/07/president-trump-coronavirus-election.jpg?quality=85&amp;w=364&amp;h=204&amp;crop=1')"
-                        title="Woman holding a mug">
-                    </div>
-                </a>
-                <a href="#"
-                    class="text-gray-900 inline-block font-semibold text-md my-2 hover:text-indigo-600 transition duration-500 ease-in-out">Trump
-                    Steps Back Into Coronavirus Spotlight</a>
-            </div>
-        </div>
-
+    <div class="w-full md:w-80">
+        <x-sidebarcard />
     </div>
 </div>

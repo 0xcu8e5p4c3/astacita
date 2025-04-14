@@ -6,6 +6,7 @@ use Filament\Models\Contracts\FilamentUser; // Perbaiki namespace
 use Filament\Panel;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Contracts\Auth\MustVerifyEmail; // Perbaiki namespace
+use App\Notifications\CustomVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -127,5 +128,6 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         return true;
         
     }
+    
     
 }

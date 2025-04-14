@@ -20,6 +20,7 @@ use Illuminate\Http\Middleware\HandleCors;
 use Illuminate\Http\Middleware\TrustProxies;
 use App\Http\Middleware\StoreArticleInSession;
 use App\Http\Middleware\IsEditor;
+use App\Http\Middleware\EnsureEmailIsVerifiedWithNotif;
 use Illuminate\Http\Middleware\VerifyCsrfToken;
 use App\Http\Middleware\FilamentAdminMiddleware;
 
@@ -88,6 +89,7 @@ class Kernel extends HttpKernel
         'verified' => EnsureEmailIsVerified::class,
         'store.article' => StoreArticleInSession::class,
         'is.editor' => IsEditor::class,
+        'verified.notify' => EnsureEmailIsVerifiedWithNotif::class,
     ];
     
     

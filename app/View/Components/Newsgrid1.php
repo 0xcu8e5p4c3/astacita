@@ -2,67 +2,51 @@
 
 namespace App\View\Components;
 
-use Illuminate\View\Component;
 use App\Models\Article;
-use Illuminate\Support\Facades\Cache;
-use Carbon\Carbon;
+use Closure;
+use Illuminate\Contracts\View\View;
+use Illuminate\View\Component;
 
-class NewsGrid1 extends Component
+class Newsgrid1 extends Component
 {
-    public $news;
     public $featured;
-    public $articles;
+    public $news;
     public $leftArticle;
     public $rightArticle;
 
+    /**
+     * Create a new component instance.
+     */
     public function __construct()
     {
-        // Cache key berdasarkan minggu ini
-        $cacheKey = 'newsgrid1_' . Carbon::now()->startOfWeek()->format('Y-m-d');
+        // Ambil artikel featured terbaru
+        $this->featured = Article::where('is_featured', 1)
+            ->where('status', 'published')
+            ->orderByDesc('published_at')
+            ->first();
 
-        if (!Cache::has($cacheKey)) {
-            // Ambil semua artikel yang tersedia
-            $allArticles = Article::inRandomOrder()->get();
+        // Ambil 4 artikel terbaru yang bukan featured & berbeda dari artikel featured
+        $this->news = Article::where('status', 'published')
+            ->where(function ($query) {
+                $query->where('is_featured', 0);
+                if ($this->featured) {
+                    $query->orWhere('id', '!=', $this->featured->id);
+                }
+            })
+            ->orderByDesc('published_at')
+            ->take(4)
+            ->get();
 
-            // Pastikan jumlah artikel cukup untuk dipilih
-            if ($allArticles->count() < 7) {
-                abort(500, "Tidak cukup artikel untuk ditampilkan!");
-            }
-
-            // Pilih artikel secara acak tanpa duplikasi
-            $this->featured = $allArticles->pop(); // 1 Featured
-            $this->leftArticle = $allArticles->pop(); // 1 Left Image Section
-            $this->rightArticle = $allArticles->pop(); // 1 Right Text Section
-            $this->articles = $allArticles->splice(0, 3); // 3 Artikel terbaru
-            $this->news = $allArticles->splice(0, 4); // 4 Artikel untuk Bottom Section
-
-            // Simpan ke cache selama 7 hari
-            Cache::put($cacheKey, [
-                'news' => $this->news,
-                'featured' => $this->featured,
-                'articles' => $this->articles,
-                'leftArticle' => $this->leftArticle,
-                'rightArticle' => $this->rightArticle,
-            ], now()->addDays(7));
-        } else {
-            // Ambil dari cache jika sudah ada
-            $cachedData = Cache::get($cacheKey);
-            $this->news = $cachedData['news'];
-            $this->featured = $cachedData['featured'];
-            $this->articles = $cachedData['articles'];
-            $this->leftArticle = $cachedData['leftArticle'];
-            $this->rightArticle = $cachedData['rightArticle'];
-        }
+        // Tetapkan left dan right article (jika tersedia)
+        $this->leftArticle = $this->news->get(0);
+        $this->rightArticle = $this->news->get(1);
     }
 
-    public function render()
+    /**
+     * Get the view / contents that represent the component.
+     */
+    public function render(): View|Closure|string
     {
-        return view('components.newsgrid1', [
-            'news' => $this->news,
-            'featured' => $this->featured,
-            'articles' => $this->articles,
-            'leftArticle' => $this->leftArticle,
-            'rightArticle' => $this->rightArticle,
-        ]);
+        return view('components.newsgrid1');
     }
 }

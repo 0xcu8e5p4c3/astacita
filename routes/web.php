@@ -11,14 +11,34 @@ use App\Models\Article;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ArticleViewController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Auth\Events\Verified;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/verify-email', function () {
-    return view('auth-user.verif-email');
-})->name('verify-email');
+Route::get('/email/verify', function () {
+    return view('auth-user.verif-email'); 
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) {
+    $user = User::findOrFail($id);
+
+    if (! hash_equals((string) $hash, sha1($user->getEmailForVerification()))) {
+        abort(403);
+    }
+
+    if (! $user->hasVerifiedEmail()) {
+        $user->markEmailAsVerified();
+        event(new Verified($user));
+    }
+
+    return redirect()->route('login');
+})->middleware('signed', 'verified')->name('verification.verify');
+
 
 Route::post('/login', [AuthUserController::class, 'store']);
 

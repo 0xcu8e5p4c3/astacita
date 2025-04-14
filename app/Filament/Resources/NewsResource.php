@@ -99,6 +99,14 @@ class NewsResource extends Resource
                 ->searchable()
                 ->preload()
                 ->placeholder('Pilih Tags'),
+            
+            Select::make('is_featured')
+                ->label('Status Featured') 
+                ->options([
+                    0 => 'None',          
+                    1 => 'Featured',      
+                ])
+                ->default(0),           
 
             Select::make('status')
                 ->label('Status')

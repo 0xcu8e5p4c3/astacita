@@ -1,102 +1,68 @@
-<div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 relative">
-    <div class="grid grid-cols-1 sm:grid-cols-12 gap-10">
+<div class=" p-6 font-sans">
+<h1 class="text-xl font-bold mb-4">
+            News
+        </h1>
 
-        <div class="sm:col-span-6 lg:col-span-5">
-            <a href="#">
-                <div class="h-56 bg-cover text-center overflow-hidden"
-                    style="background-image: url('https://tailwindcss.com/img/card-left.jpg')"
-                    title="Woman holding a mug">
-                </div>
-            </a>
-            <div
-                class="mt-3 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
-                <div class="lg:pl-16">
-                    <a href="#"
-                        class="text-xs text-indigo-600 uppercase font-medium mb-3 flex items-center hover:text-gray-900 transition duration-500 ease-in-out">
-                        Fashion
-                    </a>
-                    <a href="#"
-                        class="text-gray-900 font-bold text-lg mb-2 hover:text-indigo-600 transition duration-500 ease-in-out">The
-                        perfect summer sweater that you can wear! </a>
-                    <p class="text-gray-700 text-xs mt-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-                    </p>
-                </div>
-            </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <!-- Kiri - Berita Utama -->
+    <div class="relative h-[520px] w-full rounded-xl overflow-hidden shadow-md">
+      <!-- Gambar Berita Utama -->
+      <img src="{{ $featuredArticle->thumbnail ? asset('storage/'.$featuredArticle->thumbnail) : 'https://picsum.photos/seed/'.$featuredArticle->id.'/800/450' }}" alt="Berita Utama"
+        class="absolute inset-0 w-full h-full object-cover" />
+
+      <!-- Overlay bagian bawah -->
+      <div class="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-black/10 text-white p-5">
+        <a href="{{ route('article.show', ['categorySlug' => $featuredArticle->category->slug, 'articleSlug' => $featuredArticle->slug]) }}" class="text-lg font-bold hover:text-blue-400 transition">
+          {{ $featuredArticle->title }}
+        </a>
+        <div class="text-sm text-gray-300 flex items-center gap-2 mt-1">
+          <span class="text-purple-300 font-bold">Astacita.co</span>
+          |
+          <span class="text-white font-semibold">{{ $featuredArticle->author->name ?? 'Anonim' }}</span>
+          |
+          <span class="text-white">{{ $featuredArticle->created_at->diffForHumans() }}</span>
         </div>
-
-        <div class="sm:col-span-6 lg:col-span-4">
-            <div class="flex items-start mb-3 pb-3">
-                <a href="#" class="inline-block mr-3">
-                    <div class="w-20 h-20 bg-cover bg-center"
-                        style="background-image:url(https://media.gettyimages.com/photos/cristiano-ronaldo-of-juventus-fc-looks-dejected-during-the-uefa-of-picture-id1227967060?k=6&amp;m=1227967060&amp;s=612x612&amp;w=0&amp;h=cMSMlRyI6YAzcE_C2KgHGRLeVojHYoUhIvhwPBYv8f4=);">
-                    </div>
-                </a>
-                <div class="text-sm">
-                    <p class="text-gray-600 text-xs">Aug 18</p>
-                    <a href="#" class="text-gray-900 font-medium hover:text-indigo-600 leading-none">Cristiano Ronaldo
-                        of Juventus FC looks dejected during the...</a>
-                </div>
-            </div>
-            <div class="flex items-start mb-3 pb-3">
-                <a href="#" class="inline-block mr-3">
-                    <div class="w-20 h-20 bg-cover bg-center"
-                        style="background-image:url(https://media.gettyimages.com/photos/lionel-messi-and-marcandre-ter-stegen-of-fc-barcelona-waits-in-the-picture-id1266763488?k=6&amp;m=1266763488&amp;s=612x612&amp;w=0&amp;h=8vxz9HfQVfrff5N7d1lBVxtLamRQGK3J3lyHkUuuIiw=);">
-                    </div>
-                </a>
-                <div class="text-sm w-2/3">
-                    <p class="text-gray-600 text-xs">Jan 18</p>
-                    <a href="#" class="text-gray-900 font-medium hover:text-indigo-600 leading-none">Barcelona v Bayern
-                        Munich </a>
-                </div>
-            </div>
-            <div class="flex items-start mb-3 pb-3">
-                <a href="#" class="inline-block mr-3">
-                    <div class="w-20 h-20 bg-cover bg-center"
-                        style="background-image:url(https://media.gettyimages.com/photos/cristiano-ronaldo-of-juventus-fc-looks-dejected-during-the-uefa-of-picture-id1227967060?k=6&amp;m=1227967060&amp;s=612x612&amp;w=0&amp;h=cMSMlRyI6YAzcE_C2KgHGRLeVojHYoUhIvhwPBYv8f4=);">
-                    </div>
-                </a>
-                <div class="text-sm">
-                    <p class="text-gray-600 text-xs">Aug 18</p>
-                    <a href="#" class="text-gray-900 font-medium hover:text-indigo-600 leading-none">Cristiano Ronaldo
-                        of Juventus FC looks dejected during the...</a>
-                </div>
-            </div>
-            <div class="flex items-start">
-                <a href="#" class="inline-block mr-3">
-                    <div class="w-20 h-20 bg-cover bg-center"
-                        style="background-image:url(https://media.gettyimages.com/photos/lionel-messi-of-fc-barcelona-looks-dejected-following-his-teams-in-picture-id1266341828?k=6&amp;m=1266341828&amp;s=612x612&amp;w=0&amp;h=FZi-bSrIlOEE01780h79GsbBYPqZo2l3aaCxoktWADY=);">
-                    </div>
-                </a>
-                <div class="text-sm w-2/3">
-                    <p class="text-gray-600 text-xs">July 23</p>
-                    <a href="#" class="text-gray-900 font-medium hover:text-indigo-600 leading-none">Barcelona v Bayern
-                        Munich - UEFA Champions League </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="sm:col-span-12 lg:col-span-3">
-            <a href="#">
-                <div class="h-56 bg-cover text-center overflow-hidden"
-                    style="background-image: url('https://tailwindcss.com/img/card-left.jpg')"
-                    title="Woman holding a mug">
-                </div>
-            </a>
-            <div
-                class="mt-3 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
-                <div class="">
-                    <a href="#"
-                        class="text-xs text-indigo-600 uppercase font-medium flex items-center hover:text-gray-900 transition duration-500 ease-in-out">
-                        Fashion
-                    </a>
-                    <a href="#"
-                        class="text-gray-900 font-bold text-lg mb-2 hover:text-indigo-600 transition duration-500 ease-in-out">The
-                        perfect summer sweater that you can wear! </a>
-                    <p class="text-gray-700 text-xs mt-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                </div>
-            </div>
-        </div>
-
+      </div>
     </div>
+
+    <!-- Tengah - Trending -->
+    <div>
+      <div class="bg-white rounded-xl shadow p-4 h-[520px] flex flex-col">
+        <h3 class="font-semibold text-lg mb-2 border-b pb-2">🔹 Trending di Crypto</h3>
+        <div class="overflow-y-auto flex-1 space-y-4 pr-2">
+          @foreach ($trendingArticles as $article)
+            <div class="flex gap-3">
+              <div class="flex-1">
+                <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="font-semibold text-sm hover:text-blue-500 transition">
+                  {{ $article->title }}
+                </a>
+                <div class="text-xs text-gray-500 mt-1">Astacita.co ✔ | {{ $article->views_count }} Views | {{ $article->created_at->diffForHumans() }}</div>
+              </div>
+              <img src="{{ $article->thumbnail ? asset('storage/'.$article->thumbnail) : 'https://picsum.photos/seed/'.$article->id.'/800/450' }}" class="w-16 h-16 rounded object-cover" />
+            </div>
+          @endforeach
+        </div>
+      </div>
+    </div>
+
+    <!-- Kanan - Terbaru -->
+    <div>
+      <div class="bg-white rounded-xl shadow p-4 h-[520px] flex flex-col">
+        <h3 class="font-semibold text-lg mb-2 border-b pb-2">🔹 Terbaru di News</h3>
+        <div class="overflow-y-auto flex-1 space-y-4 pr-2">
+          @foreach ($latestArticles as $article)
+            <div class="flex gap-3">
+              <div class="flex-1">
+                <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="font-semibold text-sm hover:text-blue-500 transition">
+                  {{ $article->title }}
+                </a>
+                <div class="text-xs text-gray-500 mt-1">Astacita.co ✔ | {{ $article->views_count }} Views | {{ $article->created_at->diffForHumans() }}</div>
+              </div>
+              <img src="{{ $article->thumbnail ? asset('storage/'.$article->thumbnail) : 'https://picsum.photos/seed/'.$article->id.'/800/450' }}" class="w-16 h-16 rounded object-cover" />
+            </div>
+          @endforeach
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,77 +1,121 @@
-<div class="bg-white">
-    <div class="container mx-auto px-4 py-8">
-        <h1 class="text-2xl font-bold mb-4">Videos</h1>
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <!-- Large video item -->
-            <div class="group md:col-span-2 md:row-span-2 relative overflow-hidden rounded-2xl shadow-lg">
-                <video class="video-element w-full h-full object-cover transition-transform duration-300" muted>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
-                <div class="overlay absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-4 text-center transition-all duration-300 translate-y-0">
-                    <span class="block text-xs font-bold uppercase">Breaking News</span>
-                    <h3 class="text-lg font-semibold">Latest Headlines</h3>
-                </div>
-            </div>
-            
-            <!-- Small video items -->
-            <div class="group relative overflow-hidden rounded-2xl shadow-lg">
-                <video class="video-element w-full h-48 object-cover transition-transform duration-300" muted>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                </video>
-                <div class="overlay absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-4 text-center transition-all duration-300 translate-y-0">
-                    <span class="block text-xs font-bold uppercase">Technology</span>
-                    <h4 class="text-lg font-semibold">Innovations</h4>
-                </div>
-            </div>
-        </div>
+<html>
+ <head>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+ </head>
+ <body class="bg-white text-black">
+  <div class="container mx-auto p-4">
+   <h1 class="text-xl font-bold mb-4">
+    TikTok Video
+   </h1>
+   <div class="flex space-x-4 overflow-x-auto mb-8">
+    <!-- TikTok Card 1 -->
+    <div class="w-60 flex-shrink-0">
+     <img alt="People in a mall, one person holding a sandal" class="w-full h-96 object-cover rounded-lg" src="https://placehold.co/240x426"/>
+     <p class="mt-2 text-sm font-semibold">
+      KEJAR DOMINIQ BUAT KASIH SANDAL ...
+     </p>
+     <p class="text-xs text-gray-600">
+      7,1 jt x ditonton
+     </p>
     </div>
-</div>
-
-<div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center hidden">
-    <div class="relative w-4/5 h-3/5">
-        <button id="closeModal" class="absolute top-2 right-2 text-white text-xl">&times;</button>
-        <iframe id="videoFrame" class="w-full h-full" allowfullscreen></iframe>
+    <!-- TikTok Card 2 -->
+    <div class="w-60 flex-shrink-0">
+     <img alt="Person giving a tutorial on how to move a rubber band" class="w-full h-96 object-cover rounded-lg" src="https://placehold.co/240x426"/>
+     <p class="mt-2 text-sm font-semibold">
+      Ini Tutorial Pindah Karet nya yah.. #trick ...
+     </p>
+     <p class="text-xs text-gray-600">
+      5,3 jt x ditonton
+     </p>
     </div>
-</div>
-
-<script>
-    document.querySelectorAll('.group').forEach(group => {
-        const overlay = group.querySelector('.overlay');
-        const video = group.querySelector('.video-element');
-        
-        group.addEventListener('mouseenter', () => {
-            overlay.classList.add('translate-y-full');
-            video.removeAttribute('muted');
-            video.setAttribute('controls', '');
-            video.play();
-        });
-        
-        group.addEventListener('mouseleave', () => {
-            overlay.classList.remove('translate-y-full');
-            video.setAttribute('muted', '');
-            video.removeAttribute('controls');
-            video.pause();
-        });
-    });
-    
-    document.querySelectorAll('video').forEach(video => {
-        video.addEventListener('click', function() {
-            document.getElementById('videoModal').classList.remove('hidden');
-            document.getElementById('videoFrame').src = this.querySelector('source').src;
-        });
-    });
-    
-    document.getElementById('closeModal').addEventListener('click', () => {
-        document.getElementById('videoModal').classList.add('hidden');
-        document.getElementById('videoFrame').src = '';
-    });
-</script>
-
-<style>
-    .overlay {
-        transform: translateY(0);
-    }
-    .group:hover .overlay {
-        transform: translateY(100%);
-    }
-</style>
+    <!-- TikTok Card 3 -->
+    <div class="w-60 flex-shrink-0">
+     <img alt="Person in a car with children in the back seat" class="w-full h-96 object-cover rounded-lg" src="https://placehold.co/240x426"/>
+     <p class="mt-2 text-sm font-semibold">
+      RAISHA JENGUK DIRA DAN MAU KASIH ...
+     </p>
+     <p class="text-xs text-gray-600">
+      5,4 jt x ditonton
+     </p>
+    </div>
+    <!-- TikTok Card 4 -->
+    <div class="w-60 flex-shrink-0">
+     <img alt="Game screenshot with a logo in the center" class="w-full h-96 object-cover rounded-lg" src="https://placehold.co/240x426"/>
+     <p class="mt-2 text-sm font-semibold">
+      nama yang terlarang
+     </p>
+     <p class="text-xs text-gray-600">
+      1,6 jt x ditonton
+     </p>
+    </div>
+    <!-- TikTok Card 5 -->
+    <div class="w-60 flex-shrink-0">
+     <img alt="Two people interacting at a food stall" class="w-full h-96 object-cover rounded-lg" src="https://placehold.co/240x426"/>
+     <p class="mt-2 text-sm font-semibold">
+      PEMBELI SETIA
+     </p>
+     <p class="text-xs text-gray-600">
+      5,3 jt x ditonton
+     </p>
+    </div>
+   </div>
+   <h1 class="text-xl font-bold mb-4">
+    YouTube Video
+   </h1>
+   <div class="flex space-x-4 overflow-x-auto">
+    <!-- YouTube Card 1 -->
+    <div class="w-96 flex-shrink-0">
+     <img alt="People in a mall, one person holding a sandal" class="w-full h-60 object-cover rounded-lg" src="https://placehold.co/426x240"/>
+     <p class="mt-2 text-sm font-semibold">
+      KEJAR DOMINIQ BUAT KASIH SANDAL ...
+     </p>
+     <p class="text-xs text-gray-600">
+      7,1 jt x ditonton
+     </p>
+    </div>
+    <!-- YouTube Card 2 -->
+    <div class="w-96 flex-shrink-0">
+     <img alt="Person giving a tutorial on how to move a rubber band" class="w-full h-60 object-cover rounded-lg" src="https://placehold.co/426x240"/>
+     <p class="mt-2 text-sm font-semibold">
+      Ini Tutorial Pindah Karet nya yah.. #trick ...
+     </p>
+     <p class="text-xs text-gray-600">
+      5,3 jt x ditonton
+     </p>
+    </div>
+    <!-- YouTube Card 3 -->
+    <div class="w-96 flex-shrink-0">
+     <img alt="Person in a car with children in the back seat" class="w-full h-60 object-cover rounded-lg" src="https://placehold.co/426x240"/>
+     <p class="mt-2 text-sm font-semibold">
+      RAISHA JENGUK DIRA DAN MAU KASIH ...
+     </p>
+     <p class="text-xs text-gray-600">
+      5,4 jt x ditonton
+     </p>
+    </div>
+    <!-- YouTube Card 4 -->
+    <div class="w-96 flex-shrink-0">
+     <img alt="Game screenshot with a logo in the center" class="w-full h-60 object-cover rounded-lg" src="https://placehold.co/426x240"/>
+     <p class="mt-2 text-sm font-semibold">
+      nama yang terlarang
+     </p>
+     <p class="text-xs text-gray-600">
+      1,6 jt x ditonton
+     </p>
+    </div>
+    <!-- YouTube Card 5 -->
+    <div class="w-96 flex-shrink-0">
+     <img alt="Two people interacting at a food stall" class="w-full h-60 object-cover rounded-lg" src="https://placehold.co/426x240"/>
+     <p class="mt-2 text-sm font-semibold">
+      PEMBELI SETIA
+     </p>
+     <p class="text-xs text-gray-600">
+      5,3 jt x ditonton
+     </p>
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->timestamp('scheduled_at')->nullable();
             $table->boolean('published')->default(false);
             $table->timestamp('published_at')->nullable();
+            $table->boolean('is_featured')->default(false);
             $table->timestamps(); // created_at & updated_at
         });
     }

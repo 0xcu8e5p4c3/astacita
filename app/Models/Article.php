@@ -15,7 +15,11 @@ class Article extends Model
 
     // Kolom yang bisa diisi secara massal
     protected $fillable = [
-        'title', 'slug', 'content', 'author_id', 'editor_id', 'category_id', 'published', 'published_at','scheduled_at', 'status'
+        'title', 'slug', 'content', 'author_id', 'editor_id', 'category_id', 'is_featured', 'published', 'published_at','scheduled_at', 'status'
+    ];
+
+    protected $casts = [
+        'is_featured' => 'boolean',
     ];
 
     protected $dates = [
