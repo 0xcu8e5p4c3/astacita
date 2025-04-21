@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\Article;
 use App\Models\Category;
 
@@ -29,36 +30,46 @@ class ArticleController extends Controller
             ->orderByDesc('published_at') // Order berdasarkan tanggal publish
             ->limit(5)
             ->get();
-        
-        return view('page_category1', compact('category', 'trending', 'articles'));
-    }
-    
 
-    public function loadMore(Request $request, $categorySlug)
-    {
-        $category = Category::where('slug', $categorySlug)->firstOrFail();
-        
-        $offset = (int) $request->offset; 
-        \Log::info("Offset yang diterima: " . $offset); 
-
-        // Ambil artikel dengan limit dan offset
-        $moreArticles = Article::where('category_id', $category->id)
+        $totalArticles = Article::where('category_id', $category->id)
             ->where('status', 'published')
             ->whereNotNull('published_at')
-            ->orderByDesc('published_at')
-            ->skip($offset)
-            ->take(5)
-            ->get();
-
-        \Log::info("Jumlah artikel yang diambil: " . $moreArticles->count()); // Debug jumlah artikel yang diambil
-
-        if ($moreArticles->isEmpty()) {
-            return response()->json(['html' => '']); // Jika tidak ada artikel lagi, kirim kosong
-        }
-
-        return response()->json([
-            'html' => view('articles.partials.article_list', ['articles' => $moreArticles])->render()
-        ]);
-
+            ->count();
+        
+        return view('page_category1', compact('category', 'trending', 'articles', 'totalArticles'));
     }
+    
+    
+public function loadMore(Request $request, $slug)
+{
+    $category = Category::where('slug', $slug)->firstOrFail();
+    $offset = (int) $request->query('offset', 0);
+    $limit = 5;
+
+    $articles = Article::where('category_id', $category->id)
+        ->where('status', 'published')
+        ->whereNotNull('published_at')
+        ->orderByDesc('published_at')
+        ->skip($offset)
+        ->take($limit)
+        ->get();
+
+    $html = '';
+    foreach ($articles as $article) {
+        $html .= view('articles.partials.article_list', compact('article'))->render();
+    }
+
+    $total = Article::where('category_id', $category->id)
+        ->where('status', 'published')
+        ->whereNotNull('published_at')
+        ->count();
+
+    return response()->json([
+        'html' => $html,
+        'hasMore' => ($offset + $limit) < $total
+    ]);
+}
+
+
+    
 }

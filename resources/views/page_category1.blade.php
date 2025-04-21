@@ -72,20 +72,26 @@
   </div>
 
 
+  <div id="news-container">
+        @include('articles.partials.article_list', ['article' => $article])
+        </div>
+
         @if(isset($articles) && count($articles) > 0)
-    <div class="fter:h-px my-24 flex items-center before:h-px before:flex-1  before:bg-gray-300 before:content-[''] after:h-px after:flex-1 after:bg-gray-300  after:content-['']">
-    <button id="load-more" type="button"
-        data-url="{{ route('category.loadmore', $category->slug) }}"
-        class="flex items-center rounded-full border border-gray-300 bg-secondary-50 px-3 py-2 text-center text-sm font-medium text-gray-900 hover:bg-gray-100">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="mr-1 h-4 w-4">
-            <path fill-rule="evenodd"
-                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                clip-rule="evenodd" />
-        </svg>
-        View More
-    </button>
-</div>
+            {{-- Tombol Load More --}}
+            <div class="fter:h-px my-24 flex items-center before:h-px before:flex-1  before:bg-gray-300 before:content-[''] after:h-px after:flex-1 after:bg-gray-300  after:content-['']">
+                <button id="load-more" type="button"
+                    data-url="{{ route('category.loadmore', $category->slug) }}"
+                    class="flex items-center rounded-full border border-gray-300 bg-secondary-50 px-3 py-2 text-center text-sm font-medium text-gray-900 hover:bg-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="mr-1 h-4 w-4">
+                        <path fill-rule="evenodd"
+                            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    View More
+                </button>
+            </div>
         @endif
+
       </div> 
 
       <div class="w-full md:w-80">

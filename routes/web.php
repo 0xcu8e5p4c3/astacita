@@ -51,8 +51,7 @@ Route::get('/news/{categorySlug}/{articleSlug}', [ArticleViewController::class, 
     // ->middleware('store.article')
     ->name('article.show');
 
-
-Route::get('/pages/{slug}/loadmore', [ArticleController::class, 'loadMore'])->name('category.loadmore');
+    Route::get('/category/{slug}/load-more', [ArticleController::class, 'loadMore'])->name('category.loadmore');
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
