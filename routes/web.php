@@ -4,6 +4,7 @@
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TrendingController;
 use App\Http\Controllers\Auth\AuthUserController;
+use App\View\Components\Newsgrid6;
 use Illuminate\Support\Facades\Route;
 use App\Models\View;
 use Illuminate\Http\Request;
@@ -51,7 +52,7 @@ Route::get('/news/{categorySlug}/{articleSlug}', [ArticleViewController::class, 
     // ->middleware('store.article')
     ->name('article.show');
 
-    Route::get('/category/{slug}/load-more', [ArticleController::class, 'loadMore'])->name('category.loadmore');
+Route::get('/category/{slug}/load-more', [ArticleController::class, 'loadMore'])->name('category.loadmore');
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
@@ -66,3 +67,23 @@ Route::post('/logout', function () {
     return redirect('/'); // Redirect ke halaman utama setelah logout
 })->name('logout');
 
+Route::get('/load-more-articles', function (Request $request) {
+    $page = $request->input('page', 1);
+
+    $articles = Article::with(['category', 'author']) // <-- penting eager load
+        ->orderBy('published_at', 'desc')
+        ->where('status', 'published')
+        ->paginate(6, ['*'], 'page', $page);
+
+    $html = '';
+
+    foreach ($articles as $article) {
+        $html .= view('components.partials.article_card', compact('article'))->render();
+    }
+
+    return response()->json([
+        'html' => $html,
+        'has_more' => $articles->hasMorePages(),
+        'next_page' => $articles->currentPage() + 1,
+    ]);
+})->name('articles.loadmore');

@@ -82,11 +82,6 @@
   </div>
 
   <!-- Content Area -->
-  <div class="flex-1 p-6">
-    <h1 class="text-2xl font-bold">Main Content</h1>
-    <p>Ini adalah area konten utama. Sidebar berada di sebelah kiri dan bisa discroll secara independen.</p>
-    <div class="h-auto bg-gray-200 mt-4"></div>
-  </div>
 
 </body>
 </html>

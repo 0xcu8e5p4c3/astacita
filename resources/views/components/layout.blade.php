@@ -14,9 +14,11 @@
     <x-navbar></x-navbar>
     
     <!-- Main Content -->
-    <main class="container mx-auto px-20 py-[20px] ">
-        {{ $slot }}
-    </main>
+    <main class="container mx-auto px-4 py-4 sm:px-6 sm:py-8 md:px-10 md:py-10 lg:px-20 lg:py-[20px]">
+    {{ $slot }}
+</main>
+
+
 
     <!-- Footer -->
     <x-footer></x-footer>
