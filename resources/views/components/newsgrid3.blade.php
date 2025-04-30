@@ -34,7 +34,7 @@
                     @endif
                     <div class="space-y-4">
                         @foreach ($okegas->skip(1) as $article)
-                        <div class="flex items-start p-4">
+                        <div class="flex items-start">
                             <img alt="{{ $article->title }}" class="w-24 h-24 object-cover mr-4 rounded-lg" height="100" src="{{ $article->thumbnail ? asset('storage/'.$article->thumbnail) : 'https://picsum.photos/seed/'.$article->id.'/100/100' }}" width="100"/>
                             <div>
                                 <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="text-md font-bold hover:text-blue-500 transition duration-300 text-sm">
@@ -72,7 +72,7 @@
                     @endif
                     <div class="space-y-4">
                         @foreach ($bumn->skip(1) as $article)
-                        <div class="flex items-start p-4">
+                        <div class="flex items-start">
                             <img alt="{{ $article->title }}" class="w-24 h-24 object-cover mr-4 rounded-lg" height="100" src="{{ $article->thumbnail ? asset('storage/'.$article->thumbnail) : 'https://picsum.photos/seed/'.$article->id.'/100/100' }}" width="100"/>
                             <div>
                                 <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="text-md font-bold hover:text-blue-500 transition duration-300 text-sm">
@@ -110,7 +110,7 @@
                     @endif
                     <div class="space-y-4">
                         @foreach ($kabinet->skip(1) as $article)
-                        <div class="flex items-start p-4">
+                        <div class="flex items-start">
                             <img alt="{{ $article->title }}" class="w-24 h-24 object-cover mr-4 rounded-lg" height="100" src="{{ $article->thumbnail ? asset('storage/'.$article->thumbnail) : 'https://picsum.photos/seed/'.$article->id.'/100/100' }}" width="100"/>
                             <div>
                                 <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="text-md font-bold hover:text-blue-500 transition duration-300 text-sm">

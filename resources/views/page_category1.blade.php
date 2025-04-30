@@ -87,7 +87,6 @@
         <div class="grid grid-cols-1 gap-6">
           <div id="news-container">
             @if(isset($articles) && count($articles) > 0)
-              
               <!-- Artikel Mobile List -->
               <div class="mobile-article-list space-y-4">
                 @foreach ($articles as $article)
@@ -138,7 +137,6 @@
                 </div>
                 @endforeach
               </div>
-
             @else
               <p class="text-center text-gray-500">Tidak ada berita terbaru.</p>
             @endif
@@ -147,17 +145,28 @@
 
         <!-- Tombol Load More -->
         @if(isset($articles) && count($articles) > 0)
-          <div class="flex justify-center mt-12">
-            <button id="load-more" type="button"
-              data-url="{{ route('category.loadmore', $category->slug) }}"
-              class="flex items-center rounded-full border border-gray-300 bg-white px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-              Lihat Lebih Banyak
-            </button>
-          </div>
-        @endif
+    <div class="fter:h-px my-4 flex items-center before:h-px before:flex-1 before:bg-gray-300 before:content-[''] after:h-px after:flex-1 after:bg-gray-300 after:content-['']">
+        <button id="load-more" 
+                type="button"
+                data-url="{{ route('category.loadmore', $category->slug) }}"
+                data-page="2"
+                class="flex items-center rounded-full border border-gray-300 bg-secondary-50 px-3 py-2 text-center text-sm font-medium text-gray-900 hover:bg-gray-100">
+            
+            <!-- ICON -->
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                 viewBox="0 0 20 20" 
+                 fill="currentColor" 
+                 class="mr-1 h-4 w-4">
+                <path fill-rule="evenodd" 
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" 
+                      clip-rule="evenodd" /> 
+            </svg>
+
+            <!-- TEXT -->
+            <span id="load-more-text">View More</span>
+        </button>
+    </div>
+@endif
 
       </div>
 

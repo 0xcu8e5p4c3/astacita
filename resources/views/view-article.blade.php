@@ -3,143 +3,198 @@
 <x-layout>
 
 <!-- cover -->
-<div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16 relative">
-    <div class="bg-cover bg-center text-center overflow-hidden"
-        style="min-height: 500px; background-image: url('{{ $viewarticle->thumbnail ? asset('storage/'.$viewarticle->thumbnail) : 'https://picsum.photos/seed/'.$viewarticle->id.'/800/450' }}')"
+<div class="max-w-screen-xl mx-auto p-4 sm:p-8 md:p-12 relative">
+    <div class="bg-cover bg-center text-center overflow-hidden rounded-lg"
+        style="min-height: 550px; background-image: url('{{ $viewarticle->thumbnail ? asset('storage/'.$viewarticle->thumbnail) : 'https://picsum.photos/seed/'.$viewarticle->id.'/800/450' }}')"
         title="{{ $viewarticle->title }}">
     </div>
 
     <!-- title -->
     <div class="max-w-3xl mx-auto">
-        <div class="mt-3 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
-            <div class="bg-white relative top-0 -mt-32 p-5 sm:p-10">
-                <h1 href="#" class="text-gray-900 font-bold text-3xl mb-2">{{ $viewarticle->title }}</h1>
+        <div class="mt-3 bg-white rounded-lg flex flex-col justify-between leading-normal">
+            <div class="bg-white relative top-0 -mt-24 p-4 sm:p-8">
+                <h1 class="text-gray-900 font-bold text-2xl sm:text-3xl mb-2">{{ $viewarticle->title }}</h1>
 
                 <!-- Penulis -->
-                <p class="text-gray-700 text-xs mt-2">Written By:
-                    <a href="#"
-                        class="text-indigo-600 font-medium hover:text-gray-900 transition duration-500 ease-in-out">
+                <p class="text-gray-700 text-sm mt-2">Written By:
+                    <a href="#" class="text-indigo-600 font-medium hover:text-gray-900">
                         {{ $viewarticle->author->name }}
-                
-                <!-- category -->
-                    </a> In
-                    <a href="#"
-                        class="text-xs text-indigo-600 font-medium hover:text-gray-900 transition duration-500 ease-in-out">
+                    </a> In 
+                    <a href="#" class="text-indigo-600 font-medium hover:text-gray-900">
                         {{ $viewarticle->category->name }}
                     </a>
                 </p>
 
-                <!-- content -->
-                <div class="tiptap-content my-5">
-                {!! $viewarticle->content !!}
+                <!-- Tombol Bagikan -->
+                <div class="mt-4">
+                    <button 
+                        id="openModalBtn" 
+                        class="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-md transition-all shadow hover:shadow-lg"
+                        onclick="openShareModal()"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 8a3 3 0 11-6 0 3 3 0 016 0zM15 16a3 3 0 11-6 0 3 3 0 016 0zM12 13v-2" />
+                        </svg>
+                        Bagikan
+                    </button>
                 </div>
 
+                <!-- content -->
+                <div class="tiptap-content my-5 text-base leading-relaxed">
+                    {!! $viewarticle->content !!}
+                </div>
 
                 <!-- Tags -->
-                @foreach ($viewarticle->tags as $tag)
-                    <a href="{{ route('category.show', ['slug' => $viewarticle->slug]) }}"
-                        class="text-xs text-indigo-600 font-medium hover:text-gray-900 transition duration-500 ease-in-out">
-                        #{{ $tag->name }}
-                    </a>
-                @endforeach
+                <div class="flex flex-wrap gap-2 mt-4">
+                    @foreach ($viewarticle->tags as $tag)
+                        <a href="{{ route('category.show', ['slug' => $viewarticle->slug]) }}"
+                            class="text-xs text-indigo-600 font-medium hover:text-gray-900">
+                            #{{ $tag->name }}
+                        </a>
+                    @endforeach
+                </div>
 
-
-                <div class="pt-5 dark:bg-slate-800flex items-center">
-                    <div class="bg-gray-100 dark:bg-gray-700 relative shadow-xl overflow-hidden hover:shadow-2xl group rounded-xl p-5 transition-all duration-500 transform">
-                        <div class="flex items-center gap-4">
+                <!-- Penulis Card -->
+                <div class="pt-5 flex items-center w-full">
+                    <div class="bg-gray-100 dark:bg-gray-700 shadow-md hover:shadow-xl transition-all rounded-lg p-5 flex flex-col sm:flex-row items-center gap-4 w-full max-w-md">
                         <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwyfHxhdmF0YXJ8ZW58MHwwfHx8MTY5MTg0NzYxMHww&ixlib=rb-4.0.3&q=80&w=1080"
-                        class="w-32 group-hover:w-36 group-hover:h-36 h-32 object-center object-cover rounded-full transition-all duration-500 delay-500 transform"
-                        />
-                        <div class="w-fit transition-all transform duration-500">
-                            <h1 class="text-gray-600 dark:text-gray-200 font-bold">
-                            Mary Phiri
-                            </h1>
+                            class="w-24 h-24 rounded-full object-cover object-center transition-all" />
+
+                        <div class="text-center sm:text-left">
+                            <h2 class="text-gray-600 dark:text-gray-200 font-bold">Mary Phiri</h2>
                             <p class="text-gray-400">Senior Developer</p>
-                            <a
-                            class="text-xs text-gray-500 dark:text-gray-200 group-hover:opacity-100 opacity-0 transform transition-all delay-300 duration-500">
-                            mary@gmail.com
-                            </a>
-                        </div>
-                    </div>
-                        <div class="absolute group-hover:bottom-1 delay-300 -bottom-16 transition-all duration-500 bg-gray-600 dark:bg-gray-100 right-1 rounded-lg">
-                        <div class="flex justify-evenly items-center gap-2 p-1 text-2xl text-white dark:text-gray-600">
-                            <svg viewBox="0 0 1024 1024" fill="currentColor" height="1em" width="1em">
-                            <path
-                                d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm215.3 337.7c.3 4.7.3 9.6.3 14.4 0 146.8-111.8 315.9-316.1 315.9-63 0-121.4-18.3-170.6-49.8 9 1 17.6 1.4 26.8 1.4 52 0 99.8-17.6 137.9-47.4-48.8-1-89.8-33-103.8-77 17.1 2.5 32.5 2.5 50.1-2a111 111 0 01-88.9-109v-1.4c14.7 8.3 32 13.4 50.1 14.1a111.13 111.13 0 01-49.5-92.4c0-20.7 5.4-39.6 15.1-56a315.28 315.28 0 00229 116.1C492 353.1 548.4 292 616.2 292c32 0 60.8 13.4 81.1 35 25.1-4.7 49.1-14.1 70.5-26.7-8.3 25.7-25.7 47.4-48.8 61.1 22.4-2.4 44-8.6 64-17.3-15.1 22.2-34 41.9-55.7 57.6z" />
-                            </svg>
-                            <svg fill="currentColor" viewBox="0 0 16 16" height="1em" width="1em">
-                            <path
-                                d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
-                            </svg>
-                            <svg viewBox="0 0 960 1000" fill="currentColor" height="1em" width="1em">
-                            <path
-                                d="M480 20c133.333 0 246.667 46.667 340 140s140 206.667 140 340c0 132-46.667 245-140 339S613.333 980 480 980c-132 0-245-47-339-141S0 632 0 500c0-133.333 47-246.667 141-340S348 20 480 20M362 698V386h-96v312h96m-48-352c34.667 0 52-16 52-48s-17.333-48-52-48c-14.667 0-27 4.667-37 14s-15 20.667-15 34c0 32 17.333 48 52 48m404 352V514c0-44-10.333-77.667-31-101s-47.667-35-81-35c-44 0-76 16.667-96 50h-2l-6-42h-84c1.333 18.667 2 52 2 100v212h98V518c0-12 1.333-20 4-24 8-25.333 24.667-38 50-38 32 0 48 22.667 48 68v174h98" />
-                            </svg>
+                            <p class="text-xs text-gray-500 dark:text-gray-200">mary@gmail.com</p>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-                <section>
-                <div class="mx-auto max-w-sm mt-5 border-4 border-indigo-600 shadow-[5px_5px_0_0_rgba(0,0,0,1)] shadow-indigo-600/100 max-w-5xl mx-5 p-4 md:p-10 flex flex-col items-center justify-center text-center">
-                
-                    <p class="text-indigo-900 text-xl md:text-2xl font-bold border-b-4 border-b-indigo-300">Share this post</p>
-
-                    <ul class="flex flex-row items-center justify-center text-center mt-5">
-                        <li class="mx-2">
-                            <a href="" target="_blank" aria-label="Share on Twitter">
-                                <svg class="h-8 text-indigo-700 hover:text-indigo-300" fill="currentColor" role="img"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <title>Twitter</title>
-                                    <path
-                                        d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z">
-                                    </path>
-                                </svg>
-                            </a>
-                        </li>
-
-                        <li class="mx-2">
-                            <a href="" target="_blank" aria-label="Share on LinkedIn">
-                                <svg class="h-8 text-indigo-700 hover:text-indigo-300" fill="currentColor" role="img"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <title>LinkedIn</title>
-                                    <path
-                                        d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z">
-                                    </path>
-                                </svg>
-                            </a>
-                        </li>
-
-                        <li class="mx-2">
-                            <a href="" target="_blank" aria-label="Share on Mastodon">
-                                <svg class="h-8 text-indigo-700 hover:text-indigo-300" fill="currentColor" role="img"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <title>Mastodon</title>
-                                    <path
-                                        d="M23.268 5.313c-.35-2.578-2.617-4.61-5.304-5.004C17.51.242 15.792 0 11.813 0h-.03c-3.98 0-4.835.242-5.288.309C3.882.692 1.496 2.518.917 5.127.64 6.412.61 7.837.661 9.143c.074 1.874.088 3.745.26 5.611.118 1.24.325 2.47.62 3.68.55 2.237 2.777 4.098 4.96 4.857 2.336.792 4.849.923 7.256.38.265-.061.527-.132.786-.213.585-.184 1.27-.39 1.774-.753a.057.057 0 0 0 .023-.043v-1.809a.052.052 0 0 0-.02-.041.053.053 0 0 0-.046-.01 20.282 20.282 0 0 1-4.709.545c-2.73 0-3.463-1.284-3.674-1.818a5.593 5.593 0 0 1-.319-1.433.053.053 0 0 1 .066-.054c1.517.363 3.072.546 4.632.546.376 0 .75 0 1.125-.01 1.57-.044 3.224-.124 4.768-.422.038-.008.077-.015.11-.024 2.435-.464 4.753-1.92 4.989-5.604.008-.145.03-1.52.03-1.67.002-.512.167-3.63-.024-5.545zm-3.748 9.195h-2.561V8.29c0-1.309-.55-1.976-1.67-1.976-1.23 0-1.846.79-1.846 2.35v3.403h-2.546V8.663c0-1.56-.617-2.35-1.848-2.35-1.112 0-1.668.668-1.67 1.977v6.218H4.822V8.102c0-1.31.337-2.35 1.011-3.12.696-.77 1.608-1.164 2.74-1.164 1.311 0 2.302.5 2.962 1.498l.638 1.06.638-1.06c.66-.999 1.65-1.498 2.96-1.498 1.13 0 2.043.395 2.74 1.164.675.77 1.012 1.81 1.012 3.12z">
-                                    </path>
-                                </svg>
-                            </a>
-                        </li>
-
-                        <li class="mx-2">
-                            <a href="" target="_blank" aria-label="Share on Facebook">
-                                <svg class="h-8 text-indigo-700 hover:text-indigo-300" fill="currentColor" role="img"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <title>Facebook</title>
-                                    <path
-                                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z">
-                                    </path>
-                                </svg>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-        </section>
-
             </div>
         </div>
     </div>
-</div>  
+</div>
+    <!-- Container Modal -->
+    <div id="shareModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center">
+        <!-- Modal Content -->
+        <div class="bg-white w-full mx-4 p-4 rounded-xl md:w-1/2 lg:w-1/3">
+            <!-- Header -->
+            <div class="flex justify-between items-center border-b border-gray-200 py-1">
+                <p class="text-xl font-bold text-gray-800">Bagikan</p>
+                <div class="bg-gray-300 hover:bg-gray-500 text-gray-700 hover:text-white w-8 h-8 flex items-center justify-center rounded-full cursor-pointer" onclick="closeShareModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- Body -->
+        <div class="my-4">
+                <p class="text-sm">Bagikan tautan melalui:</p>
+
+            <div class="flex justify-around my-4">
+            <!-- Facebook Icon -->
+            <div class="border hover:bg-[#1877f2] w-12 h-12 fill-[#1877f2] hover:fill-white border-blue-200 rounded-full flex items-center justify-center shadow-xl hover:shadow-blue-500/50 cursor-pointer">
+                <a id="share-fb" href="https://www.facebook.com/sharer/sharer.php?u=" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127A22.336 22.336 0 0 0 14.201 3c-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Twitter Icon -->
+            <div class="border hover:bg-[#1d9bf0] w-12 h-12 fill-[#1d9bf0] hover:fill-white border-blue-200 rounded-full flex items-center justify-center shadow-xl hover:shadow-sky-500/50 cursor-pointer">
+                <a id="share-tw" href="https://twitter.com/intent/tweet?url=" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M19.633 7.997c.013.175.013.349.013.523 0 5.325-4.053 11.461-11.46 11.461-2.282 0-4.402-.661-6.186-1.809.324.037.636.05.973.05a8.07 8.07 0 0 0 5.001-1.721 4.036 4.036 0 0 1-3.767-2.793c.249.037.499.062.761.062.361 0 .724-.05 1.061-.137a4.027 4.027 0 0 1-3.23-3.953v-.05c.537.299 1.16.486 1.82.511a4.022 4.022 0 0 1-1.796-3.354c0-.748.199-1.434.548-2.032a11.457 11.457 0 0 0 8.306 4.215c-.062-.3-.1-.611-.1-.923a4.026 4.026 0 0 1 4.028-4.028c1.16 0 2.207.486 2.943 1.272a7.957 7.957 0 0 0 2.556-.973 4.02 4.02 0 0 1-1.771 2.22 8.073 8.073 0 0 0 2.319-.624 8.645 8.645 0 0 1-2.019 2.083z"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Instagram Icon -->
+            <div class="border hover:bg-[#bc2a8d] w-12 h-12 fill-[#bc2a8d] hover:fill-white border-pink-200 rounded-full flex items-center justify-center shadow-xl hover:shadow-pink-500/50 cursor-pointer">
+                <a id="share-ig" href="https://www.instagram.com/yourhandle" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M11.999 7.377a4.623 4.623 0 1 0 0 9.248 4.623 4.623 0 0 0 0-9.248zm0 7.627a3.004 3.004 0 1 1 0-6.008 3.004 3.004 0 0 1 0 6.008z"></path>
+                        <circle cx="16.806" cy="7.207" r="1.078"></circle>
+                        <path d="M20.533 6.111A4.605 4.605 0 0 0 17.9 3.479a6.606 6.606 0 0 0-2.186-.42c-.963-.042-1.268-.054-3.71-.054s-2.755 0-3.71.054a6.554 6.554 0 0 0-2.184.42 4.6 4.6 0 0 0-2.633 2.632 6.585 6.585 0 0 0-.419 2.186c-.043.962-.056 1.267-.056 3.71 0 2.442 0 2.753.056 3.71.015.748.156 1.486.419 2.187a4.61 4.61 0 0 0 2.634 2.632 6.584 6.584 0 0 0 2.185.45c.963.042 1.268.055 3.71.055s2.755 0 3.71-.055a6.615 6.615 0 0 0 2.186-.419 4.613 4.613 0 0 0 2.633-2.633c.263-.7.404-1.438.419-2.186.043-.962.056-1.267.056-3.71s0-2.753-.056-3.71a6.581 6.581 0 0 0-.421-2.217zm-1.218 9.532a5.043 5.043 0 0 1-.311 1.688 2.987 2.987 0 0 1-1.712 1.711 4.985 4.985 0 0 1-1.67.311c-.95.044-1.218.055-3.654.055-2.438 0-2.687 0-3.655-.055a4.96 4.96 0 0 1-1.669-.311 2.985 2.985 0 0 1-1.719-1.711 5.08 5.08 0 0 1-.311-1.669c-.043-.95-.053-1.218-.053-3.654 0-2.437 0-2.686.053-3.655a5.038 5.038 0 0 1 .311-1.687c.305-.789.93-1.41 1.719-1.712a5.01 5.01 0 0 1 1.669-.311c.951-.043 1.218-.055 3.655-.055s2.687 0 3.654.055a4.96 4.96 0 0 1 1.67.311 2.991 2.991 0 0 1 1.712 1.712 5.08 5.08 0 0 1 .311 1.669c.043.951.054 1.218.054 3.655 0 2.436 0 2.698-.043 3.654h-.011z"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- WhatsApp Icon -->
+            <div class="border hover:bg-[#25D366] w-12 h-12 fill-[#25D366] hover:fill-white border-green-200 rounded-full flex items-center justify-center shadow-xl hover:shadow-green-500/50 cursor-pointer">
+                <a id="share-wa" href="https://wa.me/?text=" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M18.403 5.633A8.919 8.919 0 0 0 12.053 3c-4.948 0-8.976 4.027-8.978 8.977 0 1.582.413 3.126 1.198 4.488L3 21.116l4.759-1.249a8.981 8.981 0 0 0 4.29 1.093h.004c4.947 0 8.975-4.027 8.977-8.977a8.926 8.926 0 0 0-2.627-6.35m-6.35 13.812h-.003a7.446 7.446 0 0 1-3.798-1.041l-.272-.162-2.824.741.753-2.753-.177-.282a7.448 7.448 0 0 1-1.141-3.971c.002-4.114 3.349-7.461 7.465-7.461a7.413 7.413 0 0 1 5.275 2.188 7.42 7.42 0 0 1 2.183 5.279c-.002 4.114-3.349 7.462-7.461 7.462m4.093-5.589c-.225-.113-1.327-.655-1.533-.73-.205-.075-.354-.112-.504.112s-.58.729-.711.879-.262.168-.486.056-.947-.349-1.804-1.113c-.667-.595-1.117-1.329-1.248-1.554s-.014-.346.099-.458c.101-.1.224-.262.336-.393.112-.131.149-.224.224-.374s.038-.281-.019-.393c-.056-.113-.505-1.217-.692-1.666-.181-.435-.366-.377-.504-.383a9.65 9.65 0 0 0-.429-.008.826.826 0 0 0-.599.28c-.206.225-.785.767-.785 1.871s.804 2.171.916 2.321c.112.15 1.582 2.415 3.832 3.387.536.231.954.369 1.279.473.537.171 1.026.146 1.413.089.431-.064 1.327-.542 1.514-1.066.187-.524.187-.973.131-1.067-.056-.094-.207-.151-.43-.263"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Telegram Icon -->
+            <div class="border hover:bg-[#229ED9] w-12 h-12 fill-[#229ED9] hover:fill-white border-sky-200 rounded-full flex items-center justify-center shadow-xl hover:shadow-sky-500/50 cursor-pointer">
+                <a id="share-tg" href="https://t.me/share/url?url=" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+
+            <!-- Copy Link -->
+            <p class="text-sm">Atau salin tautan</p>
+            <div class="border-2 border-gray-200 flex justify-between items-center mt-4 py-2 px-2 rounded-md">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              class="fill-gray-500 ml-2"
+            >
+              <path
+                d="M8.465 11.293c1.133-1.133 3.109-1.133 4.242 0l.707.707 1.414-1.414-.707-.707c-.943-.944-2.199-1.465-3.535-1.465s-2.592.521-3.535 1.465L4.929 12a5.008 5.008 0 0 0 0 7.071 4.983 4.983 0 0 0 3.535 1.462A4.982 4.982 0 0 0 12 19.071l.707-.707-1.414-1.414-.707.707a3.007 3.007 0 0 1-4.243 0 3.005 3.005 0 0 1 0-4.243l2.122-2.121z"
+              ></path>
+              <path
+                d="m12 4.929-.707.707 1.414 1.414.707-.707a3.007 3.007 0 0 1 4.243 0 3.005 3.005 0 0 1 0 4.243l-2.122 2.121c-1.133 1.133-3.109 1.133-4.242 0L10.586 12l-1.414 1.414.707.707c.943.944 2.199 1.465 3.535 1.465s2.592-.521 3.535-1.465L19.071 12a5.008 5.008 0 0 0 0-7.071 5.006 5.006 0 0 0-7.071 0z"
+              ></path>
+            </svg>
+                <input id="shareLink" class="w-full outline-none bg-transparent px-2" type="text" value="" readonly>
+                <button 
+                    class="bg-indigo-500 text-white rounded text-sm py-2 px-5 hover:bg-indigo-600"
+                    onclick="copyLink()"
+                >Copy</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </x-layout>
+
+<script>
+    function openShareModal() {
+        document.getElementById('shareModal').classList.remove('hidden');
+    }
+
+    function closeShareModal() {
+        document.getElementById('shareModal').classList.add('hidden');
+    }
+
+    function copyLink() {
+    const input = document.getElementById("shareLink");
+    input.value = window.location.href;  // Otomatis ambil URL halaman sekarang
+    input.select();
+    input.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(input.value)
+        .then(() => alert("Link disalin ke clipboard!"));
+    }
+
+    // Mendapatkan URL halaman saat ini
+    let currentUrl = window.location.href;
+
+    // Update URL pada masing-masing tombol
+    document.getElementById('share-fb').href += currentUrl;
+    document.getElementById('share-tw').href += currentUrl;
+    document.getElementById('share-wa').href += encodeURIComponent(currentUrl);
+    document.getElementById('share-tg').href += encodeURIComponent(currentUrl);
+
+</script>
