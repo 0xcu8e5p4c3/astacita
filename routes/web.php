@@ -4,8 +4,6 @@
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TrendingController;
 use App\Http\Controllers\Auth\AuthUserController;
-use App\Http\Controllers\Sharemodal;
-use App\View\Components\Newsgrid6;
 use Illuminate\Support\Facades\Route;
 use App\Models\View;
 use Illuminate\Http\Request;
@@ -68,7 +66,9 @@ Route::post('/logout', function () {
     return redirect('/'); // Redirect ke halaman utama setelah logout
 })->name('logout');
 
-Route::get('/sharemodal', [Sharemodal::class, 'show'])->name('modal');
+Route::get('/profile/{profile}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::put('/profile/{profile}', [ProfileController::class, 'update'])->name('profile.update');
+
 
 Route::get('/load-more-articles', function (Request $request) {
     $page = $request->input('page', 1);

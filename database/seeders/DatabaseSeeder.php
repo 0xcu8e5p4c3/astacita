@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Profile; 
 use App\Models\Category;
 use App\Models\Article;
 use App\Models\Tags;
@@ -24,7 +25,7 @@ class DatabaseSeeder extends Seeder
         // Seed Users
         $roles = ['user', 'author', 'editor'];
         for ($i = 1; $i <= 10; $i++) {
-            User::create([
+            $user = User::create([
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
                 'password' => Hash::make('password'),
@@ -33,8 +34,20 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
+            // Seed Profile terkait
+            Profile::create([
+                'user_id' => $user->id,
+                'nama' => $user->name,
+                'alamat' => $faker->address,
+                'tgl_lahir' => $faker->date(),
+                'nomor_telepon' => $faker->phoneNumber,
+                'email' => $user->email,
+                'gender' => $faker->randomElement(['L', 'P']),
+                'foto_profile' => "https://picsum.photos/seed/profile{$i}/200/200",
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
         }
-
         // Seed Categories
         $categoryNames = ['AI', 'Crypto', 'Start Up', 'Oke Gas', 'Kabinet', 'BUMN'];
         $categories = [];

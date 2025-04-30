@@ -105,6 +105,10 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     {
         return $this->hasMany(\App\Models\Like::class, 'user_id');
     }
+        public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
 
     /**
      * Hak akses ke Filament Admin Panel
