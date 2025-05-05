@@ -52,6 +52,7 @@ class UserResource extends Resource
                     ->required(),
                 TextInput::make('password')
                     ->password()
+                    ->revealable()
                     ->maxLength(255)
                     ->required()
                     ->dehydrateStateUsing(fn($state) => Hash::make($state)),

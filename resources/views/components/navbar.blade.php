@@ -52,7 +52,7 @@
   </div>
 
   <!-- Logo Tengah -->
-  <div class="flex-shrink-0 mx-auto md:mx-0">
+  <div onclick="window.location.href='{{ route('home') }}'" class="flex-shrink-0 mx-auto md:mx-0">
     <img src="{{ asset('images/astacitalogo.png') }}" alt="Company Logo" class="h-10" />
   </div>
   <!-- Desktop Menu & Search -->
@@ -123,6 +123,7 @@
     ['route' => 'category.show', 'slug' => 'kabinet', 'label' => 'Kabinet'],
     ['route' => 'category.show', 'slug' => 'bumn', 'label' => 'BUMN']
 ] as $data)
+
   <a href="{{ $data['slug'] ? route($data['route'], ['slug' => $data['slug']]) : route($data['route']) }}"
      class="relative">
      

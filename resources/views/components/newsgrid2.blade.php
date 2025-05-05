@@ -2,6 +2,7 @@
     
     @if($type == 'all' || $type == 'tiktok')
     <!-- TikTok Section (selalu tampil) -->
+    <div class="hidden md:block">
     <h1 class="text-xl font-bold mb-4">TikTok Video</h1>
     <div class="flex space-x-4 overflow-x-auto mb-8">
         @if($type == 'all')
@@ -53,10 +54,11 @@
         @endif
     </div>
     @endif
+</div>
 
     @if(($type == 'all' || $type == 'youtube') && (isset($videos['youtube']) || ($type == 'youtube' && !empty($videos))))
     <!-- YouTube Section (hanya tampil di md ke atas) -->
-    <div class="hidden md:block">
+    
         <h1 class="text-xl font-bold mb-4">YouTube Video</h1>
         <div class="flex space-x-4 overflow-x-auto">
             @if($type == 'all')
@@ -107,7 +109,7 @@
                 @endforeach
             @endif
         </div>
-    </div>
+    </div>  
     @endif
 
-</div>
+

@@ -6,7 +6,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     @livewireScripts
-
+    <title>{{ config('app.name', 'Astacita') }}</title>
+    <link rel="icon" href="{{ asset('images/logotitle.png') }}">
 </head>
 <body class="bg-white">
 

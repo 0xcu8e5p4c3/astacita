@@ -17,6 +17,11 @@ class VideoResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-video-camera';
 
+    public static function getNavigationSort(): int
+    {
+        return 3;
+    }
+
     protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Form $form): Form

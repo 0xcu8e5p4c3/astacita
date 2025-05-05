@@ -11,11 +11,9 @@ class Profile extends Model
 
     protected $fillable = [
         'user_id',
-        'nama',
         'alamat',
         'tgl_lahir',
         'nomor_telepon',
-        'email',
         'gender',
         'foto_profile',
     ];
@@ -25,4 +23,5 @@ class Profile extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
 }

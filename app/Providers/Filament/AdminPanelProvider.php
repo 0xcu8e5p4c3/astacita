@@ -34,6 +34,7 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Indigo
             ])
+            ->favicon(asset('images/logotitle.png'))
             ->brandLogo(asset('images/astacitalogo.png'))
             ->brandLogoHeight('45px')
             ->brandName('Astacita')

@@ -34,15 +34,13 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
-            // Seed Profile terkait
+            
             Profile::create([
                 'user_id' => $user->id,
-                'nama' => $user->name,
                 'alamat' => $faker->address,
                 'tgl_lahir' => $faker->date(),
                 'nomor_telepon' => $faker->phoneNumber,
-                'email' => $user->email,
-                'gender' => $faker->randomElement(['L', 'P']),
+                'gender' => $faker->randomElement(['male', 'female']),
                 'foto_profile' => "https://picsum.photos/seed/profile{$i}/200/200",
                 'created_at' => now(),
                 'updated_at' => now()

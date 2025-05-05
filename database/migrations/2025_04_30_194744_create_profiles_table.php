@@ -10,12 +10,10 @@ return new class extends Migration {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('nama');
             $table->text('alamat')->nullable();
             $table->date('tgl_lahir')->nullable();
             $table->string('nomor_telepon', 20)->nullable();
-            $table->string('email')->unique();
-            $table->enum('gender', ['L', 'P'])->nullable(); // L: Laki-laki, P: Perempuan
+            $table->enum('gender', ['male', 'female'])->nullable(); // L: Laki-laki, P: Perempuan
             $table->string('foto_profile')->nullable();
             $table->timestamps();
 

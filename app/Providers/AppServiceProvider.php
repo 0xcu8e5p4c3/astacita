@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
+use Livewire\Livewire;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -23,5 +24,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Blade::component('video-gallery', \App\View\Components\Newsgrid2::class);
+        Livewire::component('profile-component', \App\Http\Livewire\ProfileComponent::class);
     }
 }

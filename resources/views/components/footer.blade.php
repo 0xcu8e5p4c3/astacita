@@ -57,12 +57,11 @@
             <div>
                 <h3 class="font-semibold mb-4">Useful Links</h3>
                 <ul class="text-gray-400 text-sm space-y-2">
-                    <li><a href="#" class="hover:text-white">About</a></li>
-                    <li><a href="#" class="hover:text-white">Team</a></li>
-                    <li><a href="#" class="hover:text-white">Contact</a></li>
-                    <li><a href="#" class="hover:text-white">Archive</a></li>
-                    <li><a href="#" class="hover:text-white">Single News</a></li>
-                    <li><a href="#" class="hover:text-white">Archive News</a></li>
+                    <li><a href="#" class="hover:text-white">Tentang Astacita.co</a></li>
+                    <li><a href="#" class="hover:text-white">Redaksi</a></li>
+                    <li><a href="#" class="hover:text-white">Kode Etik</a></li>
+                    <li><a href="#" class="hover:text-white">Pedoman Media Cyber</a></li>
+                    <li><a href="#" class="hover:text-white">Kontak</a></li>
                 </ul>
             </div>
 

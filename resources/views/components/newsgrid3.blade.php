@@ -41,7 +41,7 @@
                                     {{ $article->title }}
                                 </a>
                                 <p class="text-gray-600 text-xs">
-                                {{ $article->author->name ?? 'Anonim' }} - {{ \Carbon\Carbon::parse($article->created_at)->format('d/m/Y') }}
+                                {{ $article->author->name ?? 'Anonim' }} - {{ \Carbon\Carbon::parse($article->created_at)->diffForHumans() }}
                                 </p>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                                 {{ $bumn[0]->title }}
                             </a>
                             <p class="text-gray-300 text-xs">
-                            {{ $bumn[0]->author->name ?? 'Anonim' }} - {{ \Carbon\Carbon::parse($bumn[0]->created_at)->format('d M Y') }}
+                            {{ $bumn[0]->author->name ?? 'Anonim' }} - {{ \Carbon\Carbon::parse($bumn[0]->created_at)->diffForHumans() }}
                             </p>
                         </div>
                     </div>
@@ -117,7 +117,7 @@
                                     {{ $article->title }}
                                 </a>
                                 <p class="text-gray-600 text-xs">
-                                {{ $article->author->name ?? 'Anonim' }} - {{ \Carbon\Carbon::parse($article->created_at)->format('d M Y') }}
+                                {{ $article->author->name ?? 'Anonim' }} - {{ \Carbon\Carbon::parse($article->created_at)->diffForHumans() }}
                                 </p>
                             </div>
                         </div>

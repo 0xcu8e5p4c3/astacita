@@ -58,13 +58,13 @@
                 <!-- Penulis Card -->
                 <div class="pt-5 flex items-center w-full">
                     <div class="bg-gray-100 dark:bg-gray-700 shadow-md hover:shadow-xl transition-all rounded-lg p-5 flex flex-col sm:flex-row items-center gap-4 w-full max-w-md">
-                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwyfHxhdmF0YXJ8ZW58MHwwfHx8MTY5MTg0NzYxMHww&ixlib=rb-4.0.3&q=80&w=1080"
+                        <img src="{{ $viewarticle->author->profile_photo ?? 'https://ui-avatars.com/api/?name=' . urlencode($viewarticle->author->name) }}"
                             class="w-24 h-24 rounded-full object-cover object-center transition-all" />
 
                         <div class="text-center sm:text-left">
-                            <h2 class="text-gray-600 dark:text-gray-200 font-bold">Mary Phiri</h2>
-                            <p class="text-gray-400">Senior Developer</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-200">mary@gmail.com</p>
+                            <h2 class="text-gray-600 dark:text-gray-200 font-bold">{{ $viewarticle->author->name }}</h2>
+                            <p class="text-gray-400">Astacita.co</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-200">{{ $viewarticle->author->email }}</p>
                         </div>
                     </div>
                 </div>

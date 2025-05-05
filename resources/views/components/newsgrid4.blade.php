@@ -35,7 +35,7 @@
               <img class="h-8 w-8 rounded-full" src="{{ $item->author->profile_photo ?? 'https://ui-avatars.com/api/?name=' . urlencode($item->author->name) }}" alt="{{ $item->author->name }}">
               <div class="ml-3">
                 <p class="text-xs font-semibold text-gray-900">{{ $item->author->name }}</p>
-                <p class="text-xs text-gray-500">{{ $item->created_at->format('M d, Y') }}</p>
+                <p class="text-xs text-gray-500">{{ $item->created_at->diffForHumans() }}</p>
               </div>
             </div>
           </div>

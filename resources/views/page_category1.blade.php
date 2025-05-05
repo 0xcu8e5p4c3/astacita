@@ -126,7 +126,7 @@
                       <p class="text-sm text-gray-600 mt-2">{{ Str::limit(strip_tags($article->content), 100) }}</p>
                     </div>
                     <div class="mt-3 flex items-center text-sm text-gray-500">
-                      <img src="{{ $article->author->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode($article->author->name) }}" 
+                      <img src="{{ $article->author->foto_profile ?? 'https://ui-avatars.com/api/?name='.urlencode($article->author->name) }}" 
                            alt="Author Avatar" class="w-8 h-8 rounded-full mr-2">
                       <span>
                         Ditulis oleh <strong>{{ $article->author->name ?? 'Anonim' }}</strong> 

@@ -6,24 +6,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Article;
 use App\Models\Category;
+use App\Model\Profile;
 
 class ArticleController extends Controller
 {
     public function showCategory(Request $request, $categorySlug)
     {
-        // Ambil kategori berdasarkan slug
+
         $category = Category::where('slug', $categorySlug)->firstOrFail();
 
-        // Ambil berita trending berdasarkan jumlah views terbanyak
         $trending = Article::where('category_id', $category->id)
             ->where('status', 'published')
             ->whereNotNull('published_at')
+            ->with('author.profile')
             ->withCount('views')
             ->orderByDesc('views_count') 
             ->limit(5)
             ->get();
         
-        // Ambil berita terbaru yang sudah dipublikasikan
         $articles = Article::where('category_id', $category->id)
             ->where('status', 'published')
             ->whereNotNull('published_at')
@@ -35,7 +35,7 @@ class ArticleController extends Controller
             ->where('status', 'published')
             ->whereNotNull('published_at')
             ->count();
-        
+
         return view('page_category1', compact('category', 'trending', 'articles', 'totalArticles'));
     }
     

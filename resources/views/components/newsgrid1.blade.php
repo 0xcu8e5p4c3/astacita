@@ -29,7 +29,7 @@
                 <img src="{{ $rightArticle->author->avatar }}" alt="{{ $rightArticle->author->name }}" class="w-8 h-8 rounded-full mr-2" />
                 <span>{{ $rightArticle->author->name }}</span>
                 <span class="mx-2">|</span>
-                <span>{{ $rightArticle->created_at->format('d M Y') }}</span>
+                <span>{{ $rightArticle->created_at->diffForHumans() }}</span>
             </div>
         </div>
 
