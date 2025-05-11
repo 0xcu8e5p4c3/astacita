@@ -3,7 +3,7 @@
     <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6">
         <!-- Left Article (Desktop) -->
         <div class="relative overflow-hidden rounded-lg hidden md:block">
-            <img src="{{ $leftArticle->thumbnail ? asset('storage/'.$leftArticle->thumbnail) : 'https://picsum.photos/seed/'.$leftArticle->id.'/600/400' }}" 
+            <img src="{{ $leftArticle->file_path ? asset('storage/'.$leftArticle->file_path) : 'https://picsum.photos/seed/'.$leftArticle->id.'/600/400' }}" 
                 alt="{{ $leftArticle->title }}" 
                 class="w-full aspect-[16/9] object-cover" />
             <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-4 text-center">
@@ -17,7 +17,7 @@
 
         <!-- Right Article (Desktop) -->
         <div class="bg-white p-6 rounded-lg shadow-md hidden md:block">
-            <img src="{{ $rightArticle->thumbnail ? asset('storage/'.$rightArticle->thumbnail) : 'https://picsum.photos/seed/'.$rightArticle->id.'/600/400' }}" 
+            <img src="{{ $rightArticle->file_path ? asset('storage/'.$rightArticle->file_path) : 'https://picsum.photos/seed/'.$rightArticle->id.'/600/400' }}" 
                 alt="{{ $rightArticle->title }}" 
                 class="w-full aspect-[16/9] object-cover rounded-lg mb-4" />
             <span class="bg-white shadow-md text-xs font-bold px-3 py-1 rounded">{{ $rightArticle->category->name }}</span>
@@ -39,7 +39,7 @@
                 <div class="swiper-wrapper">
                     <!-- Slide Left Article -->
                     <div class="swiper-slide rounded-lg overflow-hidden shadow-md">
-                        <img src="{{ $leftArticle->thumbnail ? asset('storage/'.$leftArticle->thumbnail) : 'https://picsum.photos/seed/'.$leftArticle->id.'/600/400' }}" 
+                        <img src="{{ $leftArticle->file_path ? asset('storage/'.$leftArticle->file_path) : 'https://picsum.photos/seed/'.$leftArticle->id.'/600/400' }}" 
                             alt="{{ $leftArticle->title }}" 
                             class="w-full h-52 object-cover" />
                         <div class="p-4">
@@ -56,7 +56,7 @@
                     <!-- Slide dari $news -->
                     @foreach($news->take(4) as $article)
                     <div class="swiper-slide rounded-lg overflow-hidden shadow-md">
-                        <img src="{{ $article->thumbnail ? asset('storage/'.$article->thumbnail) : 'https://picsum.photos/seed/'.$article->id.'/600/400' }}" 
+                        <img src="{{ $article->file_path ? asset('storage/'.$article->file_path) : 'https://picsum.photos/seed/'.$article->id.'/600/400' }}" 
                             alt="{{ $article->title }}" 
                             class="w-full h-52 object-cover" />
                         <div class="p-4">
@@ -80,7 +80,7 @@
     <div class="hidden md:grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mt-6">
         @foreach($news as $article)
             <div class="relative overflow-hidden rounded-lg carousel-item">
-                <img src="{{ $article->thumbnail ? asset('storage/'.$article->thumbnail) : 'https://picsum.photos/seed/'.$article->id.'/400/250' }}" 
+                <img src="{{ $article->file_path ? asset('storage/'.$article->file_path) : 'https://picsum.photos/seed/'.$article->id.'/400/250' }}" 
                     alt="{{ $article->title }}" 
                     class="w-full aspect-square object-cover" />
                 <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-3 text-center">
@@ -97,7 +97,7 @@
     <div class="grid gap-4 md:hidden mt-1">
         @foreach($news as $article)
             <div class="flex items-start gap-4 border-b pb-4">
-                <img src="{{ $article->thumbnail ? asset('storage/'.$article->thumbnail) : 'https://picsum.photos/seed/'.$article->id.'/150/150' }}" 
+                <img src="{{ $article->file_path ? asset('storage/'.$article->file_path) : 'https://picsum.photos/seed/'.$article->id.'/150/150' }}" 
                     alt="{{ $article->title }}" 
                     class="w-24 h-20 object-cover flex-shrink-0 rounded-md" />
                 <div class="flex flex-col justify-between">

@@ -75,15 +75,10 @@ class DatabaseSeeder extends Seeder
 
             ]);
 
-            // Simpan article untuk digunakan nanti
             $articles[] = $article;
-
-            // Tambahkan cover ke tabel media (Menggunakan Picsum)
             Media::create([
                 'article_id' => $article->id,
                 'file_path' => "https://picsum.photos/seed/{$i}/800/450", // Generate random cover image
-                'file_type' => 'image',
-                'mime_type' => 'image/jpeg',
                 'created_at' => now(),
                 'updated_at' => now()
             ]);

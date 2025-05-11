@@ -10,48 +10,43 @@ class Setting extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = [
-        'key',
-        'value',
-        'group',
-        'type',
-    ];
+    protected $fillable = ['key', 'value', 'group', 'type'];
 
     protected $casts = [
-        'value' => 'json',
+        'value' => 'json' // Laravel akan otomatis decode ke array atau object
     ];
 
-    public static function get($key, $default = null)
+    /**
+     * Get a setting by key
+     *
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    public static function getSetting($key, $default = null)
     {
         $setting = self::where('key', $key)->first();
-        
-        if ($setting) {
-            return $setting->value;
-        }
-        
-        return $default;
+        return $setting ? $setting->value : $default;
     }
 
-    public static function set($key, $value, $group = 'general')
+    /**
+     * Get all settings by group
+     *
+     * @param string $group
+     * @return \Illuminate\Support\Collection
+     */
+    public static function getSettingsByGroup($group)
     {
-        $setting = self::firstOrNew(['key' => $key]);
-        $setting->value = $value;
-        $setting->group = $group;
-        $setting->type = gettype($value);
-        $setting->save();
-        
-        return $setting;
+        return self::where('group', $group)->get()->pluck('value', 'key');
     }
 
-    public static function getGroup($group)
+    /**
+     * Get all settings as key-value pairs
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public static function getAllSettings()
     {
-        $settings = self::where('group', $group)->get();
-        
-        $result = [];
-        foreach ($settings as $setting) {
-            $result[$setting->key] = $setting->value;
-        }
-        
-        return $result;
+        return self::all()->pluck('value', 'key');
     }
 }

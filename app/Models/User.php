@@ -109,6 +109,11 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     {
         return $this->hasOne(Profile::class);
     }
+    
+        public function media()
+    {
+        return $this->hasOne(Media::class);
+    }
 
     /**
      * Hak akses ke Filament Admin Panel

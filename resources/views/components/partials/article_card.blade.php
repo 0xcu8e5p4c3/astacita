@@ -1,5 +1,5 @@
 <div class="flex items-start space-x-3 p-2 md:p-4 bg-white rounded-lg shadow-md md:flex-row">
-    <img src="{{ $article->thumbnail ? asset('storage/'.$article->thumbnail) : 'https://picsum.photos/seed/'.$article->id.'/800/450' }}"
+    <img src="{{ $article->file_path ? asset('storage/'.$article->file_path) : 'https://picsum.photos/seed/'.$article->id.'/800/450' }}"
          class="w-20 h-20 object-cover rounded-md flex-shrink-0 md:w-24 md:h-24"
          alt="{{ $article->title }}">
 

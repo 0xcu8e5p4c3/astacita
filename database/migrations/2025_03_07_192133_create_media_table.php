@@ -12,8 +12,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('article_id')->nullable()->constrained('articles')->cascadeOnDelete();
             $table->text('file_path');
-            $table->enum('file_type', ['image', 'video']);
-            $table->string('mime_type')->nullable(); // Menyimpan detail tipe file
             $table->timestamps(); // Menambahkan created_at & updated_at
         });
     }

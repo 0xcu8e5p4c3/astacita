@@ -7,7 +7,7 @@
     <!-- Kiri - Berita Utama -->
     <div class="relative h-[520px] w-full rounded-xl overflow-hidden shadow-md">
       <!-- Gambar Berita Utama -->
-      <img src="{{ $featuredArticle->thumbnail ? asset('storage/'.$featuredArticle->thumbnail) : 'https://picsum.photos/seed/'.$featuredArticle->id.'/800/450' }}" alt="Berita Utama"
+      <img src="{{ $featuredArticle->file_path ? asset('storage/'.$featuredArticle->file_path) : 'https://picsum.photos/seed/'.$featuredArticle->id.'/800/450' }}" alt="Berita Utama"
         class="absolute inset-0 w-full h-full object-cover" />
 
       <!-- Overlay bagian bawah -->
@@ -38,7 +38,7 @@
                 </a>
                 <div class="text-xs text-gray-500 mt-1">Astacita.co ✔ | {{ $article->views_count }} Views | {{ $article->created_at->diffForHumans() }}</div>
               </div>
-              <img src="{{ $article->thumbnail ? asset('storage/'.$article->thumbnail) : 'https://picsum.photos/seed/'.$article->id.'/800/450' }}" class="w-16 h-16 rounded object-cover" />
+              <img src="{{ $article->file_path ? asset('storage/'.$article->file_path) : 'https://picsum.photos/seed/'.$article->id.'/800/450' }}" class="w-16 h-16 rounded object-cover" />
             </div>
           @endforeach
         </div>
@@ -58,7 +58,7 @@
                 </a>
                 <div class="text-xs text-gray-500 mt-1">Astacita.co ✔ | {{ $article->views_count }} Views | {{ $article->created_at->diffForHumans() }}</div>
               </div>
-              <img src="{{ $article->thumbnail ? asset('storage/'.$article->thumbnail) : 'https://picsum.photos/seed/'.$article->id.'/800/450' }}" class="w-16 h-16 rounded object-cover" />
+              <img src="{{ $article->file_path ? asset('storage/'.$article->file_path) : 'https://picsum.photos/seed/'.$article->id.'/800/450' }}" class="w-16 h-16 rounded object-cover" />
             </div>
           @endforeach
         </div>

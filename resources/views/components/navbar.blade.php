@@ -19,9 +19,9 @@
           </svg>
         </button>
         <div class="absolute right-0 mt-2 w-40 bg-white text-black rounded-md shadow-lg hidden group-hover:block z-50">
-          <a href="" class="block px-4 py-2 hover:bg-gray-200">Dashboard</a>
+          <a href="{{ route('dashboard') }}" class="block px-4 py-2 hover:bg-gray-200">Dashboard</a>
           <a href="{{ route('profile') }}" class="block px-4 py-2 hover:bg-gray-200">Profile</a>
-          <a href="" class="block px-4 py-2 hover:bg-gray-200">Subscription</a>
+          <a href="{{ route('subscription') }}" class="block px-4 py-2 hover:bg-gray-200">Subscription</a>
           <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="w-full text-left px-4 py-2 hover:bg-gray-200">Logout</button>

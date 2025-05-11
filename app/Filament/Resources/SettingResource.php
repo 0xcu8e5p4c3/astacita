@@ -35,11 +35,9 @@ class SettingResource extends Resource
                             ->icon('heroicon-o-information-circle')
                             ->schema([
                                 Forms\Components\TextInput::make('site_name')
-                                    ->label('Site Name')
-                                    ->required(),
+                                    ->label('Site Name'),
                                 Forms\Components\TextInput::make('site_tagline')
-                                    ->label('Site Tagline')
-                                    ->required(),
+                                    ->label('Site Tagline'),
                                 Forms\Components\FileUpload::make('site_logo')
                                     ->label('Site Logo')
                                     ->image()
@@ -69,6 +67,43 @@ class SettingResource extends Resource
                                     ->fileAttachmentsDisk('public')
                                     ->fileAttachmentsDirectory('about-uploads')
                                     ->columnSpanFull(),
+
+                                    Forms\Components\RichEditor::make('visi')
+                                    ->label('Visi')
+                                    ->toolbarButtons([
+                                        'blockquote',
+                                        'bold',
+                                        'bulletList',
+                                        'h2',
+                                        'h3',
+                                        'italic',
+                                        'link',
+                                        'orderedList',
+                                        'redo',
+                                        'strike',
+                                        'underline',
+                                        'undo',
+                                    ])
+                                    ->columnSpanFull(),
+
+                                    Forms\Components\RichEditor::make('misi')
+                                    ->label('Misi')
+                                    ->toolbarButtons([
+                                        'blockquote',
+                                        'bold',
+                                        'bulletList',
+                                        'h2',
+                                        'h3',
+                                        'italic',
+                                        'link',
+                                        'orderedList',
+                                        'redo',
+                                        'strike',
+                                        'underline',
+                                        'undo',
+                                    ])
+                                    ->columnSpanFull(),
+
                                 Forms\Components\Textarea::make('about_short_description')
                                     ->label('Short Description (for SEO)')
                                     ->rows(3)
