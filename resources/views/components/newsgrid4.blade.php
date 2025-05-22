@@ -17,7 +17,7 @@
         @foreach ($news as $item)
         <div class="flex flex-col overflow-hidden rounded-lg shadow-md bg-white">
           <div class="flex-shrink-0">
-            <img class="h-48 w-full object-cover" src="{{ $item->file_path ? asset('storage/'.$item->file_path) : 'https://picsum.photos/seed/'.$item->id.'/800/450' }}" alt="{{ $item->title }}">
+            <img class="h-48 w-full object-cover" src="{{ $item->media ? route('image.show', $item->media->file_path) : asset('storage/default_image.jpg') }}" alt="{{ $item->title }}">
           </div>
           <div class="flex flex-1 flex-col justify-between p-4">
             <div class="flex-1">
@@ -50,7 +50,7 @@
             @foreach ($news as $item)
             <div class="swiper-slide">
               <div class="bg-white rounded-lg overflow-hidden shadow-md">
-                <img class="h-52 w-full object-cover" src="{{ $item->file_path ? asset('storage/'.$item->file_path) : 'https://picsum.photos/seed/'.$item->id.'/800/450' }}" alt="{{ $item->title }}">
+                <img class="h-52 w-full object-cover" src="{{ $item->media ? route('image.show', $item->media->file_path) : asset('storage/default_image.jpg') }}" alt="{{ $item->title }}">
                 <div class="p-4">
                   <span class="text-xs text-gray-500">{{ $item->category->name ?? 'News' }}</span>
                   <h2 class="text-lg font-bold text-gray-800 mt-2">

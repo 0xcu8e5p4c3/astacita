@@ -29,7 +29,7 @@
         @foreach ($articles as $article)
         <div class="flex space-x-4 hover:bg-gray-100 p-2 rounded-lg transition">
           <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="flex space-x-4 w-full">
-            <img class="w-20 h-20 object-cover rounded-lg shadow" src="{{ $article->file_path ? asset('storage/'.$article->file_path) : 'https://picsum.photos/seed/'.$article->id.'/800/450' }}" alt="{{ $article->title }}">
+            <img class="w-20 h-20 object-cover rounded-lg shadow" src="{{ $article->media ? route('image.show', $article->media->file_path) : asset('storage/default_image.jpg') }}" alt="{{ $article->title }}">
             <div>
               <h3 class="font-semibold text-gray-900">
                 <span class="hover:text-blue-600 transition duration-300">{{ $article->title }}</span>

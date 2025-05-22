@@ -44,7 +44,7 @@
           <div class="carousel carousel-end rounded-box">
             @foreach($trending as $item)
             <a href="{{ route('article.show', ['categorySlug' => $item->category->slug, 'articleSlug' => $item->slug]) }}" class="carousel-item relative">
-              <img src="{{ $item->file_path ? asset('storage/'.$item->file_path) : 'https://picsum.photos/seed/'.$item->id.'/800/450' }}" 
+              <img src="{{ $item->media ? route('image.show', $item->media->file_path) : asset('storage/default_image.jpg') }}" 
                    alt="{{ $item->title }}" class="w-full h-48 object-cover" />
               <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-4 text-center">
                 <span class="block text-xs font-bold uppercase">{{ $item->category->name ?? 'Uncategorized' }}</span>
@@ -61,7 +61,7 @@
           @foreach($trending as $item)
           <div class="flex items-center gap-4 border-b pb-3">
             <a href="{{ route('article.show', ['categorySlug' => $item->category->slug, 'articleSlug' => $item->slug]) }}" class="w-24 flex-shrink-0">
-              <img src="{{ $item->file_path ? asset('storage/'.$item->file_path) : 'https://picsum.photos/seed/'.$item->id.'/400/250' }}" 
+              <img src="{{ $item->media ? route('image.show', $item->media->file_path) : asset('storage/default_image.jpg') }}" 
                    alt="{{ $item->title }}" class="w-24 h-16 object-cover rounded-md">
             </a>
             <div class="flex-1">
@@ -92,7 +92,7 @@
                 @foreach ($articles as $article)
                 <div class="flex items-center gap-4 border-b pb-3">
                   <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="w-24 flex-shrink-0">
-                    <img src="{{ $article->file_path ? asset('storage/'.$article->file_path) : 'https://picsum.photos/seed/'.$article->id.'/400/250' }}" 
+                    <img src="{{ $article->media ? route('image.show', $article->media->file_path) : asset('storage/default_image.jpg') }}" 
                          alt="{{ $article->title }}" class="w-24 h-16 object-cover rounded-md">
                   </a>
                   <div class="flex-1">
@@ -112,7 +112,7 @@
                 @foreach ($articles as $article)
                 <div class="relative bg-white shadow-md rounded-lg overflow-hidden flex flex-col md:flex-row">
                   <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="w-full md:w-1/3">
-                    <img src="{{ $article->file_path ? asset('storage/'.$article->file_path) : 'https://picsum.photos/seed/'.$article->id.'/400/250' }}" 
+                    <img src="{{ $article->media ? route('image.show', $article->media->file_path) : asset('storage/default_image.jpg') }}" 
                          alt="{{ $article->title }}" class="w-full h-48 md:h-full object-cover">
                   </a>
                   <div class="p-4 flex flex-col justify-between w-full md:w-2/3">

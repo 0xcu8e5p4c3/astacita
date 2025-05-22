@@ -21,7 +21,7 @@
                     </div>
                     @if ($okegas->count() > 0)
                     <div class="relative mb-4">
-                        <img alt="{{ $okegas[0]->title }}" class="w-full h-auto rounded-lg" height="400" src="{{ $okegas[0]->file_path ? asset('storage/'.$okegas[0]->file_path) : 'https://picsum.photos/seed/'.$okegas[0]->id.'/800/450' }}" width="600"/>
+                        <img alt="{{ $okegas[0]->title }}" class="w-full h-auto rounded-lg" height="400" src="{{ $okegas[0]->media ? route('image.show', $okegas[0]->media->file_path) : asset('storage/default_image.jpg') }}" width="600"/>
                         <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-4 rounded-b-lg">
                             <a href="{{ route('article.show', ['categorySlug' => $okegas[0]->category->slug, 'articleSlug' => $okegas[0]->slug]) }}" class="text-lg font-bold text-white hover:text-blue-500 transition duration-300">
                                 {{ $okegas[0]->title }}
@@ -35,7 +35,7 @@
                     <div class="space-y-4">
                         @foreach ($okegas->skip(1) as $article)
                         <div class="flex items-start">
-                            <img alt="{{ $article->title }}" class="w-24 h-24 object-cover mr-4 rounded-lg" height="100" src="{{ $article->file_path ? asset('storage/'.$article->file_path) : 'https://picsum.photos/seed/'.$article->id.'/100/100' }}" width="100"/>
+                            <img alt="{{ $article->title }}" class="w-24 h-24 object-cover mr-4 rounded-lg" height="100" src="{{ $article->media ? route('image.show', $article->media->file_path) : asset('storage/default_image.jpg') }}" width="100"/>
                             <div>
                                 <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="text-md font-bold hover:text-blue-500 transition duration-300 text-sm">
                                     {{ $article->title }}
@@ -59,7 +59,7 @@
                     </div>
                     @if ($bumn->count() > 0)
                     <div class="relative mb-4">
-                        <img alt="{{ $bumn[0]->title }}" class="w-full h-auto rounded-lg" height="400" src="{{ $bumn[0]->file_path ? asset('storage/'.$bumn[0]->file_path) : 'https://picsum.photos/seed/'.$bumn[0]->id.'/800/450' }}" width="600"/>
+                        <img alt="{{ $bumn[0]->title }}" class="w-full h-auto rounded-lg" height="400" src="{{ $bumn[0]->media ? route('image.show', $article->media->file_path) : asset('storage/default_image.jpg') }}" width="600"/>
                         <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-4 rounded-b-lg">
                             <a href="{{ route('article.show', ['categorySlug' => $bumn[0]->category->slug, 'articleSlug' => $bumn[0]->slug]) }}" class="text-lg font-bold text-white hover:text-blue-500 transition duration-300">
                                 {{ $bumn[0]->title }}
@@ -73,7 +73,7 @@
                     <div class="space-y-4">
                         @foreach ($bumn->skip(1) as $article)
                         <div class="flex items-start">
-                            <img alt="{{ $article->title }}" class="w-24 h-24 object-cover mr-4 rounded-lg" height="100" src="{{ $article->file_path ? asset('storage/'.$article->file_path) : 'https://picsum.photos/seed/'.$article->id.'/100/100' }}" width="100"/>
+                            <img alt="{{ $article->title }}" class="w-24 h-24 object-cover mr-4 rounded-lg" height="100" src="{{ $article->media ? route('image.show', $article->media->file_path) : asset('storage/default_image.jpg') }}" width="100"/>
                             <div>
                                 <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="text-md font-bold hover:text-blue-500 transition duration-300 text-sm">
                                     {{ $article->title }}
@@ -97,7 +97,7 @@
                     </div>
                     @if ($kabinet->count() > 0)
                     <div class="relative mb-4">
-                        <img alt="{{ $kabinet[0]->title }}" class="w-full h-auto rounded-lg" height="400" src="{{ $kabinet[0]->file_path ? asset('storage/'.$kabinet[0]->file_path) : 'https://picsum.photos/seed/'.$kabinet[0]->id.'/800/450' }}" width="600"/>
+                        <img alt="{{ $kabinet[0]->title }}" class="w-full h-auto rounded-lg" height="400" src="{{ $kabinet[0]->media ? route('image.show', $article->media->file_path) : asset('storage/default_image.jpg') }}" width="600"/>
                         <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 p-4 rounded-b-lg">
                             <a href="{{ route('article.show', ['categorySlug' => $kabinet[0]->category->slug, 'articleSlug' => $kabinet[0]->slug]) }}" class="text-lg font-bold text-white hover:text-blue-500 transition duration-300">
                                 {{ $kabinet[0]->title }}
@@ -111,7 +111,7 @@
                     <div class="space-y-4">
                         @foreach ($kabinet->skip(1) as $article)
                         <div class="flex items-start">
-                            <img alt="{{ $article->title }}" class="w-24 h-24 object-cover mr-4 rounded-lg" height="100" src="{{ $article->file_path ? asset('storage/'.$article->file_path) : 'https://picsum.photos/seed/'.$article->id.'/100/100' }}" width="100"/>
+                            <img alt="{{ $article->title }}" class="w-24 h-24 object-cover mr-4 rounded-lg" height="100" src="{{ $article->media ? route('image.show', $article->media->file_path) : asset('storage/default_image.jpg') }}" width="100"/>
                             <div>
                                 <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="text-md font-bold hover:text-blue-500 transition duration-300 text-sm">
                                     {{ $article->title }}

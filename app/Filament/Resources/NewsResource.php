@@ -9,6 +9,8 @@ use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -33,30 +35,30 @@ class NewsResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-        Forms\Components\FileUpload::make('cover_upload')
-            ->label('Cover Artikel')
-            ->directory('article/covers')
-            ->image()
-            ->maxSize(2048)
-            ->uploadingMessage('Sedang mengunggah...')
-            ->visibility('public')
-            ->dehydrated(false)
-            ->afterStateUpdated(function ($state, $livewire, $set) {
-                if ($state && $livewire->record) {
-                    // Ambil nama file dari path state
-                    $fileName = collect($state)->first();
-                    
-                    // Buat URL penyimpanan yang benar
-                    $storagePath = 'article/covers/' . $fileName;
-                    $publicUrl = Storage::disk('public')->url($storagePath);
-                    
-                    \App\Models\Media::updateOrCreate(
-                        ['article_id' => $livewire->record->id],
-                        ['file_path' => $publicUrl] // Atau gunakan $storagePath jika Anda hanya ingin path relatif
-                    );
-                }
-            })
-            ->columnSpanFull(),
+        Forms\Components\FileUpload::make('file_path')
+                    ->label('Cover Artikel')
+                    ->directory('article/covers')
+                    ->image()
+                    ->maxSize(2048)
+                    ->disk('public')
+                    ->uploadingMessage('Sedang mengunggah...')
+                    ->visibility('private')
+                    ->preserveFilenames()
+                    ->dehydrated(false)
+                    ->afterStateUpdated(function ($state, $livewire, $set) {
+                        if ($state && $livewire->record) {
+                            $fileName = collect($state)->first();
+                            
+                            $storagePath = 'article/covers/' . $fileName;
+                            
+                            \App\Models\Media::updateOrCreate(
+                                ['article_id' => $livewire->record->id],
+                                ['file_path' => $storagePath]
+                            );
+                        }
+                    })
+                    ->columnSpanFull(),
+    
 
         
             Forms\Components\TextInput::make('title')
@@ -172,12 +174,6 @@ class NewsResource extends Resource
                     ->label('Kategori')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image.file_path')
-                    ->label('Cover')
-                    ->disk('public')
-                    ->visibility('public')
-                    ->height(100),
-
 
                 Tables\Columns\BadgeColumn::make('status')
                     ->label('Status')

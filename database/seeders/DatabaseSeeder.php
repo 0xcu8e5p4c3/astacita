@@ -22,30 +22,57 @@ class DatabaseSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        // Seed Users
-        $roles = ['user', 'author', 'editor'];
-        for ($i = 1; $i <= 10; $i++) {
-            $user = User::create([
+        // Seed 1 Editor dengan spesifikasi khusus
+        $editor = User::create([
+            'name' => 'Editor',
+            'email' => 'editor@gmail.com',
+            'password' => Hash::make('password'),
+            'role' => 'editor',
+            'email_verified_at' => now(),
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        
+        Profile::create([
+            'user_id' => $editor->id,
+            'alamat' => $faker->address,
+            'tgl_lahir' => $faker->date(),
+            'nomor_telepon' => $faker->phoneNumber,
+            'gender' => $faker->randomElement(['male', 'female']),
+            'foto_profile' => "https://picsum.photos/seed/editor/200/200",
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        // Seed 5 Authors
+        $authors = [];
+        for ($i = 1; $i <= 5; $i++) {
+            $author = User::create([
                 'name' => $faker->name,
                 'email' => $faker->unique()->safeEmail,
                 'password' => Hash::make('password'),
-                'role' => $roles[array_rand($roles)],
+                'role' => 'author',
                 'email_verified_at' => now(),
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
             
+            $authors[] = $author;
+            
             Profile::create([
-                'user_id' => $user->id,
+                'user_id' => $author->id,
                 'alamat' => $faker->address,
                 'tgl_lahir' => $faker->date(),
                 'nomor_telepon' => $faker->phoneNumber,
                 'gender' => $faker->randomElement(['male', 'female']),
-                'foto_profile' => "https://picsum.photos/seed/profile{$i}/200/200",
+                'foto_profile' => "https://picsum.photos/seed/author{$i}/200/200",
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
         }
+
+
+
         // Seed Categories
         $categoryNames = ['AI', 'Crypto', 'Start Up', 'Oke Gas', 'Kabinet', 'BUMN'];
         $categories = [];
@@ -56,6 +83,9 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
+        // Get author IDs untuk random assignment
+        $authorIds = collect($authors)->pluck('id')->toArray();
+
         // Seed Articles + Cover Image
         $articles = [];
         for ($i = 1; $i <= 100; $i++) {
@@ -63,8 +93,8 @@ class DatabaseSeeder extends Seeder
                 'title' => $faker->sentence,
                 'slug' => $faker->slug,
                 'content' => $faker->paragraphs(3, true),
-                'author_id' => rand(1, 10),
-                'editor_id' => rand(1, 10),
+                'author_id' => $authorIds[array_rand($authorIds)], // Random dari 5 authors
+                'editor_id' => $editor->id, // Selalu menggunakan editor yang sama
                 'category_id' => $categories[array_rand($categories)]->id,
                 'status' => 'published',
                 'published' => true,
@@ -72,16 +102,17 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
                 'is_featured' => (bool) rand(0, 1),
-
             ]);
 
             $articles[] = $article;
-            Media::create([
-                'article_id' => $article->id,
-                'file_path' => "https://picsum.photos/seed/{$i}/800/450", // Generate random cover image
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
+            
+            // Uncomment jika ingin menggunakan media/cover image
+            // Media::create([
+            //     'article_id' => $article->id,
+            //     'file_path' => "https://picsum.photos/seed/{$i}/800/450",
+            //     'created_at' => now(),
+            //     'updated_at' => now()
+            // ]);
         }
 
         // Seed Tags (10 tags random)
@@ -102,11 +133,14 @@ class DatabaseSeeder extends Seeder
             }
         }
 
+        // Get author dan editor IDs untuk comments dan likes
+        $allUserIds = array_merge($authorIds, [$editor->id]);
+
         // Seed Comments
         for ($i = 0; $i < 100; $i++) {
             Comments::create([
                 'article_id' => rand(1, 100),
-                'user_id' => rand(1, 10),
+                'user_id' => $allUserIds[array_rand($allUserIds)],
                 'content' => $faker->sentence,
                 'created_at' => now()
             ]);
@@ -126,7 +160,7 @@ class DatabaseSeeder extends Seeder
         // Seed Likes
         for ($i = 0; $i < 100; $i++) {
             Like::create([
-                'user_id' => rand(1, 10),
+                'user_id' => $allUserIds[array_rand($allUserIds)],
                 'article_id' => rand(1, 100),
                 'created_at' => now(),
                 'updated_at' => now()

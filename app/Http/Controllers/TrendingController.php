@@ -12,6 +12,7 @@ class TrendingController extends Controller
         // Pastikan tabel 'views' ada dan gunakan relasi untuk menghitung jumlah views
         $trending = Article::where('status', 'published')
         ->whereNotNull('published_at')
+        ->with('views', 'media')
         ->withCount('views') // Menghitung jumlah views dari tabel views
         ->orderByDesc('views_count') // Urutkan berdasarkan jumlah views
         ->limit(10)

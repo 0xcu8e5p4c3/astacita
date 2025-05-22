@@ -74,14 +74,13 @@
     </div>
 </div>
 
-
         <!-- Desktop carousel -->
         <div class="hidden md:block">
             <h1 class="text-xl font-bold mb-4">Trending</h1>
             <div class="carousel carousel-end rounded-box">
                 @foreach ($hometrend as $article)
                     <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="carousel-item relative">
-                        <img src="{{ $article->media->file_path ?? asset('storage/default.jpg') }}" 
+                        <img src="{{ $article->media ? route('image.show', $article->media->file_path) : asset('storage/default_image.jpg') }}" 
                             alt="{{ $article->title }}" 
                             class="w-full h-40 object-cover" />
                         <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-4 text-center">

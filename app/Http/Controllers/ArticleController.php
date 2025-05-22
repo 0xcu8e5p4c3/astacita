@@ -18,7 +18,7 @@ class ArticleController extends Controller
         $trending = Article::where('category_id', $category->id)
             ->where('status', 'published')
             ->whereNotNull('published_at')
-            ->with('author.profile')
+            ->with('author.profile', 'media')
             ->withCount('views')
             ->orderByDesc('views_count') 
             ->limit(5)
@@ -26,6 +26,7 @@ class ArticleController extends Controller
         
         $articles = Article::where('category_id', $category->id)
             ->where('status', 'published')
+            ->with('media')
             ->whereNotNull('published_at')
             ->orderByDesc('published_at') 
             ->limit(5)
@@ -48,6 +49,7 @@ class ArticleController extends Controller
 
         $articles = Article::where('category_id', $category->id)
             ->where('status', 'published')
+            ->with('media')
             ->whereNotNull('published_at')
             ->orderByDesc('published_at')
             ->skip($offset)

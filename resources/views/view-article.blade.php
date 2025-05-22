@@ -5,7 +5,7 @@
 <!-- cover -->
 <div class="max-w-screen-xl mx-auto p-4 sm:p-8 md:p-12 relative">
     <div class="bg-cover bg-center text-center overflow-hidden rounded-lg"
-        style="min-height: 550px; background-image: url('{{ $viewarticle->file_path ? asset('storage/'.$viewarticle->file_path) : 'https://picsum.photos/seed/'.$viewarticle->id.'/800/450' }}')"
+        style="min-height: 550px; background-image: url('{{ $viewarticle->media ? route('image.show', $viewarticle->media->file_path) : asset('storage/default_image.jpg') }}')"
         title="{{ $viewarticle->title }}">
     </div>
 

@@ -9,7 +9,7 @@
     <div id="article-container" class="flex-1 space-y-4 md:space-y-6">
         @foreach ($articles as $article)
             <div class="flex items-start space-x-3 p-2 md:p-4 bg-white rounded-lg shadow-md md:flex-row">
-                <img src="{{ $article->file_path ? asset('storage/'.$article->file_path) : 'https://picsum.photos/seed/'.$article->id.'/800/450' }}"
+                <img src="{{ $article->media ? route('image.show', $article->media->file_path) : asset('storage/default_image.jpg') }}"
                      alt="{{ $article->title }}"
                      class="w-20 h-20 object-cover rounded-md flex-shrink-0 md:w-24 md:h-24">
 

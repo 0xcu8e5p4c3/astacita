@@ -15,7 +15,7 @@ class ArticleViewController extends Controller
     
         // Cari artikel berdasarkan slug dan kategori
         $viewarticle = Article::where('slug', $articleSlug)
-            ->where('category_id', $category->id) // Pastikan artikel sesuai dengan kategori
+            ->where('category_id', $category->id)
             ->with(['category', 'author', 'tags', 'media'])
             ->firstOrFail();
     

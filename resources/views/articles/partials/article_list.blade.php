@@ -2,7 +2,7 @@
   <!-- Desktop View -->
   <div class="hidden md:flex relative bg-white shadow-md rounded-lg overflow-hidden flex-col md:flex-row mt-5">
     <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="w-full md:w-1/3">
-      <img src="{{ $article->file_path ? asset('storage/'.$article->file_path) : 'https://picsum.photos/seed/'.$article->id.'/400/250' }}" 
+      <img src="{{ $article->media ? route('image.show', $article->media->file_path) : asset('storage/default_image.jpg') }}" 
            alt="{{ $article->title }}" class="w-full h-48 md:h-full object-cover">
     </a>
     <div class="p-4 flex flex-col justify-between w-full md:w-2/3">
@@ -30,7 +30,7 @@
   <div class="flex md:hidden items-center gap-4 border-b pb-3 mb-3">
     <!-- Gambar file_path -->
     <a href="{{ route('article.show', ['categorySlug' => $article->category->slug, 'articleSlug' => $article->slug]) }}" class="w-24 flex-shrink-0">
-      <img src="{{ $article->file_path ? asset('storage/'.$article->file_path) : 'https://picsum.photos/seed/'.$article->id.'/400/250' }}" 
+      <img src="{{ $article->media ? route('image.show', $article->media->file_path) : asset('storage/default_image.jpg') }}" 
            alt="{{ $article->title }}" 
            class="w-24 h-16 object-cover rounded-md">
     </a>

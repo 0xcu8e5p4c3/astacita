@@ -17,6 +17,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Auth\Events\Verified;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 Route::get('/', function () {
     return view('home');
@@ -104,3 +106,47 @@ Route::get('/load-more-articles', function (Request $request) {
         'next_page' => $articles->currentPage() + 1,
     ]);
 })->name('articles.loadmore');
+
+Route::get('images/{encodedPath}', function ($encodedPath) {
+    try {
+        // Jika path memiliki format seperti "article/covers/[code]-meta[base64]-.jpg"
+        if (strpos($encodedPath, '-meta') !== false) {
+            // Decode the path to find the actual file
+            $parts = explode('-meta', $encodedPath);
+            $prefix = $parts[0];
+            
+            // Extract the base64 part (remove the "-.jpg" suffix if exists)
+            $base64Part = explode('-.jpg', $parts[1])[0];
+            
+            // Decode the base64 part
+            $decodedFileName = base64_decode($base64Part);
+            
+            // Construct the actual file path in storage
+            // Sesuaikan path ini dengan struktur penyimpanan Anda
+            $actualPath = 'images/' . $prefix . '/' . $decodedFileName;
+            
+            // Check if file exists
+            if (Storage::disk('public')->exists($actualPath)) {
+                return Storage::disk('public')->response($actualPath);
+            }
+            
+            // Alternatif jika file ada di direktori lain
+            $alternativePath = 'article/covers/' . $decodedFileName;
+            if (Storage::disk('public')->exists($alternativePath)) {
+                return Storage::disk('public')->response($alternativePath);
+            }
+        }
+        
+        // Fallback - coba tampilkan file langsung jika dekode gagal
+        if (Storage::disk('public')->exists($encodedPath)) {
+            return Storage::disk('public')->response($encodedPath);
+        }
+        
+        // Tidak ditemukan
+        abort(404, 'Image not found');
+    } catch (Exception $e) {
+        // Log error
+        Log::error('Image decode error: ' . $e->getMessage());
+        abort(500, 'Error processing image');
+    }
+})->name('image.show')->where('encodedPath', '.*');
