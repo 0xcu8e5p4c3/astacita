@@ -30,8 +30,8 @@
                     <!-- View count display -->
                     <div class="flex items-center text-gray-600 text-sm mt-2">
                         <span>{{ $viewarticle->created_at->format('d M Y') }}</span>
-                        <span class="mx-2">•</span>
-                        <span id="view-count">{{ $viewarticle->views ?? 0 }} views</span>
+                        <span class="mx-2">|</span>
+                        <span id="view-count">{{ $viewarticle->views_count }} views</span>
                     </div>
 
                     <!-- Tombol Bagikan -->

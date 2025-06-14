@@ -55,9 +55,15 @@ Route::get('/email/verify/{id}/{hash}', function (Request $request, $id, $hash) 
         event(new Verified($user));
     }
 
-    return redirect()->route('login');
+    return redirect()->route('home');
 })->middleware('signed', 'verified')->name('verification.verify');
 
+Route::get('/reset-password/{token}', function (Request $request, $token) {
+    return view('auth-user.form-forgot', [
+        'token' => $token,
+        'email' => $request->email,
+    ]);
+})->middleware('guest')->name('password.reset');
 
 Route::post('/login', [AuthUserController::class, 'store']);
 
@@ -165,9 +171,10 @@ Route::prefix('api')->group(function () {
         Route::post('visit', 'trackVisit');
         Route::post('visit/duration', 'updateVisitDuration');
         Route::post('track-event', 'trackEvent');
-        
+    
         // Analytics endpoints (GET only)
         Route::get('analytics', 'getAnalytics');
         Route::get('analytics/realtime', 'getRealTimeStats');
     });
 });
+
