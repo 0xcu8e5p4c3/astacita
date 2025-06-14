@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -11,12 +12,12 @@ class Article extends Model
 {
     use HasFactory;
 
-    // Nama tabel yang digunakan oleh model ini (opsional jika mengikuti konvensi Laravel)
     protected $table = 'articles';
 
-    // Kolom yang bisa diisi secara massal
     protected $fillable = [
-        'title', 'slug', 'content', 'author_id', 'editor_id', 'category_id', 'is_featured', 'published', 'published_at','scheduled_at', 'status'
+        'title', 'slug', 'content', 'author_id', 
+        'editor_id', 'category_id', 'is_featured', 
+        'published', 'published_at','scheduled_at', 'status'
     ];
 
     protected $casts = [
@@ -100,9 +101,34 @@ class Article extends Model
     /**
      * Relasi: Artikel memiliki banyak views (One to Many)
      */
-    public function views()
+   public function views(): HasMany
     {
-        return $this->hasMany(View::class, 'article_id');
+        return $this->hasMany(View::class);
+    }
+
+    public function getViewsCountAttribute(): int
+    {
+        return $this->views()->count();
+    }
+
+    public function getUniqueViewsCountAttribute(): int
+    {
+        return $this->views()->distinct('session_id')->count();
+    }
+
+    public function getTodayViewsCountAttribute(): int
+    {
+        return $this->views()->today()->count();
+    }
+
+    public function getWeekViewsCountAttribute(): int
+    {
+        return $this->views()->thisWeek()->count();
+    }
+
+    public function getMonthViewsCountAttribute(): int
+    {
+        return $this->views()->thisMonth()->count();
     }
         /**
      * Relasi: Artikel memiliki 1 cover

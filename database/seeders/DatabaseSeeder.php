@@ -9,6 +9,8 @@ use App\Models\Profile;
 use App\Models\Category;
 use App\Models\Article;
 use App\Models\Tags;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 use App\Models\Comments;
 use App\Models\View;
 use App\Models\Like;
@@ -147,15 +149,15 @@ class DatabaseSeeder extends Seeder
         }
 
         // Seed Views
-        for ($i = 0; $i < 1000; $i++) {
-            View::create([
-                'article_id' => rand(1, 100),
-                'ip_address' => $faker->ipv4,
-                'visited_at' => now(),
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
-        }
+        // for ($i = 0; $i < 1000; $i++) {
+        //     View::create([
+        //         'article_id' => rand(1, 100),
+        //         'ip_address' => $faker->ipv4,
+        //         'visited_at' => now(),
+        //         'created_at' => now(),
+        //         'updated_at' => now()
+        //     ]);
+        // }
 
         // Seed Likes
         for ($i = 0; $i < 100; $i++) {

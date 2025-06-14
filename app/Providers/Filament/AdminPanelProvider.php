@@ -47,6 +47,9 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
+                // Widgets\ViewsStatsOverview::class,
+                // Widgets\TopArticlesChart::class,
+                // Widgets\ViewsOverTimeChart::class,
             ])
             
             ->middleware([

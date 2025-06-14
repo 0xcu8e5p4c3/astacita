@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Seo extends Model
+class Seos extends Model
 {
     use HasFactory;
 
     // Nama tabel yang digunakan (opsional jika mengikuti konvensi Laravel)
     protected $table = 'seos';
 
-    // Primary key bukan id, jadi perlu diatur
+    // Pcrimary key bukan id, jadi perlu diatur
     protected $primaryKey = 'article_id';
 
     // Tidak menggunakan timestamps (created_at & updated_at)

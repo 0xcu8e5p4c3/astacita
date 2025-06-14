@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use FilamentTiptapEditor\TiptapEditor;
 use Filament\Forms\Components\Select;
 use App\Models\User;
+use App\Models\View;
 use App\Models\Category;
 use App\Models\Tags;
 
@@ -85,12 +86,11 @@ class NewsResource extends Resource
                 ])
                 ->required(),
 
-                Select::make('author_id')
+            Select::make('author_id')
                 ->label('Author')
                 ->relationship('author', 'name', function ($query) {
                     $query->where('role', 'author');
                 })
-                ->searchable()
                 ->preload()
                 ->placeholder('Pilih Author')
                 ->required(),
@@ -100,7 +100,6 @@ class NewsResource extends Resource
                 ->relationship('editor', 'name', function ($query) {
                     $query->where('role', 'editor');
                 })
-                ->searchable()
                 ->preload()
                 ->placeholder('Pilih Editor')
                 ->required(),
@@ -108,16 +107,14 @@ class NewsResource extends Resource
             Select::make('category_id')
                 ->label('Kategori')
                 ->relationship('category', 'name')
-                ->searchable()
                 ->preload()
                 ->placeholder('Pilih Kategori')
                 ->required(),
 
             Select::make('tags')
                 ->label('Tags')
-                ->multiple()
+                // ->multiple()
                 ->relationship('tags', 'name')
-                ->searchable()
                 ->preload()
                 ->placeholder('Pilih Tags'),
             
@@ -210,6 +207,34 @@ class NewsResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                                    Tables\Columns\TextColumn::make('views_count')
+                    ->label('Total Views')
+                    ->getStateUsing(function (Article $record) {
+                        return View::where('article_id', $record->id)->count();
+                    })
+                    ->sortable()
+                    ->icon('heroicon-m-eye'),
+                    
+                Tables\Columns\TextColumn::make('views_today')
+                    ->label('Views Hari Ini')
+                    ->getStateUsing(function (Article $record) {
+                        return View::where('article_id', $record->id)
+                            ->whereDate('viewed_at', today())
+                            ->count();
+                    })
+                    ->icon('heroicon-m-chart-bar'),
+                    
+                Tables\Columns\TextColumn::make('views_week')
+                    ->label('Views Minggu Ini')
+                    ->getStateUsing(function (Article $record) {
+                        return View::where('article_id', $record->id)
+                            ->whereBetween('viewed_at', [
+                                now()->startOfWeek(),
+                                now()->endOfWeek()
+                            ])
+                            ->count();
+                    })
+                    ->icon('heroicon-m-calendar'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')

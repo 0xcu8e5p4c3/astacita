@@ -19,7 +19,7 @@
          
          $request->session()->regenerate();
  
-         return redirect()->intended('/'); // Ganti dengan route tujuan setelah login
+         return redirect()->intended('/'); 
      }
  
      public function destroy(Request $request)
@@ -29,6 +29,6 @@
          $request->session()->invalidate();
          $request->session()->regenerateToken();
  
-         return redirect('/'); // Ganti dengan route tujuan setelah logout
+         return redirect('/');
      }
  }
