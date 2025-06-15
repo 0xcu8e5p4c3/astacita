@@ -148,17 +148,6 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        // Seed Views
-        // for ($i = 0; $i < 1000; $i++) {
-        //     View::create([
-        //         'article_id' => rand(1, 100),
-        //         'ip_address' => $faker->ipv4,
-        //         'visited_at' => now(),
-        //         'created_at' => now(),
-        //         'updated_at' => now()
-        //     ]);
-        // }
-
         // Seed Likes
         for ($i = 0; $i < 100; $i++) {
             Like::create([
@@ -168,5 +157,10 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now()
             ]);
         }
+        $this->call([
+            WebsiteSettingSeeder::class,
+            SmartAdSeeder::class,
+        ]);
+
     }
 }

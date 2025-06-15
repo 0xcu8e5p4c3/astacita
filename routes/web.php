@@ -69,9 +69,9 @@ Route::post('/login', [AuthUserController::class, 'store']);
 
 Route::post('/logout', [AuthUserController::class, 'destroy'])->name('logout');
 
-Route::get('/tentang-kami', [AboutController::class, 'about'])->name('about');
-Route::get('/redaksi', [AboutController::class, 'editorial'])->name('editorial');
-Route::get('/kode-etik', [AboutController::class, 'ethicsCode'])->name('ethics-code');
+Route::get('/tentang-kami', [AboutController::class, 'tentang'])->name('about');
+Route::get('/redaksi', [AboutController::class, 'redaksi'])->name('editorial');
+Route::get('/kode-etik', [AboutController::class, 'kodeEtik'])->name('ethics-code');
 Route::get('/pedoman-media-cyber', [AboutController::class, 'cyberGuidelines'])->name('cyber-guidelines');
 Route::get('/kontak', [AboutController::class, 'contact'])->name('contact');
 

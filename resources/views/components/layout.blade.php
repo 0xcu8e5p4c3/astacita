@@ -7,8 +7,12 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     @livewireScripts
-    <title>{{ config('app.name', 'Astacita') }}</title>
-    <link rel="icon" href="{{ asset('images/logotitle.png') }}">
+    <title>@yield('title') {{ App\Models\WebsiteSetting::get('site_name', 'Astacita.com') }} </title>
+    <meta name="description" content="@yield('description', App\Models\WebsiteSetting::get('site_tagline', 'Portal Berita Terpercaya'))">
+    <link rel="icon" href="{{ App\Models\WebsiteSetting::getInstance()->site_favicon_url ?? asset('images/logotitle.png') }}">
+
+    <!-- <link rel="icon" href="{{ asset('images/logotitle.png') }}"> -->
+     <!-- <title>{{ config('app.name', 'Astacita') }}</title> -->
 </head>
 <body class="bg-white">
 

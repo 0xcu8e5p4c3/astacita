@@ -1,85 +1,109 @@
-    <x-layout>
+<x-layout>
 
-    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-7xl mx-auto">
-            <!-- Header Section -->
-            <div class="text-center mb-16">
-                <h1 class="text-4xl font-bold text-gray-900 sm:text-5xl mb-4">
-                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">Tim Redaksi</span>
-                </h1>
-                <div class="w-24 h-1 bg-gradient-to-r from-blue-500 to-indigo-600 mx-auto mb-6 rounded-full"></div>
-                <p class="max-w-2xl mx-auto text-xl text-gray-600">
-                    Kenali lebih dekat tim redaksi Astacita.co yang berdedikasi untuk menyajikan konten berkualitas
-                </p>
+<div class="container mx-auto px-4 py-12">
+    <div class="max-w-6xl mx-auto">
+        <!-- Header Section -->
+        <div class="text-center mb-12 fade-in">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Tim Redaksi</h1>
+            <div class="w-24 h-1 bg-blue-600 mx-auto rounded-full mb-6"></div>
+            <p class="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+                Mengenal para profesional di balik setiap artikel berkualitas yang kami sajikan
+            </p>
+        </div>
+
+        <!-- Editorial Statement -->
+        @if($setting->editorial_statement)
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8 mb-12 fade-in">
+                <h2 class="text-2xl font-semibold text-gray-900 mb-6 text-center">Pernyataan Editorial</h2>
+                <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed text-center">
+                    {!! $setting->editorial_statement !!}
+                </div>
             </div>
+        @endif
 
-            <!-- Team Grid Layout -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @if(isset($settings['editorial_team']) && count($settings['editorial_team']) > 0)
-                    @foreach($settings['editorial_team'] as $member)
-                        <div class="group relative rounded-xl bg-white shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
-                            <!-- Card Top Decoration -->
-                            <div class="h-2 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
-                            
-                            <div class="p-6">
-                                <!-- Photo with cool image frame -->
-                                <div class="mb-6 flex justify-center">
-                                    <div class="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-md group-hover:scale-105 transition-transform duration-300">
-                                        @if(isset($member['photo']) && $member['photo'])
-                                            <img 
-                                                src="{{ Storage::url($member['photo']) }}" 
-                                                alt="{{ $member['name'] }}" 
-                                                class="w-full h-full object-cover"
-                                            >
-                                        @else
-                                            <div class="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                                                <span class="text-gray-400 text-3xl">
-                                                    {{ substr($member['name'] ?? 'User', 0, 1) }}
-                                                </span>
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-                                
-                                <!-- Content -->
-                                <div class="text-center">
-                                    <h3 class="text-xl font-bold text-gray-900 mb-1">{{ $member['name'] ?? 'Nama tidak tersedia' }}</h3>
-                                    <div class="text-indigo-600 font-medium mb-3">{{ $member['position'] ?? 'Jabatan tidak tersedia' }}</div>
-                                    
-                                    @if(isset($member['bio']) && $member['bio'])
-                                        <p class="text-gray-600 mb-4 text-sm">{{ $member['bio'] }}</p>
-                                    @endif
-                                    
-                                    @if(isset($member['email']) && $member['email'])
-                                        <div class="flex justify-center mt-4">
-                                            <a href="mailto:{{ $member['email'] }}" class="flex items-center text-indigo-600 hover:text-indigo-800 transition-colors duration-200">
-                                                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                                                </svg>
-                                                <span class="text-sm">Kontak</span>
-                                            </a>
+        <!-- Editorial Team -->
+        @if($setting->editorial_team && count($setting->editorial_team) > 0)
+            <div class="mb-12 fade-in">
+                <h2 class="text-3xl font-bold text-gray-900 text-center mb-8">Tim Editorial</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    @foreach($setting->editorial_team_with_photos as $member)
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
+                            <!-- Photo Section -->
+                            <div class="relative h-64 bg-gradient-to-br from-blue-50 to-indigo-100">
+                                @if(isset($member['photo_url']))
+                                    <img src="{{ $member['photo_url'] }}" 
+                                         alt="{{ $member['name'] ?? 'Tim Member' }}" 
+                                         class="w-full h-full object-cover">
+                                @else
+                                    <div class="w-full h-full flex items-center justify-center">
+                                        <div class="w-20 h-20 bg-blue-200 rounded-full flex items-center justify-center">
+                                            <svg class="w-10 h-10 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                                            </svg>
                                         </div>
-                                    @endif
-                                </div>
+                                    </div>
+                                @endif
                             </div>
                             
-                            <!-- Decorative element -->
-                            <div class="absolute top-0 right-0 bg-gradient-to-bl from-blue-500 to-transparent w-12 h-12 opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-bl-full"></div>
+                            <!-- Info Section -->
+                            <div class="p-6">
+                                @if(isset($member['name']))
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ $member['name'] }}</h3>
+                                @endif
+                                
+                                @if(isset($member['position']))
+                                    <p class="text-blue-600 font-medium mb-3">{{ $member['position'] }}</p>
+                                @endif
+                                
+                                @if(isset($member['bio']))
+                                    <p class="text-gray-600 text-sm leading-relaxed mb-4">{{ $member['bio'] }}</p>
+                                @endif
+                                
+                                @if(isset($member['experience']))
+                                    <div class="text-xs text-gray-500">
+                                        <span class="font-medium">Pengalaman:</span> {{ $member['experience'] }}
+                                    </div>
+                                @endif
+                                
+                                <!-- Social Links -->
+                                @if(isset($member['social_links']) && is_array($member['social_links']))
+                                    <div class="flex space-x-3 mt-4 pt-4 border-t border-gray-100">
+                                        @foreach($member['social_links'] as $platform => $url)
+                                            @if($url)
+                                                <a href="{{ $url }}" target="_blank" 
+                                                   class="text-gray-400 hover:text-blue-600 transition-colors">
+                                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                        <circle cx="10" cy="10" r="8"/>
+                                                    </svg>
+                                                </a>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     @endforeach
-                @else
-                    <div class="col-span-full text-center py-12">
-                        <div class="bg-white rounded-lg shadow-md p-8">
-                            <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                            </svg>
-                            <p class="text-gray-500 text-lg">Data tim redaksi belum tersedia</p>
-                            <p class="text-gray-400 text-sm mt-2">Silakan tambahkan data tim redaksi melalui panel admin</p>
-                        </div>
-                    </div>
-                @endif
+                </div>
             </div>
-        </div>
+        @else
+            <!-- Empty State -->
+            <div class="text-center py-16 fade-in">
+                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                              d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Tim Redaksi Sedang Dipersiapkan</h3>
+                <p class="text-gray-600">Informasi lengkap tentang tim redaksi akan segera tersedia.</p>
+            </div>
+        @endif
+
+        <!-- Contact Section -->
+
     </div>
-    </x-layout>
+</div>
+
+
+</x-layout>

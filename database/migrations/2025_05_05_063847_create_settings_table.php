@@ -11,108 +11,48 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('settings', function (Blueprint $table) {
+        Schema::create('website_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('key')->unique();
-            $table->json('value')->nullable();
-            $table->string('group')->default('general');
-            $table->string('type')->default('string');
+            
+            // Basic Site Info
+            $table->string('site_name')->nullable();
+            $table->string('site_tagline')->nullable();
+            $table->string('site_logo')->nullable();
+            $table->string('site_favicon')->nullable();
+            $table->text('about_description')->nullable();
+            $table->text('visi')->nullable();
+            $table->text('misi')->nullable();
+            $table->text('about_short_description')->nullable();
+            $table->year('year_established')->nullable();
+            
+            // Editorial Team (JSON field)
+            $table->json('editorial_team')->nullable();
+            $table->text('editorial_statement')->nullable();
+            
+            // Ethics Code
+            $table->text('ethics_code')->nullable();
+            $table->date('ethics_last_updated')->nullable();
+            
+            // Cyber Media Guidelines
+            $table->text('cyber_media_guidelines')->nullable();
+            $table->date('guidelines_last_updated')->nullable();
+            $table->string('guidelines_reference')->nullable();
+            
+            // Contact Information
+            $table->string('contact_email')->nullable();
+            $table->string('contact_phone')->nullable();
+            $table->text('contact_address')->nullable();
+            $table->text('maps_embed_code')->nullable();
+            
+            // Social Media
+            $table->string('social_facebook')->nullable();
+            $table->string('social_twitter')->nullable();
+            $table->string('social_instagram')->nullable();
+            $table->string('social_youtube')->nullable();
+            $table->string('social_linkedin')->nullable();
+            
             $table->timestamps();
-            $table->softDeletes();
         });
-        
-        // Insert default settings
-        DB::table('settings')->insert([
-            // Tentang Astacita.co
-            [
-                'key' => 'site_name',
-                'value' => json_encode('Astacita.co'),
-                'group' => 'about',
-                'type' => 'string',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'key' => 'site_tagline',
-                'value' => json_encode('Berita dan Informasi Terpercaya'),
-                'group' => 'about',
-                'type' => 'string',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'key' => 'about_description',
-                'value' => json_encode('<p>Astacita.co adalah portal berita dan informasi yang berdedikasi untuk menyajikan konten berkualitas dan terpercaya.</p>'),
-                'group' => 'about',
-                'type' => 'string',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            
-            // Redaksi
-            [
-                'key' => 'editorial_team',
-                'value' => json_encode([
-                    [
-                        'name' => 'John Doe',
-                        'position' => 'Pemimpin Redaksi',
-                        'email' => 'john@astacita.co',
-                        'bio' => 'Jurnalis berpengalaman selama 15 tahun',
-                        'photo' => null
-                    ],
-                ]),
-                'group' => 'editorial',
-                'type' => 'array',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            
-            // Kode Etik
-            [
-                'key' => 'ethics_code',
-                'value' => json_encode('<p>Kode Etik Jurnalistik Astacita.co mengacu pada standar profesional jurnalistik yang berlaku secara nasional.</p>'),
-                'group' => 'ethics',
-                'type' => 'string',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            
-            // Pedoman Media Cyber
-            [
-                'key' => 'cyber_media_guidelines',
-                'value' => json_encode('<p>Pedoman Media Siber Astacita.co mematuhi regulasi yang ditetapkan oleh Dewan Pers Indonesia.</p>'),
-                'group' => 'guidelines',
-                'type' => 'string',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            
-            // Kontak
-            [
-                'key' => 'contact_email',
-                'value' => json_encode('info@astacita.co'),
-                'group' => 'contact',
-                'type' => 'string',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'key' => 'contact_phone',
-                'value' => json_encode('021-12345678'),
-                'group' => 'contact',
-                'type' => 'string',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'key' => 'contact_address',
-                'value' => json_encode('Jl. Contoh No. 123, Jakarta Pusat, DKI Jakarta 10110'),
-                'group' => 'contact',
-                'type' => 'string',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
     }
 
     /**
@@ -120,6 +60,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('settings');
+        Schema::dropIfExists('website_settings');
     }
 };

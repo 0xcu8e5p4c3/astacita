@@ -4,12 +4,11 @@
             <!-- Kolom 1: Logo & Deskripsi -->
             <div class="col-span-2">
                 <a href="{{ url('/') }}" class="flex items-center mb-4">
-                    <img src="images/astacitalogo.png" alt="Logo" class="h-12"> <!-- Ganti dengan logo yang sesuai -->
+                    <img src="images/astacitalogo.png" alt="Logo" class="h-12">
                 </a>
                 <p class="text-gray-400 text-sm">
-                    Expert insights, industry trends, and inspiring stories that help you live and work on your own terms.
+                    Astacita adalah portal berita digital terpercaya yang menghadirkan informasi akurat, berimbang, dan terkini seputar teknologi, crypto, AI, dan dunia inovasi untuk masyarakat Indonesia.
                 </p>
-                <p class="text-gray-400 text-sm">Fusce varius, dolor tempor interdum.</p>
 
                 <!-- Social Media -->
                 <div class="mt-4">
@@ -23,10 +22,10 @@
                 </div>
 
                 <!-- App Store & Play Store -->
-                <div class="mt-4 flex space-x-2">
+                <!-- <div class="mt-4 flex space-x-2">
                     <img src="/app-store.png" alt="App Store" class="h-10">
                     <img src="/google-play.png" alt="Google Play" class="h-10">
-                </div>
+                </div> -->
             </div>
 
             <!-- Kolom 2: Top News -->
