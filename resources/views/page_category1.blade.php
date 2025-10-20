@@ -1,5 +1,4 @@
 <x-layout>
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
   <script src="{{ asset('js/loadmore.js') }}"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -38,23 +37,6 @@
       <!-- Trending Area -->
       <div class="flex-1">
         @if(isset($trending) && count($trending) > 0)
-
-        <!-- Desktop Carousel -->
-        <div class="desktop-carousel">
-          <div class="carousel carousel-end rounded-box">
-            @foreach($trending as $item)
-            <a href="{{ route('article.show', ['categorySlug' => $item->category->slug, 'articleSlug' => $item->slug]) }}" class="carousel-item relative">
-              <img src="{{ $item->media ? route('image.show', $item->media->file_path) : asset('storage/default_image.jpg') }}" 
-                   alt="{{ $item->title }}" class="w-full h-48 object-cover" />
-              <div class="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-4 text-center">
-                <span class="block text-xs font-bold uppercase">{{ $item->category->name ?? 'Uncategorized' }}</span>
-                <h3 class="text-lg font-semibold">{{ $item->title }}</h3>
-                <p class="text-sm">{{ Str::limit(strip_tags($item->content), 50) }}</p>
-              </div>
-            </a>
-            @endforeach
-          </div>
-        </div>
 
         <!-- Mobile Trending List -->
         <div class="mobile-trending-list space-y-4">

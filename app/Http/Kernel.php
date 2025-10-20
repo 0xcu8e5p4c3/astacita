@@ -26,6 +26,11 @@ use App\Http\Middleware\FilamentAdminMiddleware;
 
 class Kernel extends HttpKernel
 {
+    /**
+     * The application's global HTTP middleware stack.
+     *
+     * These middleware are run during every request to your application.
+     */
     protected $middleware = [
         \App\Http\Middleware\TrustProxies::class,
         \Illuminate\Http\Middleware\HandleCors::class,
@@ -33,21 +38,6 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-    ];
-
-    protected $middlewareAliases = [
-        'track.visitor' => \App\Http\Middleware\TrackVisitor::class,
-    ];
-}
-
-class Kernel extends HttpKernel
-{
-    /**
-     * The application's global HTTP middleware stack.
-     *
-     * These middleware are run during every request to your application.
-     */
-    protected $middleware = [
         TrustProxies::class,
         HandleCors::class,
         EncryptCookies::class,
@@ -90,6 +80,9 @@ class Kernel extends HttpKernel
         'store.article' => StoreArticleInSession::class,
         'is.editor' => IsEditor::class,
         'verified.notify' => EnsureEmailIsVerifiedWithNotif::class,
+    ];
+    protected $middlewareAliases = [
+        'track.visitor' => \App\Http\Middleware\TrackVisitor::class,
     ];
     
     

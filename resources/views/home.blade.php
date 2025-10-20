@@ -2,8 +2,6 @@
 
 <x-gridtrend />
 
-<x-smart-ads type="banner" position="top" page="home" />
-
 <x-newsgrid1 />
 
 <x-newsgrid4 />
