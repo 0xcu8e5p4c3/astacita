@@ -3,643 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Smart Ads Testing Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Crypto Ticker Bar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root {
-            --primary: #4f46e5;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --info: #3b82f6;
-        }
-
-        body {
-            background: #f8fafc;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .test-header {
-            background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
-            color: white;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            border-radius: 0 0 1rem 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .ad-slot {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border: 2px solid #e2e8f0;
-            position: relative;
-        }
-
-        .ad-slot-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid #f1f5f9;
-        }
-
-        .ad-slot-title {
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: #1e293b;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .ad-status {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .status-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .status-loaded {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .status-empty {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .status-error {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .ad-preview-area {
-            min-height: 120px;
-            background: #f8fafc;
-            border: 2px dashed #cbd5e1;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ad-preview-area.has-ad {
-            border-color: var(--success);
-            background: white;
-        }
-
-        .ad-preview-area.empty {
-            border-color: var(--warning);
-        }
-
-        .empty-state {
-            text-align: center;
-            color: #64748b;
-            padding: 2rem;
-        }
-
-        .empty-state-icon {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            opacity: 0.3;
-        }
-
-        .debug-panel {
-            background: #fefce8;
-            border-left: 4px solid var(--warning);
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-top: 1rem;
-            font-size: 0.85rem;
-        }
-
-        .debug-item {
-            display: flex;
-            gap: 0.5rem;
-            padding: 0.25rem 0;
-        }
-
-        .debug-label {
-            font-weight: 600;
-            color: #92400e;
-            min-width: 120px;
-        }
-
-        .debug-value {
-            color: #451a03;
-            font-family: 'Courier New', monospace;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border-left: 4px solid var(--primary);
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1e293b;
-            margin-top: 0.5rem;
-        }
-
-        .test-controls {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .btn-test {
-            margin: 0.25rem;
-            border-radius: 8px;
-            padding: 0.5rem 1rem;
-            font-weight: 500;
-        }
-
-        .info-box {
-            background: #eff6ff;
-            border-left: 4px solid var(--info);
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .ad-slot-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
             }
         }
 
-        /* Popup Overlay */
-        .popup-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 9998;
-            display: none;
+        .crypto-ticker {
+            animation: scroll 40s linear infinite;
         }
 
-        .popup-overlay.show {
-            display: block;
+        .crypto-ticker:hover {
+            animation-play-state: paused;
         }
 
-        /* Loading Animation */
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #e2e8f0;
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .crypto-item {
+            min-width: 200px;
+            flex-shrink: 0;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        @media (max-width: 640px) {
+            .crypto-item {
+                min-width: 160px;
+            }
+        }
+
+        .price-up {
+            color: #10b981;
+        }
+
+        .price-down {
+            color: #ef4444;
+        }
+
+        .loading-skeleton {
+            background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
         }
     </style>
 </head>
-<body>
-    <div class="test-header">
-        <div class="container">
-            <h1 class="mb-2">🎯 Smart Ads Testing Dashboard</h1>
-            <p class="mb-0 opacity-75">Test semua posisi iklan dan lihat status real-time</p>
+<body class="bg-gray-100">
+    <!-- Crypto Ticker Bar -->
+    <div class="w-full bg-white shadow-sm border-b border-gray-200 overflow-hidden">
+        <div class="relative py-3">
+            <!-- Loading State -->
+            <div id="loadingState" class="flex justify-center items-center">
+                <div class="flex gap-4 px-4">
+                    <div class="loading-skeleton h-8 w-40 rounded"></div>
+                    <div class="loading-skeleton h-8 w-40 rounded"></div>
+                    <div class="loading-skeleton h-8 w-40 rounded"></div>
+                    <div class="loading-skeleton h-8 w-40 rounded"></div>
+                </div>
+            </div>
+
+            <!-- Ticker Container -->
+            <div id="tickerContainer" class="hidden flex items-center">
+                <div class="crypto-ticker flex gap-6 px-4">
+                    <!-- Crypto items will be inserted here dynamically -->
+                </div>
+            </div>
+
+            <!-- Error State -->
+            <div id="errorState" class="hidden text-center py-2">
+                <p class="text-sm text-red-600">Unable to load crypto data. Using demo mode.</p>
+            </div>
         </div>
     </div>
 
-    <div class="container">
-        <!-- Stats Overview -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-label">Total Ads</div>
-                <div class="stat-value">{{ $allAds->count() }}</div>
+    <!-- Demo Preview (Remove this section when integrating) -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Live Crypto Ticker Bar</h2>
+            <p class="text-gray-600 mb-4">This ticker displays real-time data for the top 10 cryptocurrencies by market cap.</p>
+            
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                <h3 class="font-semibold text-blue-900 mb-2">⚠️ API Key Required</h3>
+                <p class="text-sm text-blue-800 mb-2">To use live data, you need a CoinMarketCap API key:</p>
+                <ol class="text-sm text-blue-800 list-decimal list-inside space-y-1 ml-2">
+                    <li>Get free API key at <a href="https://coinmarketcap.com/api/" target="_blank" class="underline font-medium">coinmarketcap.com/api</a></li>
+                    <li>Replace 'YOUR_API_KEY_HERE' in the code with your actual API key</li>
+                    <li>The ticker will automatically update every 60 seconds</li>
+                </ol>
             </div>
-            <div class="stat-card" style="border-left-color: var(--success)">
-                <div class="stat-label">Active Ads</div>
-                <div class="stat-value">{{ $activeAds->count() }}</div>
-            </div>
-            <div class="stat-card" style="border-left-color: var(--warning)">
-                <div class="stat-label">Impressions</div>
-                <div class="stat-value">{{ number_format($allAds->sum(function($ad) { return $ad->analytics->sum('impressions'); })) }}</div>
-            </div>
-            <div class="stat-card" style="border-left-color: var(--info)">
-                <div class="stat-label">Active Slots</div>
-                <div class="stat-value" id="active-slots-count">0</div>
+
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <h3 class="font-semibold text-gray-900 mb-2">Features:</h3>
+                <ul class="text-sm text-gray-700 space-y-1">
+                    <li>✓ Real-time prices from CoinMarketCap API</li>
+                    <li>✓ Smooth auto-scrolling animation (pauses on hover)</li>
+                    <li>✓ Color-coded 24h price changes (green = up, red = down)</li>
+                    <li>✓ Fully responsive design for mobile and desktop</li>
+                    <li>✓ Automatic data refresh every 60 seconds</li>
+                    <li>✓ Loading skeleton and error handling</li>
+                </ul>
             </div>
         </div>
-
-        <!-- Test Controls -->
-        <div class="test-controls">
-            <h5 class="mb-3">🔧 Test Controls</h5>
-            <div class="info-box">
-                <strong>💡 Tips:</strong> Klik tombol di bawah untuk test berbagai halaman atau reload semua iklan
-            </div>
-            <div class="d-flex flex-wrap gap-2">
-                <button class="btn btn-primary btn-test" onclick="reloadAllAds()">🔄 Reload All Ads</button>
-                <button class="btn btn-success btn-test" onclick="testPopup()">🚀 Test Popup</button>
-                <a href="{{ route('ads.test.page', 'home') }}" class="btn btn-outline-secondary btn-test">Home Page</a>
-                <a href="{{ route('ads.test.page', 'blog') }}" class="btn btn-outline-secondary btn-test">Blog Page</a>
-                <a href="{{ route('ads.test.page', 'about') }}" class="btn btn-outline-secondary btn-test">About Page</a>
-                <a href="/admin" target="_blank" class="btn btn-outline-primary btn-test">Open Admin</a>
-            </div>
-        </div>
-
-        <!-- Banner Top -->
-        <div class="ad-slot" data-type="banner" data-position="top">
-            <div class="ad-slot-header">
-                <div class="ad-slot-title">
-                    📱 Banner Top
-                </div>
-                <div class="ad-status">
-                    <span class="status-badge status-empty" id="status-banner-top">Checking...</span>
-                </div>
-            </div>
-            <div class="ad-preview-area" id="preview-banner-top">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="debug-panel" id="debug-banner-top" style="display:none;"></div>
-        </div>
-
-        <div class="row">
-            <!-- Sidebar Left -->
-            <div class="col-md-3">
-                <div class="ad-slot" data-type="sidebar" data-position="left">
-                    <div class="ad-slot-header">
-                        <div class="ad-slot-title">
-                            ◀️ Sidebar Left
-                        </div>
-                        <div class="ad-status">
-                            <span class="status-badge status-empty" id="status-sidebar-left">Checking...</span>
-                        </div>
-                    </div>
-                    <div class="ad-preview-area" id="preview-sidebar-left">
-                        <div class="loading-spinner"></div>
-                    </div>
-                    <div class="debug-panel" id="debug-sidebar-left" style="display:none;"></div>
-                </div>
-            </div>
-
-            <!-- Main Content -->
-            <div class="col-md-6">
-                <!-- Inline Ad -->
-                <div class="ad-slot" data-type="inline" data-position="center">
-                    <div class="ad-slot-header">
-                        <div class="ad-slot-title">
-                            📰 Inline Content Ad
-                        </div>
-                        <div class="ad-status">
-                            <span class="status-badge status-empty" id="status-inline-center">Checking...</span>
-                        </div>
-                    </div>
-                    <div class="ad-preview-area" id="preview-inline-center">
-                        <div class="loading-spinner"></div>
-                    </div>
-                    <div class="debug-panel" id="debug-inline-center" style="display:none;"></div>
-                </div>
-
-                <!-- Sample Content -->
-                <div class="ad-slot">
-                    <div class="ad-slot-header">
-                        <div class="ad-slot-title">📄 Sample Content</div>
-                    </div>
-                    <div style="padding: 1rem; line-height: 1.6; color: #64748b;">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sidebar Right -->
-            <div class="col-md-3">
-                <div class="ad-slot" data-type="sidebar" data-position="right">
-                    <div class="ad-slot-header">
-                        <div class="ad-slot-title">
-                            ▶️ Sidebar Right
-                        </div>
-                        <div class="ad-status">
-                            <span class="status-badge status-empty" id="status-sidebar-right">Checking...</span>
-                        </div>
-                    </div>
-                    <div class="ad-preview-area" id="preview-sidebar-right">
-                        <div class="loading-spinner"></div>
-                    </div>
-                    <div class="debug-panel" id="debug-sidebar-right" style="display:none;"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Banner Bottom -->
-        <div class="ad-slot" data-type="banner" data-position="bottom">
-            <div class="ad-slot-header">
-                <div class="ad-slot-title">
-                    📱 Banner Bottom
-                </div>
-                <div class="ad-status">
-                    <span class="status-badge status-empty" id="status-banner-bottom">Checking...</span>
-                </div>
-            </div>
-            <div class="ad-preview-area" id="preview-banner-bottom">
-                <div class="loading-spinner"></div>
-            </div>
-            <div class="debug-panel" id="debug-banner-bottom" style="display:none;"></div>
-        </div>
-
-        <!-- Active Ads Table -->
-        @if($activeAds->count() > 0)
-        <div class="ad-slot">
-            <div class="ad-slot-header">
-                <div class="ad-slot-title">📋 Active Ads Configuration</div>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-sm">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Type</th>
-                            <th>Position</th>
-                            <th>Priority</th>
-                            <th>Target Pages</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($activeAds as $ad)
-                        <tr>
-                            <td>{{ $ad->title }}</td>
-                            <td><span class="badge bg-primary">{{ $ad->type }}</span></td>
-                            <td><span class="badge bg-secondary">{{ $ad->position }}</span></td>
-                            <td>{{ $ad->priority }}</td>
-                            <td><small class="text-muted">{{ $ad->target_pages ?? 'All Pages' }}</small></td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        @endif
     </div>
 
-    <!-- Popup Overlay -->
-    <div class="popup-overlay" id="popup-overlay" onclick="closePopup()"></div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-    const adSlots = [
-        { type: 'banner', position: 'top' },
-        { type: 'sidebar', position: 'left' },
-        { type: 'inline', position: 'center' },
-        { type: 'sidebar', position: 'right' },
-        { type: 'banner', position: 'bottom' }
-    ];
+        // CoinMarketCap API Configuration
+        const API_KEY = 'YOUR_API_KEY_HERE'; // Replace with your actual API key
+        const API_URL = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest';
+        const USE_DEMO_MODE = API_KEY === 'YOUR_API_KEY_HERE'; // Auto switch to demo if no key
 
-    let activeSlots = 0;
+        // Demo data for testing without API key
+        const DEMO_DATA = [
+            { name: 'Bitcoin', symbol: 'BTC', price: 67234.56, change: 2.34 },
+            { name: 'Ethereum', symbol: 'ETH', price: 3456.78, change: -1.23 },
+            { name: 'Tether', symbol: 'USDT', price: 1.00, change: 0.01 },
+            { name: 'BNB', symbol: 'BNB', price: 598.34, change: 3.45 },
+            { name: 'Solana', symbol: 'SOL', price: 156.78, change: 5.67 },
+            { name: 'XRP', symbol: 'XRP', price: 0.6234, change: -2.34 },
+            { name: 'Cardano', symbol: 'ADA', price: 0.5678, change: 1.89 },
+            { name: 'Dogecoin', symbol: 'DOGE', price: 0.1234, change: 4.56 },
+            { name: 'TRON', symbol: 'TRX', price: 0.1678, change: -0.89 },
+            { name: 'Polygon', symbol: 'MATIC', price: 0.8456, change: 2.78 }
+        ];
 
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('🎯 Smart Ads Test Dashboard Loaded');
-        loadAllAds();
-    });
+        const loadingState = document.getElementById('loadingState');
+        const tickerContainer = document.getElementById('tickerContainer');
+        const errorState = document.getElementById('errorState');
 
-    function loadAllAds() {
-        activeSlots = 0;
-        adSlots.forEach(slot => loadAd(slot.type, slot.position));
-    }
-
-    function reloadAllAds() {
-        adSlots.forEach(slot => {
-            const preview = document.getElementById(`preview-${slot.type}-${slot.position}`);
-            preview.innerHTML = '<div class="loading-spinner"></div>';
-            preview.classList.remove('has-ad', 'empty');
-        });
-        loadAllAds();
-    }
-
-    function loadAd(type, position) {
-        const page = '{{ request()->segment(3) ?? "test" }}';
-        const statusEl = document.getElementById(`status-${type}-${position}`);
-        const previewEl = document.getElementById(`preview-${type}-${position}`);
-        const debugEl = document.getElementById(`debug-${type}-${position}`);
-
-        fetch(`/api/smart-ads?type=${type}&position=${position}&page=${page}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.ads && data.ads.length > 0) {
-                    renderAd(data.ads[0], previewEl);
-                    statusEl.textContent = 'Loaded';
-                    statusEl.className = 'status-badge status-loaded';
-                    previewEl.classList.add('has-ad');
-                    recordImpression(data.ads[0].id);
-                    activeSlots++;
-                    showDebug(debugEl, data.ads[0], true);
-                } else {
-                    showEmptyState(previewEl, type, position);
-                    statusEl.textContent = 'No Ads';
-                    statusEl.className = 'status-badge status-empty';
-                    previewEl.classList.add('empty');
-                    showDebug(debugEl, { type, position, page }, false);
-                }
-                updateActiveSlots();
-            })
-            .catch(error => {
-                console.error(`Error loading ${type}-${position}:`, error);
-                statusEl.textContent = 'Error';
-                statusEl.className = 'status-badge status-error';
-                showErrorState(previewEl);
-                showDebug(debugEl, { error: error.message }, false);
-            });
-    }
-
-    function renderAd(ad, container) {
-        if (ad.content.image_url) {
-            const link = document.createElement('a');
-            link.href = ad.content.link_url || '#';
-            link.target = '_blank';
-            link.onclick = () => recordClick(ad.id);
-            
-            const img = document.createElement('img');
-            img.src = ad.content.image_url;
-            img.alt = ad.content.alt_text || ad.title;
-            img.style.maxWidth = '100%';
-            img.style.height = 'auto';
-            img.style.borderRadius = '8px';
-            
-            link.appendChild(img);
-            container.innerHTML = '';
-            container.appendChild(link);
+        function formatPrice(price) {
+            if (price >= 1) {
+                return `$${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            } else {
+                return `$${price.toFixed(6)}`;
+            }
         }
-    }
 
-    function showEmptyState(container, type, position) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-state-icon">📭</div>
-                <div><strong>No ads available</strong></div>
-                <small class="text-muted">Type: ${type} | Position: ${position}</small>
-            </div>
-        `;
-    }
+        function formatChange(change) {
+            const sign = change >= 0 ? '+' : '';
+            return `${sign}${change.toFixed(2)}%`;
+        }
 
-    function showErrorState(container) {
-        container.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-state-icon">⚠️</div>
-                <div><strong>Error loading ad</strong></div>
-            </div>
-        `;
-    }
-
-    function showDebug(debugEl, data, hasAd) {
-        let debugHtml = '<strong>🔍 Debug Info:</strong><br>';
-        
-        if (hasAd) {
-            debugHtml += `
-                <div class="debug-item"><span class="debug-label">✅ Ad Found:</span><span class="debug-value">${data.title}</span></div>
-                <div class="debug-item"><span class="debug-label">Type:</span><span class="debug-value">${data.type}</span></div>
-                <div class="debug-item"><span class="debug-label">Position:</span><span class="debug-value">${data.position}</span></div>
-                <div class="debug-item"><span class="debug-label">Priority:</span><span class="debug-value">${data.priority}</span></div>
-            `;
-        } else {
-            debugHtml += `
-                <div class="debug-item"><span class="debug-label">❌ Reason:</span><span class="debug-value">No active ads match criteria</span></div>
-                <div class="debug-item"><span class="debug-label">Checked:</span><span class="debug-value">type=${data.type}, position=${data.position}</span></div>
-                <div class="debug-item"><span class="debug-label">Page:</span><span class="debug-value">${data.page || 'test'}</span></div>
-                <div class="debug-item"><span class="debug-label">💡 Fix:</span><span class="debug-value">Create ad in admin with matching type/position</span></div>
+        function createCryptoItem(crypto) {
+            const changeClass = crypto.change >= 0 ? 'price-up' : 'price-down';
+            const arrow = crypto.change >= 0 ? '▲' : '▼';
+            
+            return `
+                <div class="crypto-item flex items-center gap-3 bg-gray-50 rounded-lg px-4 py-2 hover:bg-gray-100 transition-colors">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-800 text-sm">${crypto.symbol}</span>
+                        <span class="text-xs text-gray-500 hidden sm:inline">${crypto.name}</span>
+                    </div>
+                    <div class="flex items-center gap-2 ml-auto">
+                        <span class="font-semibold text-gray-900 text-sm">${formatPrice(crypto.price)}</span>
+                        <span class="${changeClass} text-xs font-medium flex items-center gap-1">
+                            <span class="text-[10px]">${arrow}</span>
+                            ${formatChange(crypto.change)}
+                        </span>
+                    </div>
+                </div>
             `;
         }
-        
-        debugEl.innerHTML = debugHtml;
-        debugEl.style.display = 'block';
-    }
 
-    function updateActiveSlots() {
-        document.getElementById('active-slots-count').textContent = activeSlots;
-    }
+        async function fetchCryptoData() {
+            if (USE_DEMO_MODE) {
+                return DEMO_DATA;
+            }
 
-    function testPopup() {
-        fetch('/api/smart-ads?type=popup&position=center&page=home')
-            .then(response => response.json())
-            .then(data => {
-                if (data.ads && data.ads.length > 0) {
-                    const overlay = document.getElementById('popup-overlay');
-                    overlay.classList.add('show');
-                    
-                    const popup = createPopupElement(data.ads[0]);
-                    document.body.appendChild(popup);
-                    recordImpression(data.ads[0].id);
-                } else {
-                    alert('❌ No popup ads available. Create a popup ad in admin first.');
+            try {
+                const response = await fetch(`${API_URL}?limit=10&convert=USD`, {
+                    headers: {
+                        'X-CMC_PRO_API_KEY': API_KEY,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('API request failed');
                 }
-            });
-    }
 
-    function createPopupElement(ad) {
-        const popup = document.createElement('div');
-        popup.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            max-width: 90%;
-        `;
-        
-        const closeBtn = document.createElement('button');
-        closeBtn.textContent = '×';
-        closeBtn.style.cssText = `
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: #ef4444;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 35px;
-            height: 35px;
-            cursor: pointer;
-            font-size: 20px;
-        `;
-        closeBtn.onclick = closePopup;
-        
-        const img = document.createElement('img');
-        img.src = ad.content.image_url;
-        img.style.maxWidth = '100%';
-        img.style.borderRadius = '8px';
-        img.style.cursor = 'pointer';
-        img.onclick = () => {
-            if (ad.content.link_url) {
-                recordClick(ad.id);
-                window.open(ad.content.link_url, '_blank');
+                const data = await response.json();
+                
+                return data.data.map(coin => ({
+                    name: coin.name,
+                    symbol: coin.symbol,
+                    price: coin.quote.USD.price,
+                    change: coin.quote.USD.percent_change_24h
+                }));
+            } catch (error) {
+                console.error('Error fetching crypto data:', error);
+                errorState.classList.remove('hidden');
+                return DEMO_DATA;
             }
-        };
-        
-        popup.appendChild(closeBtn);
-        popup.appendChild(img);
-        return popup;
-    }
+        }
 
-    function closePopup() {
-        document.getElementById('popup-overlay').classList.remove('show');
-        document.querySelectorAll('[style*="z-index: 9999"]').forEach(el => el.remove());
-    }
+        function updateTicker(cryptoData) {
+            const ticker = tickerContainer.querySelector('.crypto-ticker');
+            
+            // Create items HTML
+            const itemsHTML = cryptoData.map(createCryptoItem).join('');
+            
+            // Duplicate items for seamless loop
+            ticker.innerHTML = itemsHTML + itemsHTML;
+            
+            // Show ticker, hide loading
+            loadingState.classList.add('hidden');
+            tickerContainer.classList.remove('hidden');
+        }
 
-    function recordImpression(adId) {
-        fetch(`/api/smart-ads/${adId}/impression`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            }
-        }).catch(e => console.log('Impression logged'));
-    }
+        async function init() {
+            const cryptoData = await fetchCryptoData();
+            updateTicker(cryptoData);
+            
+            // Refresh data every 60 seconds
+            setInterval(async () => {
+                const newData = await fetchCryptoData();
+                updateTicker(newData);
+            }, 60000);
+        }
 
-    function recordClick(adId) {
-        fetch(`/api/smart-ads/${adId}/click`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            }
-        }).catch(e => console.log('Click logged'));
-    }
+        // Initialize on page load
+        init();
     </script>
 </body>
 </html>

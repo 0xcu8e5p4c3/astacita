@@ -50,6 +50,10 @@ return new class extends Migration
             $table->string('social_instagram')->nullable();
             $table->string('social_youtube')->nullable();
             $table->string('social_linkedin')->nullable();
+
+            // API CMC
+            $table->text('coinmarketcap_api_key')->nullable();
+            $table->boolean('crypto_ticker_enabled')->default(false);
             
             $table->timestamps();
         });

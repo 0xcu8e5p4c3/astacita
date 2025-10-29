@@ -229,7 +229,32 @@
     @endif
   </div>
 </div>
+    <!-- Crypto Ticker Bar -->
+    <div class="w-full bg-white shadow-sm border-b border-gray-200 overflow-hidden">
+        <div class="relative py-3">
+            <!-- Loading State -->
+            <div id="loadingState" class="flex justify-center items-center">
+                <div class="flex gap-4 px-4">
+                    <div class="loading-skeleton h-8 w-40 rounded"></div>
+                    <div class="loading-skeleton h-8 w-40 rounded"></div>
+                    <div class="loading-skeleton h-8 w-40 rounded"></div>
+                    <div class="loading-skeleton h-8 w-40 rounded"></div>
+                </div>
+            </div>
 
+            <!-- Ticker Container -->
+            <div id="tickerContainer" class="hidden flex items-center">
+                <div class="crypto-ticker flex gap-6 px-4">
+                    <!-- Crypto items will be inserted here dynamically -->
+                </div>
+            </div>
+
+            <!-- Error State -->
+            <div id="errorState" class="hidden text-center py-2">
+                <p class="text-sm text-red-600">Unable to load crypto data. Using demo mode.</p>
+            </div>
+        </div>
+    </div>
 <!-- Overlay -->
 <div id="mobileOverlay" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40 hidden transition-opacity duration-300"></div>
 
@@ -314,6 +339,57 @@ body.menu-open::before {
     opacity: 1;
   }
 }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .crypto-ticker {
+            animation: scroll 40s linear infinite;
+        }
+
+        .crypto-ticker:hover {
+            animation-play-state: paused;
+        }
+
+        .crypto-item {
+            min-width: 200px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 640px) {
+            .crypto-item {
+                min-width: 160px;
+            }
+        }
+
+        .price-up {
+            color: #10b981;
+        }
+
+        .price-down {
+            color: #ef4444;
+        }
+
+        .loading-skeleton {
+            background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
 </style>
 
 <!-- Javascript Functionality -->
@@ -382,4 +458,89 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+ 
+    const tickerContainer = document.getElementById('tickerContainer');
+    const loadingState = document.getElementById('loadingState');
+    const errorState = document.getElementById('errorState');
+
+    function formatPrice(price) {
+        if (price >= 1) {
+            return `$${price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        } else {
+            return `$${price.toFixed(6)}`;
+        }
+    }
+
+    function formatChange(change) {
+        const sign = change >= 0 ? '+' : '';
+        return `${sign}${change.toFixed(2)}%`;
+    }
+
+    function createCryptoItem(crypto) {
+        const changeClass = crypto.change >= 0 ? 'price-up' : 'price-down';
+        const arrow = crypto.change >= 0 ? '▲' : '▼';
+        
+        return `
+            <div class="crypto-item flex items-center gap-3 bg-gray-50 rounded-lg px-4 py-2 hover:bg-gray-100 transition-colors">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-gray-800 text-sm">${crypto.symbol}</span>
+                    <span class="text-xs text-gray-500 hidden sm:inline">${crypto.name}</span>
+                </div>
+                <div class="flex items-center gap-2 ml-auto">
+                    <span class="font-semibold text-gray-900 text-sm">${formatPrice(crypto.price)}</span>
+                    <span class="${changeClass} text-xs font-medium flex items-center gap-1">
+                        <span class="text-[10px]">${arrow}</span>
+                        ${formatChange(crypto.change)}
+                    </span>
+                </div>
+            </div>
+        `;
+    }
+
+    async function fetchCryptoData() {
+        try {
+            const response = await fetch('{{ route("crypto.ticker") }}');
+            const result = await response.json();
+            
+            if (result.success && result.data.length > 0) {
+                return result.data;
+            }
+            
+            return null;
+        } catch (error) {
+            console.error('Error fetching crypto data:', error);
+            errorState.classList.remove('hidden');
+            return null;
+        }
+    }
+
+    function updateTicker(cryptoData) {
+        const ticker = tickerContainer.querySelector('.crypto-ticker');
+        const itemsHTML = cryptoData.map(createCryptoItem).join('');
+        ticker.innerHTML = itemsHTML + itemsHTML;
+        
+        loadingState.classList.add('hidden');
+        tickerContainer.classList.remove('hidden');
+    }
+
+    async function init() {
+        const cryptoData = await fetchCryptoData();
+        
+        if (cryptoData) {
+            updateTicker(cryptoData);
+            
+            // Refresh every 60 seconds
+            setInterval(async () => {
+                const newData = await fetchCryptoData();
+                if (newData) {
+                    updateTicker(newData);
+                }
+            }, 60000);
+        } else {
+            loadingState.classList.add('hidden');
+            errorState.classList.remove('hidden');
+        }
+    }
+
+    init();
 </script>

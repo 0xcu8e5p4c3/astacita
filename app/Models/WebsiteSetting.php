@@ -36,12 +36,15 @@ class WebsiteSetting extends Model
         'social_instagram',
         'social_youtube',
         'social_linkedin',
+        'coinmarketcap_api_key',
+        'crypto_ticker_enabled',
     ];
 
     protected $casts = [
         'editorial_team' => 'array',
         'ethics_last_updated' => 'date',
         'guidelines_last_updated' => 'date',
+        'crypto_ticker_enabled' => 'boolean',
     ];
 
     /**
@@ -143,5 +146,13 @@ class WebsiteSetting extends Model
             'youtube' => $this->social_youtube,
             'linkedin' => $this->social_linkedin,
         ];
+    }
+    
+    protected function coinmarketcapApiKey(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? decrypt($value) : null,
+            set: fn ($value) => $value ? encrypt($value) : null,
+        );
     }
 }

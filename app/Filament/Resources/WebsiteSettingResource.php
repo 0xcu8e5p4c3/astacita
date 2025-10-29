@@ -37,6 +37,53 @@ class WebsiteSettingResource extends Resource
             ->schema([
                 Forms\Components\Tabs::make('Website Settings')
                     ->tabs([
+                    // Tab 6: Crypto Ticker Settings
+                    Forms\Components\Tabs\Tab::make('Crypto Ticker')
+                        ->icon('heroicon-o-currency-dollar')
+                        ->schema([
+                            Forms\Components\Section::make('Pengaturan Ticker Cryptocurrency')
+                                ->description('Konfigurasi tampilan ticker cryptocurrency di website')
+                                ->schema([
+                                    Forms\Components\Toggle::make('crypto_ticker_enabled')
+                                        ->label('Aktifkan Crypto Ticker')
+                                        ->helperText('Tampilkan ticker cryptocurrency di halaman utama')
+                                        ->default(false)
+                                        ->live(),
+                                        
+                                    Forms\Components\TextInput::make('coinmarketcap_api_key')
+                                        ->label('CoinMarketCap API Key')
+                                        ->password()
+                                        ->revealable()
+                                        ->helperText('Dapatkan API key gratis di coinmarketcap.com/api')
+                                        ->placeholder('Masukkan API key Anda')
+                                        ->maxLength(255)
+                                        ->visible(fn (Forms\Get $get) => $get('crypto_ticker_enabled'))
+                                        ->columnSpanFull(),
+                                        
+                                    Forms\Components\Placeholder::make('crypto_info')
+                                        ->label('Informasi')
+                                        ->content(new \Illuminate\Support\HtmlString('
+                                            <div class="text-sm space-y-2">
+                                                <p class="font-medium text-gray-700">Cara mendapatkan API Key:</p>
+                                                <ol class="list-decimal list-inside space-y-1 text-gray-600">
+                                                    <li>Kunjungi <a href="https://coinmarketcap.com/api/" target="_blank" class="text-blue-600 hover:underline">coinmarketcap.com/api</a></li>
+                                                    <li>Daftar akun (gratis untuk basic plan)</li>
+                                                    <li>Copy API key dari dashboard</li>
+                                                    <li>Paste di kolom di atas</li>
+                                                </ol>
+                                                <p class="mt-3 font-medium text-gray-700">Fitur Ticker:</p>
+                                                <ul class="list-disc list-inside space-y-1 text-gray-600">
+                                                    <li>Menampilkan 10 cryptocurrency terbesar</li>
+                                                    <li>Update otomatis setiap 60 detik</li>
+                                                    <li>Cache data untuk performa optimal</li>
+                                                    <li>API key disimpan dengan enkripsi</li>
+                                                </ul>
+                                            </div>
+                                        '))
+                                        ->visible(fn (Forms\Get $get) => $get('crypto_ticker_enabled'))
+                                        ->columnSpanFull(),
+                                ]),
+                        ]),
                         // Tab 1: About Astacita.co
                         Forms\Components\Tabs\Tab::make('Tentang Astacita.co')
                             ->icon('heroicon-o-information-circle')

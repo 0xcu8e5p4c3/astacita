@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Api\TrackingController;
 use App\Models\View;
+use App\Http\Controllers\CryptoTickerController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\SmartAdController;
 use App\Http\Controllers\AdsTestController;
@@ -176,5 +177,13 @@ Route::prefix('api')->group(function () {
         Route::get('analytics', 'getAnalytics');
         Route::get('analytics/realtime', 'getRealTimeStats');
     });
+});
+
+// Add this to your routes file
+Route::get('/api/crypto-ticker', [CryptoTickerController::class, 'getData'])->name('crypto.ticker');
+
+// Optional: Admin route to clear cache
+Route::middleware(['auth'])->group(function () {
+    Route::post('/api/crypto-ticker/clear-cache', [CryptoTickerController::class, 'clearCache'])->name('crypto.ticker.clear-cache');
 });
 
